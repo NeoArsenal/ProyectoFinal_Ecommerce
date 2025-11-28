@@ -1,0 +1,115 @@
+<div class="home-container">
+  
+  <h1>Bienvenido al Sistema E-commerce</h1>
+  
+  <!-- SECCIÓN 1: DASHBOARD DE MÉTRICAS -->
+  <div class="stats-grid" *ngIf="stats">
+    <div class="stat-card blue">
+      <div class="stat-icon">💰</div>
+      <div class="stat-info">
+        <h3>S/ {{ stats.totalVentas | number:'1.2-2' }}</h3>
+        <p>Ingresos Totales</p>
+      </div>
+    </div>
+    
+    <div class="stat-card green">
+      <div class="stat-icon">📦</div>
+      <div class="stat-info">
+        <h3>{{ stats.cantidadPedidos }}</h3>
+        <p>Pedidos Realizados</p>
+      </div>
+    </div>
+    
+    <div class="stat-card red">
+      <div class="stat-icon">⚠️</div>
+      <div class="stat-info">
+        <h3>{{ stats.productosBajoStock }}</h3>
+        <p>Bajo Stock (< 5)</p>
+      </div>
+    </div>
+  </div>
+  
+  <p class="subtitle">Selecciona una opción para comenzar:</p>
+
+  <!-- SECCIÓN 2: MENÚ DE NAVEGACIÓN COMPLETO (11 TARJETAS) -->
+  <div class="menu-grid">
+     
+     <!-- 1. Venta -->
+     <div class="card venta" routerLink="/ventas">
+        <div class="icon">🛒</div>
+        <h3>Punto de Venta</h3>
+        <p>Registrar nuevas compras</p>
+     </div>
+     
+     <!-- 2. Productos -->
+     <div class="card producto" routerLink="/productos">
+       <div class="icon">📱</div>
+       <h3>Catálogo</h3>
+       <p>Gestionar productos</p>
+     </div>
+
+     <!-- 3. Categorías -->
+     <div class="card categorias" routerLink="/categorias">
+        <div class="icon">🏷️</div>
+        <h3>Categorías</h3>
+        <p>Tipos de productos</p>
+     </div>
+
+     <!-- 4. Métodos -->
+     <div class="card metodos" routerLink="/metodos">
+        <div class="icon">📬</div>
+        <h3>Métodos</h3>
+        <p>Configurar envíos</p>
+     </div>
+
+     <!-- 5. Almacenes -->
+     <div class="card almacenes" routerLink="/almacenes">
+       <div class="icon">🏭</div>
+       <h3>Almacenes</h3>
+       <p>Gestionar sedes</p>
+     </div>
+
+     <!-- 6. Inventarios -->
+     <div class="card inventarios" routerLink="/inventarios">
+       <div class="icon">🚛</div>
+       <h3>Distribución</h3>
+       <p>Stock por almacén</p>
+     </div>
+
+     <!-- 7. Despachos -->
+     <div class="card envios" routerLink="/envios">
+       <div class="icon">📤</div>
+       <h3>Despachos</h3>
+       <p>Logística de salida</p>
+     </div>
+
+     <!-- 8. Historial -->
+     <div class="card historial" routerLink="/historial">
+       <div class="icon">📜</div>
+       <h3>Historial</h3>
+       <p>Ver reportes</p>
+     </div>
+
+     <!-- 9. Proveedores -->
+     <div class="card proveedores" routerLink="/proveedores">
+       <div class="icon">🚚</div>
+       <h3>Proveedores</h3>
+       <p>Agenda de contactos</p>
+     </div>
+
+     <!-- 10. Usuarios (NUEVO) -->
+     <div class="card usuarios" routerLink="/usuarios">
+       <div class="icon">👥</div>
+       <h3>Usuarios</h3>
+       <p>Gestión de cuentas</p>
+     </div>
+
+     <!-- 11. Roles -->
+     <div class="card roles" routerLink="/roles">
+       <div class="icon">👮‍♂️</div>
+       <h3>Seguridad</h3>
+       <p>Gestionar Roles</p>
+     </div>
+
+  </div>
+</div>

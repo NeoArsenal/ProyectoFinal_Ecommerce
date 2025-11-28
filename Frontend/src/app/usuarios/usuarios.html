@@ -1,0 +1,71 @@
+<div class="container">
+  <h1>👥 Gestión de Usuarios y Permisos</h1>
+
+  <!-- FORMULARIO FLOTANTE DE ASIGNACIÓN -->
+  <!-- Solo se muestra si hay un usuario seleccionado (*ngIf) -->
+  <div class="formulario" *ngIf="usuarioSeleccionado" style="background: #e3f2fd; border: 1px solid #90caf9;">
+    
+    <h3 style="margin-top: 0; color: #1565c0;">
+      Editando permisos de: <strong>{{ usuarioSeleccionado.email }}</strong>
+    </h3>
+    
+    <div class="campo">
+      <label>Seleccionar Roles (Mantén presionado Ctrl para varios):</label>
+      
+      <!-- Select Múltiple -->
+      <select multiple [(ngModel)]="rolesSeleccionados" style="height: 120px; padding: 5px;">
+        <option *ngFor="let r of rolesDisponibles" [value]="r.id">
+          {{ r.nombre }}
+        </option>
+      </select>
+      
+      <small style="color: #666; margin-top: 5px;">
+        Haz clic en los roles para asignarlos o quitarlos.
+      </small>
+    </div>
+
+    <div class="botones">
+      <button (click)="guardarRoles()" class="btn-verde">💾 Guardar Cambios</button>
+      <button (click)="usuarioSeleccionado = null" class="btn-gris">Cancelar</button>
+    </div>
+  </div>
+
+  <hr *ngIf="usuarioSeleccionado">
+
+  <!-- TABLA DE USUARIOS -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Roles Actuales</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of usuarios">
+        <td class="center">{{ u.id }}</td>
+        <td>{{ u.email }}</td>
+        
+        <!-- COLUMNA DE ROLES (Aquí está la magia) -->
+        <td>
+            <!-- Si tiene roles, los mostramos como etiquetas azules -->
+            <span *ngFor="let rol of u.rolesNombres" class="badge-rol">
+                {{ rol }}
+            </span>
+
+            <!-- Si no tiene roles o la lista es nula, mostramos aviso gris -->
+            <span *ngIf="!u.rolesNombres?.length" style="color:#999; font-size: 11px; font-style: italic;">
+                (Sin roles asignados)
+            </span>
+        </td>
+        
+        <td class="center">
+          <button (click)="seleccionar(u)" class="btn-azul-sm">
+            🛡️ Asignar Roles
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

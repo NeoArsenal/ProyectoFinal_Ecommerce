@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>🏷️ Gestión de Categorías</h1>
+
+  <!-- Formulario -->
+  <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
+    <div class="campo">
+      <label>Nombre:</label>
+      <input type="text" formControlName="nombre" placeholder="Ej: Ropa">
+    </div>
+    <div class="campo">
+      <label>Descripción:</label>
+      <input type="text" formControlName="descripcion" placeholder="Ej: Polos y pantalones">
+    </div>
+    <button type="submit" [disabled]="form.invalid" class="btn-guardar">Guardar</button>
+  </form>
+
+  <hr>
+
+  <!-- Tabla -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of categorias">
+        <td class="center">{{ c.id }}</td>
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.descripcion }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

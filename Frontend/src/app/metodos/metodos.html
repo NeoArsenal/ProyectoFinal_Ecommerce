@@ -1,0 +1,30 @@
+<div class="container">
+  <h1>📦 Métodos de Envío</h1>
+
+  <div class="formulario">
+    <div class="campo">
+      <label>Nuevo Método:</label>
+      <input type="text" [(ngModel)]="nombreNuevo" placeholder="Ej: Aéreo Express">
+    </div>
+    <button (click)="guardar()" class="btn-guardar" [disabled]="!nombreNuevo">Agregar</button>
+  </div>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of metodos">
+        <td class="center">{{ m.id }}</td>
+        <td>{{ m.nombre }}</td>
+        <td class="center">
+          <button (click)="borrar(m.id)" class="btn-borrar">X</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

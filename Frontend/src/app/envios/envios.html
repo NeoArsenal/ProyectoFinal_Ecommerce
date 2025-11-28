@@ -1,0 +1,57 @@
+<div class="container">
+  <h1>🚚 Centro de Despachos</h1>
+  <p>Gestión de paquetes y logística de salida.</p>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Tracking #</th>
+        <th>Método</th>
+        <th>Cliente</th>
+        <th>Destino (Dirección)</th>
+        <th>Estado Actual</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of envios">
+        <td class="tracking">{{ e.tracking }}</td>
+        <td>{{ e.metodo || 'Estándar' }}</td>
+        <td>{{ e.cliente }}</td>
+        <td>{{ e.direccion }}</td>
+        
+        <td>
+          <span class="badge" 
+                [class.pendiente]="e.estado === 'PENDIENTE'"
+                [class.enviado]="e.estado === 'ENVIADO'"
+                [class.entregado]="e.estado === 'ENTREGADO'">
+            {{ e.estado }}
+          </span>
+        </td>
+        
+        <td class="acciones">
+          <!-- Botones de Acción Rápida -->
+          <button *ngIf="e.estado === 'PENDIENTE'" 
+                  (click)="cambiarEstado(e, 'ENVIADO')" 
+                  class="btn-enviar">
+            📦 Despachar
+          </button>
+
+          <button *ngIf="e.estado === 'ENVIADO'" 
+                  (click)="cambiarEstado(e, 'ENTREGADO')" 
+                  class="btn-entregar">
+            ✅ Confirmar Entrega
+          </button>
+
+          <span *ngIf="e.estado === 'ENTREGADO'" class="text-ok">
+            Finalizado
+          </span>
+        </td>
+      </tr>
+
+      <tr *ngIf="envios.length === 0">
+        <td colspan="6" class="vacio">No hay envíos pendientes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

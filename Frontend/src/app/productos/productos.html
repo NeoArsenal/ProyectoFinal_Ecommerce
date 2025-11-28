@@ -1,0 +1,90 @@
+<div class="container">
+  <h1>📦 Gestión de Productos</h1>
+
+  <form [formGroup]="form" class="formulario">
+    <input type="hidden" formControlName="id" />
+    
+    <div class="fila">
+      <div class="campo">
+         <label>Nombre:</label>
+         <input type="text" formControlName="nombre" />
+      </div>
+      <div class="campo">
+         <label>Descripción:</label>
+         <input type="text" formControlName="descripcion" />
+      </div>
+    </div>
+
+    <div class="fila">
+      <div class="campo">
+         <label>Precio:</label>
+         <input type="number" formControlName="precio" />
+      </div>
+      <div class="campo">
+         <label>Stock:</label>
+         <input type="number" formControlName="stock" />
+      </div>
+    </div>
+
+    <div class="fila">
+      <div class="campo">
+          <label>Categoría:</label>
+          <select formControlName="categoriaId">
+            <option [ngValue]="null">-- Seleccione --</option>
+            <option *ngFor="let c of categorias" [value]="c.id">{{ c.nombre }}</option>
+          </select>
+      </div>
+
+      <!-- NUEVO CAMPO: Múltiples Proveedores -->
+      <div class="campo">
+          <label>Proveedores (Ctrl + Clic):</label>
+          <select formControlName="proveedorIds" multiple style="height: 80px;">
+            <option *ngFor="let p of proveedores" [value]="p.id">
+              {{ p.empresa }}
+            </option>
+          </select>
+      </div>
+    </div>
+
+    <div class="botones">
+      <button type="button" (click)="alta()" [disabled]="deshabilitarAgregar" class="btn-verde">Agregar</button>
+      <button type="button" (click)="modificacion()" [disabled]="deshabilitarModificar" class="btn-azul">Modificar</button>
+      <button type="button" (click)="resetForm()" class="btn-gris">Limpiar</button>
+    </div>
+  </form>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Stock</th>
+        <th>Categoría</th>
+        <th>Proveedores</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of productos">
+          <td>{{ p.nombre }}</td>
+          <td class="center">{{ p.stock }}</td>
+          <td>{{ p.categoriaNombre }}</td>
+          
+          <!-- Columna Proveedores con etiquetas -->
+          <td>
+            <span *ngFor="let nombre of p.proveedorNombres" class="badge-prov">
+              {{ nombre }}
+            </span>
+            <span *ngIf="!p.proveedorNombres?.length" style="color:#999; font-size:11px;">(Ninguno)</span>
+          </td>
+          
+          <td class="num">S/ {{ p.precio | number:'1.2-2' }}</td>
+          <td class="center">
+              <button (click)="seleccionar(p)" class="btn-azul-sm">Editar</button>
+              <button (click)="baja(p.id)" class="btn-rojo-sm">X</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

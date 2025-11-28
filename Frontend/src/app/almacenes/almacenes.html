@@ -1,0 +1,49 @@
+<div class="container">
+  <h1>🏭 Gestión de Almacenes</h1>
+
+  <!-- Formulario de Registro -->
+  <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
+    
+    <div class="campo">
+      <label>Nombre del Almacén:</label>
+      <input type="text" formControlName="nombre" placeholder="Ej: Almacén Norte">
+    </div>
+
+    <div class="campo">
+      <label>Ubicación Física:</label>
+      <input type="text" formControlName="ubicacion" placeholder="Ej: Av. Industrial 123">
+    </div>
+
+    <button type="submit" [disabled]="form.invalid" class="btn-guardar">
+      Guardar Almacén
+    </button>
+  </form>
+
+  <hr>
+
+  <!-- Tabla de Resultados -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th style="width: 50px;">ID</th>
+        <th>Nombre</th>
+        <th>Ubicación</th>
+        <th style="width: 100px;">Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of almacenes">
+        <td class="center">{{ a.id }}</td>
+        <td>{{ a.nombre }}</td>
+        <td>{{ a.ubicacion }}</td>
+        <td class="center">
+          <button (click)="borrar(a.id)" class="btn-borrar">Eliminar</button>
+        </td>
+      </tr>
+      
+      <tr *ngIf="almacenes.length === 0">
+        <td colspan="4" class="vacio">No hay almacenes registrados.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

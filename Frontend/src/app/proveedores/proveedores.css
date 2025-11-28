@@ -1,0 +1,18 @@
+.container { font-family: Arial, sans-serif; padding: 20px; }
+.formulario { background: #f4f4f4; padding: 15px; border-radius: 8px; display: flex; gap: 15px; align-items: flex-start; flex-wrap: wrap;}
+.campo { display: flex; flex-direction: column; }
+label { font-weight: bold; font-size: 12px; margin-bottom: 4px; }
+input { padding: 6px; border: 1px solid #ccc; border-radius: 4px; width: 180px; }
+.error { color: red; font-size: 10px; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th { background: #444; color: white; padding: 10px; text-align: left; }
+td { padding: 8px; border-bottom: 1px solid #ddd; }
+
+button { padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; color: white; font-weight: bold; }
+button[type="submit"] { background: #28a745; } /* Verde por defecto */
+.btn-edit { background: #ffc107 !important; color: black !important; } /* Amarillo si edita */
+.btn-limpiar { background: #6c757d; margin-left: 10px; }
+.btn-azul { background: #007bff; margin-right: 5px; padding: 4px 8px; font-size: 12px; }
+.btn-rojo { background: #dc3545; padding: 4px 8px; font-size: 12px; }
+button:disabled { background: #ccc; cursor: not-allowed; }

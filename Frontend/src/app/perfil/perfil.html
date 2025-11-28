@@ -1,0 +1,35 @@
+<div class="perfil-container">
+  <h1>👤 Mi Perfil</h1>
+  
+  <div class="card-perfil">
+    
+    <!-- Email (Solo lectura) -->
+    <div class="form-group">
+      <label>Email (No editable):</label>
+      <input type="text" [value]="perfil.email" disabled class="input-disabled">
+    </div>
+
+    <!-- DNI -->
+    <div class="form-group">
+      <label>DNI:</label>
+      <input type="text" [(ngModel)]="perfil.dni" placeholder="12345678">
+    </div>
+
+    <!-- Teléfono -->
+    <div class="form-group">
+      <label>Teléfono:</label>
+      <input type="text" [(ngModel)]="perfil.telefono" placeholder="999-999-999">
+    </div>
+
+    <!-- Dirección -->
+    <div class="form-group">
+      <label>Dirección de Envío:</label>
+      <textarea [(ngModel)]="perfil.direccion" rows="3" placeholder="Av. Principal 123..."></textarea>
+    </div>
+
+    <button (click)="guardar()" class="btn-guardar">
+      💾 Guardar Cambios
+    </button>
+
+  </div>
+</div>

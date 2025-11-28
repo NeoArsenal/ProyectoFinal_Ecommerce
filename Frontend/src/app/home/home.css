@@ -1,0 +1,45 @@
+.home-container {
+  text-align: center;
+  padding: 30px;
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 { color: #2c3e50; margin-bottom: 5px; }
+.subtitle { color: #7f8c8d; font-size: 16px; margin-bottom: 20px; }
+.divider { border: 0; border-top: 1px solid #eee; margin: 30px 0; }
+
+/* GRID DE ESTADÍSTICAS */
+.stats-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.stat-card { color: white; padding: 20px; border-radius: 12px; width: 220px; display: flex; align-items: center; justify-content: center; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: transform 0.3s; }
+.stat-card:hover { transform: translateY(-5px); }
+.stat-icon { font-size: 32px; }
+.stat-info { text-align: left; }
+.stat-card h3 { margin: 0; font-size: 24px; font-weight: bold; }
+.stat-card p { margin: 0; font-size: 13px; opacity: 0.9; font-weight: 500; }
+
+.blue { background: linear-gradient(135deg, #3498db, #2980b9); }
+.green { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+.red { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+
+/* GRID DEL MENÚ */
+.menu-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+.card { background: white; border: 1px solid #eee; border-radius: 10px; padding: 25px; width: 180px; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.icon { font-size: 40px; margin-bottom: 10px; }
+.card h3 { margin: 0 0 8px 0; color: #333; font-size: 18px; }
+.card p { font-size: 13px; margin: 0; color: #666; }
+
+/* COLORES DE SECCIONES */
+.venta { border-top: 4px solid #2ecc71; }
+.producto { border-top: 4px solid #3498db; }
+.categorias { border-top: 4px solid #ff9ff3; }
+.metodos { border-top: 4px solid #16a085; }
+.almacenes { border-top: 4px solid #9b59b6; }
+.inventarios { border-top: 4px solid #e67e22; }
+.envios { border-top: 4px solid #1abc9c; }
+.historial { border-top: 4px solid #f1c40f; }
+.proveedores { border-top: 4px solid #e74c3c; }
+.usuarios { border-top: 4px solid #3f51b5; } /* Indigo (NUEVO) */
+.roles { border-top: 4px solid #2c3e50; }

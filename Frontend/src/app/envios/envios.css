@@ -1,0 +1,24 @@
+.container { font-family: 'Segoe UI', sans-serif; padding: 20px; }
+h1 { color: #333; margin-bottom: 5px; }
+p { color: #777; margin-bottom: 20px; }
+
+table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+th { background: #34495e; color: white; padding: 12px; text-align: left; }
+td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+
+.tracking { font-family: monospace; font-weight: bold; color: #2980b9; }
+.vacio { text-align: center; padding: 30px; color: #999; }
+
+/* Badges de Estado */
+.badge { padding: 5px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; color: white; }
+.pendiente { background-color: #f39c12; }
+.enviado { background-color: #3498db; }
+.entregado { background-color: #27ae60; }
+
+/* Botones de Acción */
+button { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; color: white; transition: transform 0.2s; }
+button:hover { transform: scale(1.05); }
+
+.btn-enviar { background-color: #3498db; } /* Azul */
+.btn-entregar { background-color: #27ae60; } /* Verde */
+.text-ok { color: #27ae60; font-weight: bold; font-size: 12px; }

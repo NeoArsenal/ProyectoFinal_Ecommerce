@@ -1,0 +1,58 @@
+<!-- BARRA DE NAVEGACIÓN -->
+<nav class="navbar" *ngIf="auth.estaLogueado">
+  
+  <!-- LADO IZQUIERDO: Menú Contextual -->
+  <div class="nav-links">
+    <a *ngIf="!esHome" routerLink="/home" class="nav-item home-btn">
+      🏠 INICIO
+    </a>
+
+    <ng-container *ngIf="!esHome">
+      
+      <a *ngIf="noEsRuta('/ventas')" routerLink="/ventas" class="nav-item">
+        🛒 VENTAS
+      </a>
+      <a *ngIf="noEsRuta('/productos')" routerLink="/productos" class="nav-item">
+        📦 PRODUCTOS
+      </a>
+      <a *ngIf="noEsRuta('/historial')" routerLink="/historial" class="nav-item">
+        📜 HISTORIAL
+      </a>
+      <a *ngIf="noEsRuta('/proveedores')" routerLink="/proveedores" class="nav-item">
+        🚚 PROVEEDORES
+      </a>
+      <a *ngIf="noEsRuta('/almacenes')" routerLink="/almacenes" class="nav-item">
+        🏭 ALMACENES
+      </a>
+      <a *ngIf="noEsRuta('/inventarios')" routerLink="/inventarios" class="nav-item">
+        📦 DISTRIBUCIÓN
+      </a>
+      
+      <!-- BOTÓN USUARIOS (NUEVO) -->
+      <a *ngIf="noEsRuta('/usuarios')" routerLink="/usuarios" class="nav-item">
+        👥 USUARIOS
+      </a>
+
+    </ng-container>
+  </div>
+
+  <!-- LADO DERECHO -->
+  <div class="user-info">
+    <span class="email-text">
+      Hola, {{ auth.usuario?.email }}
+    </span>
+    
+    <a routerLink="/perfil" style="color: #4da3ff; margin-right: 15px; text-decoration: none; font-size: 13px; font-weight: bold; cursor: pointer;">
+       👤 Mi Perfil
+    </a>
+
+    <button (click)="auth.logout()" class="btn-salir">
+      Salir
+    </button>
+  </div>
+</nav>
+
+<!-- Contenido -->
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,78 @@
+/* Estilo base de la barra */
+.navbar {
+  background-color: #2c3e50; /* Azul oscuro elegante */
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Contenedor de enlaces */
+.nav-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Estilo de cada enlace */
+.nav-item {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Botón INICIO destacado */
+.home-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-right: 10px;
+  border-left: 3px solid #3498db;
+}
+
+/* Sección derecha */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.email-text {
+  color: #bdc3c7;
+  font-size: 13px;
+}
+
+.btn-salir {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 15px;
+  border-radius: 20px; /* Redondeado moderno */
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+  transition: background 0.3s;
+}
+
+.btn-salir:hover {
+  background: #c0392b;
+}
+
+.main-content {
+  padding: 20px;
+  background-color: #f8f9fa; /* Fondo gris muy suave para toda la app */
+  min-height: calc(100vh - 60px);}

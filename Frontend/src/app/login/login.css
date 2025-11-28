@@ -1,0 +1,7 @@
+.login-container { display: flex; justify-content: center; padding-top: 50px; }
+.card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; text-align: center; }
+.form-group { margin-bottom: 15px; text-align: left; }
+input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; font-size: 16px; }
+.error-msg { color: red; font-size: 14px; }
+.footer { margin-top: 15px; font-size: 14px; }

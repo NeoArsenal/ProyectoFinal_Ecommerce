@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>📦 Gestión de Stock por Almacén</h1>
+
+  <!-- Formulario -->
+  <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
+    
+    <div class="campo">
+      <label>Producto:</label>
+      <select formControlName="productoId">
+        <option [ngValue]="null">-- Seleccione --</option>
+        <option *ngFor="let p of listaProductos" [value]="p.id">{{ p.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Almacén:</label>
+      <select formControlName="almacenId">
+        <option [ngValue]="null">-- Seleccione --</option>
+        <option *ngFor="let a of listaAlmacenes" [value]="a.id">{{ a.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Cantidad:</label>
+      <input type="number" formControlName="cantidad" min="1" style="width: 80px;">
+    </div>
+
+    <button type="submit" [disabled]="form.invalid" class="btn-guardar">
+      Asignar Stock
+    </button>
+  </form>
+
+  <hr>
+
+  <!-- Tabla -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Almacén</th>
+        <th>Cantidad</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listaInventario">
+        <td>{{ item.productoNombre }}</td>
+        <td>{{ item.almacenNombre }}</td>
+        <td class="center font-bold">{{ item.cantidad }}</td>
+        <td class="center">
+          <button (click)="borrar(item.id)" class="btn-borrar">X</button>
+        </td>
+      </tr>
+      <tr *ngIf="listaInventario.length === 0">
+        <td colspan="4" class="vacio">No hay inventario distribuido.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

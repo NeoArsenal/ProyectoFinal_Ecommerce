@@ -1,0 +1,20 @@
+# --- ANGULAR ---
+node_modules/
+dist/
+.angular/
+.vscode/
+package-lock.json
+
+# --- JAVA / SPRING BOOT ---
+target/
+*.class
+.settings/
+.classpath
+.project
+.idea/
+*.iml
+logs/
+
+# --- SISTEMA ---
+.DS_Store
+Thumbs.db

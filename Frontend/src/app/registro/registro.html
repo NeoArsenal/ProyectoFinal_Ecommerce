@@ -1,0 +1,21 @@
+<div class="login-container">
+  <div class="card">
+    <h2>Crear Cuenta</h2>
+    
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" [(ngModel)]="datos.email">
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña:</label>
+      <input type="password" [(ngModel)]="datos.password">
+    </div>
+
+    <button (click)="crearCuenta()" style="background-color: #28a745;">Registrarme</button>
+    
+    <p class="footer">
+      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+    </p>
+  </div>
+</div>

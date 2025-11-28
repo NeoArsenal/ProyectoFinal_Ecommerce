@@ -1,0 +1,64 @@
+<div class="container">
+  <h1>Gestión de Proveedores</h1>
+
+  <!-- Formulario -->
+  <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
+    <input type="hidden" formControlName="id">
+
+    <div class="campo">
+      <label>Empresa:</label>
+      <input type="text" formControlName="empresa" placeholder="Ej: Sony Corp">
+      <small *ngIf="empresaCtl?.touched && empresaCtl?.invalid" class="error">Requerido</small>
+    </div>
+
+    <div class="campo">
+      <label>Contacto:</label>
+      <input type="text" formControlName="contacto" placeholder="Ej: Juan Pérez">
+      <small *ngIf="contactoCtl?.touched && contactoCtl?.invalid" class="error">Requerido</small>
+    </div>
+
+    <div class="campo">
+      <label>Teléfono:</label>
+      <input type="text" formControlName="telefono" placeholder="Ej: 999888777">
+      <small *ngIf="telCtl?.touched && telCtl?.invalid" class="error">Solo números</small>
+    </div>
+
+    <div class="botones">
+      <button type="submit" [disabled]="form.invalid" [class.btn-edit]="esEdicion">
+        {{ esEdicion ? 'Actualizar' : 'Registrar' }}
+      </button>
+      <button type="button" (click)="limpiar()" class="btn-limpiar">Limpiar</button>
+    </div>
+  </form>
+
+  <hr>
+
+  <!-- Tabla -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Empresa</th>
+        <th>Contacto</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of proveedores">
+        <td>{{ p.id }}</td>
+        <td>{{ p.empresa }}</td>
+        <td>{{ p.contacto }}</td>
+        <td>{{ p.telefono }}</td>
+        <td>
+          <button (click)="editar(p)" class="btn-azul">Editar</button>
+          <button (click)="borrar(p.id)" class="btn-rojo">Eliminar</button>
+        </td>
+      </tr>
+      <tr *ngIf="proveedores.length === 0">
+        <td colspan="5" style="text-align:center">No hay proveedores registrados.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

@@ -1,0 +1,71 @@
+<div class="contenedor-ventas">
+  <h1>Registro de Nueva Venta</h1>
+
+  <!-- SECCIÓN 1: Agregar Productos -->
+  <div class="panel-agregar">
+    <div class="campo">
+      <label>Cliente (ID):</label>
+      <!-- Harcodeado al usuario 1 por ahora -->
+      <input type="number" [(ngModel)]="usuarioId" disabled title="Usuario fijo para prueba">
+    </div>
+
+    <div class="campo">
+      <label>Seleccionar Producto:</label>
+      <select [(ngModel)]="productoSeleccionadoId">
+        <option [ngValue]="null">-- Seleccione --</option>
+        <option *ngFor="let p of listaProductos" [value]="p.id">
+          {{ p.nombre }} - S/ {{ p.precio }}
+        </option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Cantidad:</label>
+      <input type="number" [(ngModel)]="cantidad" min="1" style="width: 60px;">
+    </div>
+
+    <button (click)="agregarAlCarrito()" class="btn-agregar">
+      + Agregar al Carrito
+    </button>
+  </div>
+
+  <hr>
+
+  <!-- SECCIÓN 2: El Carrito (Tabla) -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Precio Unit.</th>
+        <th>Cant.</th>
+        <th>Subtotal</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of carrito; let i = index">
+        <td>{{ item.nombreProducto }}</td>
+        <td class="num">S/ {{ item.precio | number:'1.2-2' }}</td>
+        <td class="center">{{ item.cantidad }}</td>
+        <td class="num">S/ {{ item.subtotal | number:'1.2-2' }}</td>
+        <td class="center">
+          <button (click)="eliminarDelCarrito(i)" class="btn-eliminar">X</button>
+        </td>
+      </tr>
+      <tr *ngIf="carrito.length === 0">
+        <td colspan="5" style="text-align:center; color: #888;">
+          El carrito está vacío
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECCIÓN 3: Totales y Guardar -->
+  <div class="panel-total" *ngIf="carrito.length > 0">
+    <h3>Total a Pagar: S/ {{ totalVenta | number:'1.2-2' }}</h3>
+    <button (click)="guardarVenta()" class="btn-finalizar">
+      $$ FINALIZAR COMPRA $$
+    </button>
+  </div>
+</div>
+<router-outlet>

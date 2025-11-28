@@ -1,0 +1,41 @@
+.container { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
+
+h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th { background: #2c3e50; color: white; padding: 12px; text-align: left; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
+td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+tr:last-child td { border-bottom: none; }
+tr:hover { background-color: #f8f9fa; }
+
+.num { text-align: right; font-weight: bold; color: #2c3e50; }
+
+/* BADGES (Etiquetas de colores) */
+.badge { 
+    padding: 5px 10px; 
+    border-radius: 12px; 
+    font-size: 11px; 
+    font-weight: bold; 
+    color: white; 
+    text-transform: uppercase;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+.pago { background-color: #27ae60; } /* Verde */
+
+/* Estados de Envío */
+.envio { background-color: #95a5a6; } /* Gris (Default) */
+.pendiente { background-color: #f39c12; } /* Naranja */
+.enviado { background-color: #3498db; } /* Azul */
+.entregado { background-color: #2ecc71; } /* Verde Claro */

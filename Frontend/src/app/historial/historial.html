@@ -1,0 +1,51 @@
+<div class="container">
+  <h1>📜 Historial de Pedidos (Backoffice)</h1>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Cliente</th>
+        <th>Total</th>
+        <th>Pago</th>
+        <th>Estado Envío</th>
+        <th>Tracking #</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of pedidos">
+        <td>#{{ p.idPedido }}</td>
+        <!-- Pipe de fecha para que se vea bonito -->
+        <td>{{ p.fecha | date:'short' }}</td>
+        <td>{{ p.emailUsuario }}</td>
+        <td class="num">S/ {{ p.total | number:'1.2-2' }}</td>
+        
+        <td>
+          <span class="badge pago">{{ p.metodoPago }}</span>
+        </td>
+        
+        <td>
+          <!-- Clases dinámicas según el estado -->
+          <span class="badge envio" 
+                [class.pendiente]="p.estadoEnvio === 'PENDIENTE'"
+                [class.enviado]="p.estadoEnvio === 'ENVIADO'"
+                [class.entregado]="p.estadoEnvio === 'ENTREGADO'">
+            {{ p.estadoEnvio }}
+          </span>
+        </td>
+        
+        <td style="font-family: monospace; font-weight: bold; color: #555;">
+          {{ p.tracking }}
+        </td>
+      </tr>
+      
+      <!-- Mensaje si no hay datos -->
+      <tr *ngIf="pedidos.length === 0">
+        <td colspan="7" style="text-align:center; padding: 20px; color: #888;">
+          No hay pedidos registrados todavía.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
