@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { UsuariosService } from '../services/usuarios';
 import { RolesService, RolDTO } from '../services/roles';
+import { AuthService } from '../services/auth';
 
 @Component({
   selector: 'app-usuarios',
@@ -23,7 +24,8 @@ export class Usuarios implements OnInit {
 
   constructor(
     private userService: UsuariosService,
-    private rolesService: RolesService
+    private rolesService: RolesService,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class Usuarios implements OnInit {
   }
 
   seleccionar(u: any) {
+    if(!this.canManageUsers()) return; // evita abrir editor si no es admin
     this.usuarioSeleccionado = u;
     this.rolesSeleccionados = []; 
 
@@ -50,6 +53,7 @@ export class Usuarios implements OnInit {
 
   guardarRoles() {
     if(!this.usuarioSeleccionado) return;
+    if(!this.canManageUsers()) return;
 
     this.userService.asignarRoles(this.usuarioSeleccionado.id, this.rolesSeleccionados)
       .subscribe({
@@ -64,5 +68,10 @@ export class Usuarios implements OnInit {
           alert('Error al guardar. Revisa la consola (F12).');
         }
       });
+  }
+
+  // Sólo administradores pueden gestionar roles de usuarios
+  canManageUsers(): boolean {
+    return this.auth.isAdmin();
   }
 }

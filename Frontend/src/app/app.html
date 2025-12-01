@@ -14,7 +14,7 @@
       <a routerLink="/proveedores" class="nav-item" routerLinkActive="active">🚚 PROVEEDORES</a>
       <a routerLink="/almacenes" class="nav-item" routerLinkActive="active">🏭 ALMACENES</a>
       <a routerLink="/inventarios" class="nav-item" routerLinkActive="active">📦 DISTRIBUCIÓN</a>
-      <a routerLink="/usuarios" class="nav-item" routerLinkActive="active">👥 USUARIOS</a>
+  <a *ngIf="auth.isAdmin()" routerLink="/usuarios" class="nav-item" routerLinkActive="active">👥 USUARIOS</a>
     </ng-container>
   </div>
 

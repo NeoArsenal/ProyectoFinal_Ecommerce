@@ -56,6 +56,8 @@ export const routes: Routes = [
   { path: 'metodos', component: Metodos, canActivate: [authGuard] },
   { path: 'roles', component: Roles, canActivate: [authGuard, adminGuard] },
   { path: 'usuarios', component: Usuarios, canActivate: [authGuard] },
+  // Usuarios: sólo administradores
+  { path: 'usuarios', component: Usuarios, canActivate: [authGuard, adminGuard] },
 
   // Comodín
   { path: '**', redirectTo: 'login' }

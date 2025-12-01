@@ -3,7 +3,7 @@
 
   <!-- FORMULARIO FLOTANTE DE ASIGNACIÓN -->
   <!-- Solo se muestra si hay un usuario seleccionado (*ngIf) -->
-  <div class="formulario" *ngIf="usuarioSeleccionado" style="background: #e3f2fd; border: 1px solid #90caf9;">
+  <div class="formulario" *ngIf="usuarioSeleccionado && canManageUsers()" style="background: #e3f2fd; border: 1px solid #90caf9;">
     
     <h3 style="margin-top: 0; color: #1565c0;">
       Editando permisos de: <strong>{{ usuarioSeleccionado.email }}</strong>
@@ -61,7 +61,7 @@
         </td>
         
         <td class="center">
-          <button (click)="seleccionar(u)" class="btn-azul-sm">
+          <button *ngIf="canManageUsers()" (click)="seleccionar(u)" class="btn-azul-sm">
             🛡️ Asignar Roles
           </button>
         </td>
