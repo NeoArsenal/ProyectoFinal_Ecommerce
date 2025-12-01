@@ -35,7 +35,16 @@ export class AuthService {
   logout() {
     this.usuarioActual = null;
     localStorage.removeItem('usuario_ecommerce');
-    window.location.href = '/login'; // Recargar página
+    // Evitar recarga completa; permitir que guards/plantillas reaccionen correctamente
+    try {
+      // Router navigation es preferible para SPA
+      // Nota: usamos navegación por URL para no acoplar el servicio con Router directamente
+      history.pushState(null, '', '/login');
+      window.dispatchEvent(new Event('popstate'));
+    } catch {
+      // Fallback: recargar si algo falla
+      window.location.href = '/login';
+    }
   }
 
   // --- UTILIDADES ---
@@ -52,6 +61,35 @@ export class AuthService {
 
   get estaLogueado(): boolean {
     return this.usuarioActual != null;
+  }
+
+  // --- ROLES Y PERMISOS ---
+  // Obtiene el usuario actual (claims/roles deberían venir del backend al hacer login)
+  getCurrentUser() {
+    return this.usuarioActual;
+  }
+
+  // Devuelve arreglo de roles si existe, o [] si no
+  private getRoles(): string[] {
+    const user = this.getCurrentUser();
+    const roles = Array.isArray(user?.roles) ? user.roles : [];
+    // También soporta roles como string separado por comas
+    if (!roles.length && typeof user?.roles === 'string') {
+      return user.roles.split(',').map((r: string) => r.trim());
+    }
+    return roles;
+  }
+
+  hasRole(role: string): boolean {
+    return this.getRoles().includes(role);
+  }
+
+  isAdmin(): boolean {
+    return this.hasRole('ROLE_ADMIN');
+  }
+
+  isUser(): boolean {
+    return this.hasRole('ROLE_USER');
   }
   obtenerPerfil(id: number): Observable<any> {
     return this.http.get(`${this.url}/${id}/perfil`);

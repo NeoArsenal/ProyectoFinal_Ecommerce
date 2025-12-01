@@ -6,7 +6,7 @@ import { Historial } from './historial/historial';
 import { Home } from './home/home';
 import { Login } from './login/login';
 import { Registro } from './registro/registro';
-import { authGuard } from './auth-guard';
+import { authGuard, adminGuard, guestGuard } from './auth-guard';
 import { Almacenes } from './almacenes/almacenes';
 import { Inventarios } from './inventarios/inventarios';
 import { Perfil } from './perfil/perfil';
@@ -19,8 +19,8 @@ import { Usuarios } from './usuarios/usuarios';
 export const routes: Routes = [
   // Rutas Públicas (Cualquiera entra)
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: Login },
-  { path: 'registro', component: Registro },
+  { path: 'login', component: Login, canActivate: [guestGuard] },
+  { path: 'registro', component: Registro, canActivate: [guestGuard] },
 
   // Rutas Privadas (Protegidas por el Guardián)
   { 
@@ -54,7 +54,7 @@ export const routes: Routes = [
   { path: 'categorias', component: Categorias, canActivate: [authGuard] },
   { path: 'envios', component: Envios, canActivate: [authGuard] },
   { path: 'metodos', component: Metodos, canActivate: [authGuard] },
-  { path: 'roles', component: Roles, canActivate: [authGuard] },
+  { path: 'roles', component: Roles, canActivate: [authGuard, adminGuard] },
   { path: 'usuarios', component: Usuarios, canActivate: [authGuard] },
 
   // Comodín

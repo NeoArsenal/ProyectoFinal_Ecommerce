@@ -3,36 +3,18 @@
   
   <!-- LADO IZQUIERDO: Menú Contextual -->
   <div class="nav-links">
-    <a *ngIf="!esHome" routerLink="/home" class="nav-item home-btn">
+    <a *ngIf="!esHome" routerLink="/home" class="nav-item home-btn" routerLinkActive="active">
       🏠 INICIO
     </a>
 
     <ng-container *ngIf="!esHome">
-      
-      <a *ngIf="noEsRuta('/ventas')" routerLink="/ventas" class="nav-item">
-        🛒 VENTAS
-      </a>
-      <a *ngIf="noEsRuta('/productos')" routerLink="/productos" class="nav-item">
-        📦 PRODUCTOS
-      </a>
-      <a *ngIf="noEsRuta('/historial')" routerLink="/historial" class="nav-item">
-        📜 HISTORIAL
-      </a>
-      <a *ngIf="noEsRuta('/proveedores')" routerLink="/proveedores" class="nav-item">
-        🚚 PROVEEDORES
-      </a>
-      <a *ngIf="noEsRuta('/almacenes')" routerLink="/almacenes" class="nav-item">
-        🏭 ALMACENES
-      </a>
-      <a *ngIf="noEsRuta('/inventarios')" routerLink="/inventarios" class="nav-item">
-        📦 DISTRIBUCIÓN
-      </a>
-      
-      <!-- BOTÓN USUARIOS (NUEVO) -->
-      <a *ngIf="noEsRuta('/usuarios')" routerLink="/usuarios" class="nav-item">
-        👥 USUARIOS
-      </a>
-
+      <a routerLink="/ventas" class="nav-item" routerLinkActive="active">🛒 VENTAS</a>
+      <a routerLink="/productos" class="nav-item" routerLinkActive="active">📦 PRODUCTOS</a>
+      <a routerLink="/historial" class="nav-item" routerLinkActive="active">📜 HISTORIAL</a>
+      <a routerLink="/proveedores" class="nav-item" routerLinkActive="active">🚚 PROVEEDORES</a>
+      <a routerLink="/almacenes" class="nav-item" routerLinkActive="active">🏭 ALMACENES</a>
+      <a routerLink="/inventarios" class="nav-item" routerLinkActive="active">📦 DISTRIBUCIÓN</a>
+      <a routerLink="/usuarios" class="nav-item" routerLinkActive="active">👥 USUARIOS</a>
     </ng-container>
   </div>
 

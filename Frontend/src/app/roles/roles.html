@@ -6,7 +6,7 @@
       <label>Nuevo Rol:</label>
       <input type="text" [(ngModel)]="nombreNuevo" placeholder="Ej: ADMIN, SUPERVISOR">
     </div>
-    <button (click)="guardar()" class="btn-guardar" [disabled]="!nombreNuevo">Crear Rol</button>
+    <button *ngIf="canManageRoles()" (click)="guardar()" class="btn-guardar" [disabled]="!nombreNuevo">Crear Rol</button>
   </div>
 
   <table border="1">
@@ -22,7 +22,7 @@
         <td class="center">{{ r.id }}</td>
         <td>{{ r.nombre }}</td>
         <td class="center">
-          <button (click)="borrar(r.id)" class="btn-borrar">X</button>
+          <button *ngIf="canManageRoles()" (click)="borrar(r.id)" class="btn-borrar">X</button>
         </td>
       </tr>
     </tbody>

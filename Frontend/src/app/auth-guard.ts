@@ -15,3 +15,28 @@ export const authGuard: CanActivateFn = (route, state) => {
     return false; // Acceso denegado
   }
 };
+
+// Guard sólo para administradores
+export const adminGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.estaLogueado && authService.isAdmin()) {
+    return true;
+  }
+  // Si no es admin, redirige a Home (o a una página de acceso denegado si existe)
+  router.navigate(['/home']);
+  return false;
+};
+
+// Guard para páginas de invitado (login/registro): si ya está logueado, redirige a Home
+export const guestGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.estaLogueado) {
+    router.navigate(['/home']);
+    return false;
+  }
+  return true;
+};
