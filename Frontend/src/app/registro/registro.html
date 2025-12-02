@@ -1,18 +1,37 @@
 <div class="login-container">
   <div class="card">
-    <h2>Crear Cuenta</h2>
+    <h2>Crear Cuenta Nueva</h2>
     
-    <div class="form-group">
-      <label>Email:</label>
-      <input type="email" [(ngModel)]="datos.email">
-    </div>
+    <form #regForm="ngForm" (ngSubmit)="crearCuenta()">
+      
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" name="email" [(ngModel)]="datos.email" 
+               required email #email="ngModel"
+               [class.input-error]="email.invalid && email.touched">
+        
+        <small *ngIf="email.invalid && email.touched" class="msg-error">
+          Formato incorrecto
+        </small>
+      </div>
 
-    <div class="form-group">
-      <label>Contraseña:</label>
-      <input type="password" [(ngModel)]="datos.password">
-    </div>
+      <div class="form-group">
+        <label>Contraseña:</label>
+        <input type="password" name="password" [(ngModel)]="datos.password" 
+               required minlength="6" #pass="ngModel"
+               [class.input-error]="pass.invalid && pass.touched">
+        
+        <small *ngIf="pass.invalid && pass.touched" class="msg-error">
+          Mínimo 6 caracteres
+        </small>
+      </div>
 
-    <button (click)="crearCuenta()" style="background-color: #28a745;">Registrarme</button>
+      <p class="error-msg" *ngIf="mensajeError">⚠️ {{ mensajeError }}</p>
+
+      <button type="submit" style="background-color: #28a745;" [disabled]="regForm.invalid">
+        Registrarme
+      </button>
+    </form>
     
     <p class="footer">
       ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>

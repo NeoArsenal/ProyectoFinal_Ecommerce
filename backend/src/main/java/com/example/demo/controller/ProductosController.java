@@ -20,6 +20,8 @@ import com.example.demo.dto.ProductosDTO;
 
 import com.example.demo.service.ProductosService;
 
+import jakarta.validation.Valid;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -45,7 +47,7 @@ public class ProductosController {
 
     // 3. CREAR (Recibe DTO para poder guardar múltiples proveedores)
     @PostMapping
-    public ResponseEntity<?> crear(@RequestBody ProductosDTO nuevo) {
+    public ResponseEntity<?> crear(@Valid @RequestBody ProductosDTO nuevo) {
         int ok = service.save(nuevo);
         
         if (ok != 1) {
@@ -59,7 +61,7 @@ public class ProductosController {
     // 4. ACTUALIZAR
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable("id") Integer id,
-                                        @RequestBody ProductosDTO cambios) {
+                                        @Valid @RequestBody ProductosDTO cambios) {
         
         // Verificamos si existe antes de intentar actualizar
         if (service.buscar(id).isEmpty()) {

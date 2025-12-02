@@ -16,6 +16,8 @@ import com.example.demo.dto.PerfilDTO;
 import com.example.demo.dto.UsuariosDTO;
 import com.example.demo.service.UsuariosService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -23,16 +25,12 @@ public class UsuariosController {
 
     @Autowired
     private UsuariosService service;
-    
-    @GetMapping
-    public ResponseEntity<List<UsuariosDTO>> listar() {
-        return ResponseEntity.ok(service.listar());
-    }
 
+    // --- 1. Login Validado ---
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UsuariosDTO credenciales) {
+    // Agregamos @Valid antes de @RequestBody
+    public ResponseEntity<?> login(@Valid @RequestBody UsuariosDTO credenciales) {
         UsuariosDTO usuario = service.login(credenciales.getEmail(), credenciales.getPassword());
-        
         if (usuario != null) {
             return ResponseEntity.ok(usuario);
         } else {
@@ -40,8 +38,10 @@ public class UsuariosController {
         }
     }
 
+    // --- 2. Registro Validado ---
     @PostMapping("/registro")
-    public ResponseEntity<?> registrar(@RequestBody UsuariosDTO nuevoUsuario) {
+    // Agregamos @Valid aquí también
+    public ResponseEntity<?> registrar(@Valid @RequestBody UsuariosDTO nuevoUsuario) {
         try {
             UsuariosDTO creado = service.registrar(nuevoUsuario);
             return ResponseEntity.ok(creado);
@@ -49,7 +49,14 @@ public class UsuariosController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    
+
+    // --- 3. Listar ---
+    @GetMapping
+    public ResponseEntity<List<UsuariosDTO>> listar() {
+        return ResponseEntity.ok(service.listar());
+    }
+
+    // --- 4. Perfil (Ver) ---
     @GetMapping("/{id}/perfil")
     public ResponseEntity<PerfilDTO> verPerfil(@PathVariable Integer id) {
         PerfilDTO perfil = service.obtenerPerfil(id);
@@ -59,6 +66,7 @@ public class UsuariosController {
         return ResponseEntity.notFound().build();
     }
 
+    // --- 5. Perfil (Guardar) ---
     @PostMapping("/{id}/perfil")
     public ResponseEntity<?> guardarPerfil(@PathVariable Integer id, @RequestBody PerfilDTO dto) {
         int ok = service.guardarPerfil(id, dto);
@@ -67,11 +75,11 @@ public class UsuariosController {
         }
         return ResponseEntity.badRequest().body("Error al actualizar perfil");
     }
-    
+
+    // --- 6. Asignar Roles ---
     @PostMapping("/{id}/roles")
     public ResponseEntity<?> asignarRoles(@PathVariable Integer id, @RequestBody List<Integer> rolesIds) {
         service.asignarRoles(id, rolesIds);
-        // Devolvemos texto plano para que Angular no sufra parseando JSON vacío
         return ResponseEntity.ok("Roles actualizados");
     }
 }

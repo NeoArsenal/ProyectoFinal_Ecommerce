@@ -2,19 +2,36 @@
   <div class="card">
     <h2>Iniciar Sesión</h2>
     
-    <div class="form-group">
-      <label>Email:</label>
-      <input type="email" [(ngModel)]="credenciales.email" placeholder="usuario@ejemplo.com">
-    </div>
+    <!-- Formulario Template-Driven -->
+    <form #loginForm="ngForm" (ngSubmit)="ingresar()">
+      
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" name="email" [(ngModel)]="credenciales.email" 
+               required email #email="ngModel"
+               [class.input-error]="email.invalid && email.touched">
+        
+        <small *ngIf="email.invalid && email.touched" class="msg-error">
+          Email inválido
+        </small>
+      </div>
 
-    <div class="form-group">
-      <label>Contraseña:</label>
-      <input type="password" [(ngModel)]="credenciales.password">
-    </div>
+      <div class="form-group">
+        <label>Contraseña:</label>
+        <input type="password" name="password" [(ngModel)]="credenciales.password" 
+               required minlength="6" #pass="ngModel"
+               [class.input-error]="pass.invalid && pass.touched">
+        
+        <small *ngIf="pass.invalid && pass.touched" class="msg-error">
+          Mínimo 6 caracteres
+        </small>
+      </div>
 
-    <p class="error-msg" *ngIf="error">{{ error }}</p>
+      <!-- Mensaje de error general (Backend) -->
+      <p class="error-msg" *ngIf="error">⚠️ {{ error }}</p>
 
-    <button (click)="ingresar()">Ingresar</button>
+      <button type="submit" [disabled]="loginForm.invalid">Ingresar</button>
+    </form>
     
     <p class="footer">
       ¿No tienes cuenta? <a routerLink="/registro">Regístrate aquí</a>

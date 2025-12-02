@@ -26,15 +26,22 @@ export class Productos implements OnInit {
   ) {
     this.form = this.fb.group({
       id: [0],
-      nombre: ['', [Validators.required, Validators.maxLength(50)]],
-      descripcion: ['', [Validators.required, Validators.maxLength(100)]],
+      // Validadores sincronizados con Backend
+      nombre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      descripcion: ['', [Validators.required]],
       precio: [null, [Validators.required, Validators.min(0.01)]],
       stock: [0, [Validators.required, Validators.min(0)]],
-      categoriaId: [null, [Validators.required]],
-      proveedorIds: [[]] // Inicializamos como array vacío
+      categoriaId: [null, Validators.required], 
+      proveedorIds: [[]]
     });
   }
 
+    // Helper para saber si un campo es inválido y fue tocado
+  esInvalido(campo: string): boolean {
+    const control = this.form.get(campo);
+    return control ? control.invalid && control.touched : false;
+  }
+  
   ngOnInit(): void {
     this.cargarTodo();
   }

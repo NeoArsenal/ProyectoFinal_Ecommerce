@@ -7,48 +7,61 @@
     <div class="fila">
       <div class="campo">
          <label>Nombre:</label>
-         <input type="text" formControlName="nombre" />
+         <input type="text" formControlName="nombre" 
+                [class.input-error]="esInvalido('nombre')"/>
+         
+         <!-- MENSAJES DE ERROR -->
+         <small *ngIf="esInvalido('nombre')" class="msg-error">
+            Mínimo 3 letras
+         </small>
       </div>
+
       <div class="campo">
          <label>Descripción:</label>
-         <input type="text" formControlName="descripcion" />
+         <input type="text" formControlName="descripcion" 
+                [class.input-error]="esInvalido('descripcion')"/>
+         <small *ngIf="esInvalido('descripcion')" class="msg-error">Requerido</small>
       </div>
     </div>
 
     <div class="fila">
       <div class="campo">
          <label>Precio:</label>
-         <input type="number" formControlName="precio" />
+         <input type="number" formControlName="precio" 
+                [class.input-error]="esInvalido('precio')"/>
+         <small *ngIf="esInvalido('precio')" class="msg-error">Debe ser mayor a 0</small>
       </div>
+
       <div class="campo">
          <label>Stock:</label>
-         <input type="number" formControlName="stock" />
+         <input type="number" formControlName="stock" 
+                [class.input-error]="esInvalido('stock')"/>
+         <small *ngIf="esInvalido('stock')" class="msg-error">No puede ser negativo</small>
       </div>
     </div>
 
     <div class="fila">
       <div class="campo">
           <label>Categoría:</label>
-          <select formControlName="categoriaId">
+          <select formControlName="categoriaId" [class.input-error]="esInvalido('categoriaId')">
             <option [ngValue]="null">-- Seleccione --</option>
             <option *ngFor="let c of categorias" [value]="c.id">{{ c.nombre }}</option>
           </select>
+          <small *ngIf="esInvalido('categoriaId')" class="msg-error">Seleccione una</small>
       </div>
 
-      <!-- NUEVO CAMPO: Múltiples Proveedores -->
       <div class="campo">
           <label>Proveedores (Ctrl + Clic):</label>
           <select formControlName="proveedorIds" multiple style="height: 80px;">
-            <option *ngFor="let p of proveedores" [value]="p.id">
-              {{ p.empresa }}
-            </option>
+            <option *ngFor="let p of proveedores" [value]="p.id">{{ p.empresa }}</option>
           </select>
       </div>
     </div>
 
     <div class="botones">
-      <button type="button" (click)="alta()" [disabled]="deshabilitarAgregar" class="btn-verde">Agregar</button>
-      <button type="button" (click)="modificacion()" [disabled]="deshabilitarModificar" class="btn-azul">Modificar</button>
+      <!-- El botón se deshabilita si el formulario es inválido -->
+      <button type="button" (click)="alta()" [disabled]="form.invalid" class="btn-verde">Agregar</button>
+      <button type="button" (click)="modificacion()" [disabled]="form.invalid || !form.value.id" class="btn-azul">Modificar</button>
       <button type="button" (click)="resetForm()" class="btn-gris">Limpiar</button>
     </div>
   </form>

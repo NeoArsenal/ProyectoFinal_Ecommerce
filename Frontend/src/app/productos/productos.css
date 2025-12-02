@@ -94,3 +94,15 @@ td {
   display: inline-block;
   margin-bottom: 2px;
 }
+
+.input-error {
+  border: 1px solid #dc3545 !important;
+  background-color: #fff8f8;
+}
+
+.msg-error {
+  color: #dc3545;
+  font-size: 11px;
+  margin-top: 2px;
+  font-weight: bold;
+}

@@ -7,12 +7,13 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -28,15 +29,18 @@ public class Pedidos {
     private LocalDateTime fecha;
     private Double total;
     
-    @Column(name = "usuario_id")
-    private Integer usuarioId;
+    // --- CORRECCIÓN: Dejamos SOLO la relación real ---
+    // Eliminamos 'private Integer usuarioId' para evitar el error de columna repetida.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false) // Es obligatorio que tenga usuario
+    @JsonIgnoreProperties({"roles", "detalles", "password", "pedidos"}) 
+    private Usuarios usuario;
+    // -----------------------------------------------------
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("pedido")
     private List<DetallesPedido> detalles = new ArrayList<>();
 
-    // --- NUEVAS RELACIONES (Esto es lo que te falta) ---
-    
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Pagos pago;
 
@@ -61,16 +65,22 @@ public class Pedidos {
     public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
     public Double getTotal() { return total; }
     public void setTotal(Double total) { this.total = total; }
-    public Integer getUsuarioId() { return usuarioId; }
-    public void setUsuarioId(Integer usuarioId) { this.usuarioId = usuarioId; }
     
+    // Getter y Setter para el Objeto Usuario
+    public Usuarios getUsuario() { return usuario; }
+    public void setUsuario(Usuarios usuario) { this.usuario = usuario; }
+    
+    // Helper por si alguna parte vieja del código pide el ID
+    public Integer getUsuarioId() {
+        return usuario != null ? usuario.getId() : null;
+    }
+
     public List<DetallesPedido> getDetalles() { return detalles; }
     public void setDetalles(List<DetallesPedido> detalles) { 
         this.detalles = detalles;
         for(DetallesPedido d : detalles){ d.setPedido(this); }
     }
     
-    // Estos son los que pide el error:
     public Pagos getPago() { return pago; }
     public void setPago(Pagos pago) { this.pago = pago; }
     

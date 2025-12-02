@@ -13,16 +13,20 @@ import { AuthService } from '../services/auth';
 })
 export class Registro {
   datos = { email: '', password: '' };
+  mensajeError = '';
 
   constructor(private auth: AuthService, private router: Router) {}
 
   crearCuenta() {
     this.auth.registrar(this.datos).subscribe({
       next: () => {
-        alert('Cuenta creada. Ahora inicia sesión.');
+        alert('¡Cuenta creada! Por favor inicia sesión.');
         this.router.navigate(['/login']);
       },
-      error: (err) => alert('Error: ' + (err.error || 'No se pudo registrar'))
+      error: (err) => {
+        // Captura el error del backend (ej: "Email inválido")
+        this.mensajeError = err.error || 'Error al registrar usuario';
+      }
     });
   }
 }

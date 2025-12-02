@@ -5,3 +5,56 @@ input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
 button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; font-size: 16px; }
 .error-msg { color: red; font-size: 14px; }
 .footer { margin-top: 15px; font-size: 14px; }
+
+.login-container { display: flex; justify-content: center; padding-top: 50px; font-family: 'Segoe UI', sans-serif; }
+.card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; text-align: center; }
+.form-group { margin-bottom: 20px; text-align: left; }
+label { font-weight: bold; font-size: 14px; color: #555; }
+
+input { 
+  width: 100%; 
+  padding: 10px; 
+  margin-top: 5px; 
+  box-sizing: border-box; 
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+}
+
+button { 
+  width: 100%; 
+  padding: 12px; 
+  background: #007bff; 
+  color: white; 
+  border: none; 
+  cursor: pointer; 
+  font-size: 16px; 
+  border-radius: 4px; 
+  transition: background 0.3s;
+}
+button:hover { background: #0056b3; }
+button:disabled { background: #ccc; cursor: not-allowed; }
+
+.footer { margin-top: 20px; font-size: 14px; color: #666; }
+a { color: #007bff; text-decoration: none; }
+
+/* ESTILOS DE ERROR (NUEVO) */
+.input-error {
+  border: 1px solid #dc3545 !important;
+  background-color: #fff8f8;
+}
+
+.msg-error {
+  color: #dc3545;
+  font-size: 12px;
+  display: block;
+  margin-top: 2px;
+}
+
+.error-msg {
+  color: #dc3545;
+  background-color: #ffe6e6;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 13px;
+}

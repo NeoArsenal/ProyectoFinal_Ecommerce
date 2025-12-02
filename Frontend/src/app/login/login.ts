@@ -18,13 +18,20 @@ export class Login {
   constructor(private auth: AuthService, private router: Router) {}
 
   ingresar() {
+    // Validación básica antes de enviar
+    if (!this.credenciales.email || !this.credenciales.password) {
+      this.error = "Complete todos los campos";
+      return;
+    }
+
     this.auth.login(this.credenciales).subscribe({
       next: (usuario) => {
-        alert(`¡Bienvenido ${usuario.email}!`);
-        this.router.navigate(['/home']); // Redirigir al inicio
+        // Redirige al Home
+        this.router.navigate(['/home']);
       },
-      error: () => {
-        this.error = 'Credenciales incorrectas. Intente de nuevo.';
+      error: (err) => {
+        // Si el backend falla (400 Bad Request), mostramos el mensaje
+        this.error = err.error || 'Credenciales incorrectas o error de servidor';
       }
     });
   }

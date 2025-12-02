@@ -16,6 +16,7 @@ import com.example.demo.model.Envios;
 import com.example.demo.model.Pagos;
 import com.example.demo.model.Pedidos;
 import com.example.demo.model.Productos;
+import com.example.demo.model.Usuarios;
 import com.example.demo.repository.EnviosRepository;
 import com.example.demo.repository.MetodosEnvioRepository;
 import com.example.demo.repository.PagosRepository;
@@ -40,7 +41,6 @@ public class PedidosServiceImp implements PedidosService {
         return pedidosRepo.findAll();
     }
 
-    // --- AQUÍ ESTÁ EL MÉTODO QUE TE FALTABA ---
     @Override
     public List<HistorialDTO> listarHistorial() {
         List<Pedidos> pedidos = pedidosRepo.findAll();
@@ -52,18 +52,16 @@ public class PedidosServiceImp implements PedidosService {
             dto.setFecha(p.getFecha());
             dto.setTotal(p.getTotal());
             
-            // 1. Email del Usuario
-            usuariosRepo.findById(p.getUsuarioId())
-                .ifPresent(u -> dto.setEmailUsuario(u.getEmail()));
-
-            // 2. Datos de Pago
-            if (p.getPago() != null) {
-                dto.setMetodoPago(p.getPago().getMetodoPago());
+            // CORRECCIÓN: Obtenemos el email desde el Objeto Usuario
+            if (p.getUsuario() != null) {
+                dto.setEmailUsuario(p.getUsuario().getEmail());
             } else {
-                dto.setMetodoPago("Pendiente");
+                dto.setEmailUsuario("Desconocido");
             }
 
-            // 3. Datos de Envío
+            if (p.getPago() != null) dto.setMetodoPago(p.getPago().getMetodoPago());
+            else dto.setMetodoPago("Pendiente");
+
             if (p.getEnvio() != null) {
                 dto.setEstadoEnvio(p.getEnvio().getEstado());
                 dto.setTracking(p.getEnvio().getNumeroTracking());
@@ -77,15 +75,23 @@ public class PedidosServiceImp implements PedidosService {
         return historial;
     }
 
-    // --- TU MÉTODO DE REGISTRAR VENTA (Super Transacción) ---
     @Override
     @Transactional 
     public int registrarVenta(VentaDTO dto) {
         try {
-            if (!usuariosRepo.existsById(dto.getUsuarioId())) return 0;
+            // 1. CORRECCIÓN CRÍTICA: Buscar el Objeto Usuario Real
+            Optional<Usuarios> usuarioOpt = usuariosRepo.findById(dto.getUsuarioId());
+            
+            // Si el usuario no existe, no podemos crear el pedido (Constraint de BD)
+            if (usuarioOpt.isEmpty()) {
+                System.out.println("Error: Usuario no encontrado ID " + dto.getUsuarioId());
+                return 0; 
+            }
 
             Pedidos pedido = new Pedidos();
-            pedido.setUsuarioId(dto.getUsuarioId());
+            // Asignamos la Entidad completa, NO el ID suelto
+            pedido.setUsuario(usuarioOpt.get()); 
+            
             double totalCalculado = 0.0;
 
             for (VentaDTO.ItemVentaDTO item : dto.getItems()) {
