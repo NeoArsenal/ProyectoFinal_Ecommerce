@@ -1,114 +1,138 @@
 <div class="home-container">
   
-  <h1>Bienvenido al Sistema E-commerce</h1>
+  <!-- Header -->
+  <div class="home-header">
+    <h1>Panel de Control</h1>
+    <p class="subtitle">Resumen general de tu negocio</p>
+  </div>
   
   <!-- SECCIÓN 1: DASHBOARD DE MÉTRICAS -->
   <div class="stats-grid" *ngIf="stats">
-    <div class="stat-card blue">
-      <div class="stat-icon">💰</div>
+    <div class="stat-card stat-revenue">
+      <div class="stat-icon-wrapper revenue-icon">
+        <span class="stat-icon">💰</span>
+      </div>
       <div class="stat-info">
-        <h3>S/ {{ stats.totalVentas | number:'1.2-2' }}</h3>
-        <p>Ingresos Totales</p>
+        <p class="stat-label">Ingresos Totales</p>
+        <h3 class="stat-value">S/ {{ stats.totalVentas | number:'1.2-2' }}</h3>
       </div>
     </div>
     
-    <div class="stat-card green">
-      <div class="stat-icon">📦</div>
+    <div class="stat-card stat-orders">
+      <div class="stat-icon-wrapper orders-icon">
+        <span class="stat-icon">📦</span>
+      </div>
       <div class="stat-info">
-        <h3>{{ stats.cantidadPedidos }}</h3>
-        <p>Pedidos Realizados</p>
+        <p class="stat-label">Pedidos Realizados</p>
+        <h3 class="stat-value">{{ stats.cantidadPedidos }}</h3>
       </div>
     </div>
     
-    <div class="stat-card red">
-      <div class="stat-icon">⚠️</div>
+    <div class="stat-card stat-stock">
+      <div class="stat-icon-wrapper stock-icon">
+        <span class="stat-icon">⚠️</span>
+      </div>
       <div class="stat-info">
-        <h3>{{ stats.productosBajoStock }}</h3>
-        <p>Bajo Stock (< 5)</p>
+        <p class="stat-label">Bajo Stock (< 5)</p>
+        <h3 class="stat-value">{{ stats.productosBajoStock }}</h3>
       </div>
     </div>
   </div>
-  
-  <p class="subtitle">Selecciona una opción para comenzar:</p>
 
-  <!-- SECCIÓN 2: MENÚ DE NAVEGACIÓN COMPLETO (11 TARJETAS) -->
+  <!-- Loading state -->
+  <div class="stats-grid" *ngIf="!stats">
+    <div class="stat-card stat-loading">
+      <p style="color: var(--text-muted); font-size: 14px;">Cargando datos del sistema...</p>
+    </div>
+  </div>
+  
+  <!-- Separador con título de sección -->
+  <div class="section-header">
+    <h2>Módulos del Sistema</h2>
+    <p>Selecciona una opción para comenzar</p>
+  </div>
+
+  <!-- SECCIÓN 2: MENÚ DE NAVEGACIÓN -->
   <div class="menu-grid">
      
-     <!-- 1. Venta -->
-     <div class="card venta" routerLink="/ventas">
-        <div class="icon">🛒</div>
+     <!-- Grupo: Operaciones -->
+     <div class="card" routerLink="/ventas">
+        <div class="card-accent accent-emerald"></div>
+        <div class="card-icon">🛒</div>
         <h3>Punto de Venta</h3>
         <p>Registrar nuevas compras</p>
      </div>
      
-     <!-- 2. Productos -->
-     <div class="card producto" routerLink="/productos">
-       <div class="icon">📱</div>
+     <div class="card" routerLink="/productos">
+       <div class="card-accent accent-primary"></div>
+       <div class="card-icon">📱</div>
        <h3>Catálogo</h3>
        <p>Gestionar productos</p>
      </div>
 
-     <!-- 3. Categorías -->
-     <div class="card categorias" routerLink="/categorias">
-        <div class="icon">🏷️</div>
+     <div class="card" routerLink="/categorias">
+        <div class="card-accent accent-violet"></div>
+        <div class="card-icon">🏷️</div>
         <h3>Categorías</h3>
         <p>Tipos de productos</p>
      </div>
 
-     <!-- 4. Métodos -->
-     <div class="card metodos" routerLink="/metodos">
-        <div class="icon">📬</div>
-        <h3>Métodos</h3>
-        <p>Configurar envíos</p>
+     <div class="card" routerLink="/metodos">
+        <div class="card-accent accent-teal"></div>
+        <div class="card-icon">📬</div>
+        <h3>Métodos de Envío</h3>
+        <p>Configurar opciones</p>
      </div>
 
-     <!-- 5. Almacenes -->
-     <div class="card almacenes" routerLink="/almacenes">
-       <div class="icon">🏭</div>
+     <!-- Grupo: Logística -->
+     <div class="card" routerLink="/almacenes">
+       <div class="card-accent accent-amber"></div>
+       <div class="card-icon">🏭</div>
        <h3>Almacenes</h3>
        <p>Gestionar sedes</p>
      </div>
 
-     <!-- 6. Inventarios -->
-     <div class="card inventarios" routerLink="/inventarios">
-       <div class="icon">🚛</div>
+     <div class="card" routerLink="/inventarios">
+       <div class="card-accent accent-orange"></div>
+       <div class="card-icon">📊</div>
        <h3>Distribución</h3>
        <p>Stock por almacén</p>
      </div>
 
-     <!-- 7. Despachos -->
-     <div class="card envios" routerLink="/envios">
-       <div class="icon">📤</div>
+     <div class="card" routerLink="/envios">
+       <div class="card-accent accent-sky"></div>
+       <div class="card-icon">📤</div>
        <h3>Despachos</h3>
        <p>Logística de salida</p>
      </div>
 
-     <!-- 8. Historial -->
-     <div class="card historial" routerLink="/historial">
-       <div class="icon">📜</div>
+     <div class="card" routerLink="/historial">
+       <div class="card-accent accent-amber"></div>
+       <div class="card-icon">📜</div>
        <h3>Historial</h3>
-       <p>Ver reportes</p>
+       <p>Ver reportes de ventas</p>
      </div>
 
-     <!-- 9. Proveedores -->
-     <div class="card proveedores" routerLink="/proveedores">
-       <div class="icon">🚚</div>
+     <!-- Grupo: Administración -->
+     <div class="card" routerLink="/proveedores">
+       <div class="card-accent accent-rose"></div>
+       <div class="card-icon">🚚</div>
        <h3>Proveedores</h3>
        <p>Agenda de contactos</p>
      </div>
 
-     <!-- 10. Usuarios (NUEVO) -->
-     <div class="card usuarios" routerLink="/usuarios">
-       <div class="icon">👥</div>
+     <div class="card" routerLink="/usuarios">
+       <div class="card-accent accent-primary"></div>
+       <div class="card-icon">👥</div>
        <h3>Usuarios</h3>
        <p>Gestión de cuentas</p>
      </div>
 
-     <!-- 11. Roles -->
-     <div class="card roles" routerLink="/roles">
-       <div class="icon">👮‍♂️</div>
+     <div class="card" routerLink="/roles">
+       <div class="card-accent accent-slate"></div>
+       <div class="card-icon">🛡️</div>
        <h3>Seguridad</h3>
-       <p>Gestionar Roles</p>
+       <p>Gestionar roles</p>
      </div>
 
   </div>

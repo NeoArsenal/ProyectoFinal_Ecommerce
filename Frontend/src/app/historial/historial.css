@@ -1,41 +1,43 @@
-.container { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
+/* =============================================
+   HISTORIAL — Diseño Premium
+   ============================================= */
 
-h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-
-table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    margin-top: 20px; 
-    background: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
-    border-radius: 8px;
-    overflow: hidden;
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 30px;
+  animation: fadeInUp 0.4s ease-out;
 }
 
-th { background: #2c3e50; color: white; padding: 12px; text-align: left; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
-td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
-tr:last-child td { border-bottom: none; }
-tr:hover { background-color: #f8f9fa; }
+.container h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  letter-spacing: -0.3px;
+}
 
-.num { text-align: right; font-weight: bold; color: #2c3e50; }
+/* Tabla hereda estilos globales */
+.num { text-align: right; font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
 
-/* BADGES (Etiquetas de colores) */
+/* Badges */
 .badge { 
-    padding: 5px 10px; 
-    border-radius: 12px; 
-    font-size: 11px; 
-    font-weight: bold; 
-    color: white; 
-    text-transform: uppercase;
-    display: inline-block;
-    min-width: 80px;
-    text-align: center;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+  letter-spacing: 0.3px;
 }
 
-.pago { background-color: #27ae60; } /* Verde */
+.pago { background: linear-gradient(135deg, var(--accent-emerald), #059669); }
 
 /* Estados de Envío */
-.envio { background-color: #95a5a6; } /* Gris (Default) */
-.pendiente { background-color: #f39c12; } /* Naranja */
-.enviado { background-color: #3498db; } /* Azul */
-.entregado { background-color: #2ecc71; } /* Verde Claro */
+.envio { background: #94a3b8; }
+.pendiente { background: linear-gradient(135deg, var(--accent-amber), #d97706); }
+.enviado { background: linear-gradient(135deg, var(--accent-sky), #0284c7); }
+.entregado { background: linear-gradient(135deg, var(--accent-emerald), #059669); }

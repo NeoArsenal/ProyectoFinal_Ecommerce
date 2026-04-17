@@ -4,33 +4,33 @@
   <!-- LADO IZQUIERDO: Menú Contextual -->
   <div class="nav-links">
     <a *ngIf="!esHome" routerLink="/home" class="nav-item home-btn">
-      🏠 INICIO
+      🏠 Inicio
     </a>
 
     <ng-container *ngIf="!esHome">
       
       <a *ngIf="noEsRuta('/ventas')" routerLink="/ventas" class="nav-item">
-        🛒 VENTAS
+        🛒 Ventas
       </a>
       <a *ngIf="noEsRuta('/productos')" routerLink="/productos" class="nav-item">
-        📦 PRODUCTOS
+        📦 Productos
       </a>
       <a *ngIf="noEsRuta('/historial')" routerLink="/historial" class="nav-item">
-        📜 HISTORIAL
+        📜 Historial
       </a>
       <a *ngIf="noEsRuta('/proveedores')" routerLink="/proveedores" class="nav-item">
-        🚚 PROVEEDORES
+        🚚 Proveedores
       </a>
       <a *ngIf="noEsRuta('/almacenes')" routerLink="/almacenes" class="nav-item">
-        🏭 ALMACENES
+        🏭 Almacenes
       </a>
       <a *ngIf="noEsRuta('/inventarios')" routerLink="/inventarios" class="nav-item">
-        📦 DISTRIBUCIÓN
+        📊 Inventario
       </a>
       
-      <!-- BOTÓN USUARIOS (NUEVO) -->
+      <!-- BOTÓN USUARIOS -->
       <a *ngIf="noEsRuta('/usuarios')" routerLink="/usuarios" class="nav-item">
-        👥 USUARIOS
+        👥 Usuarios
       </a>
 
     </ng-container>
@@ -39,15 +39,15 @@
   <!-- LADO DERECHO -->
   <div class="user-info">
     <span class="email-text">
-      Hola, {{ auth.usuario?.email }}
+      {{ auth.usuario?.email }}
     </span>
     
-    <a routerLink="/perfil" style="color: #4da3ff; margin-right: 15px; text-decoration: none; font-size: 13px; font-weight: bold; cursor: pointer;">
-       👤 Mi Perfil
+    <a routerLink="/perfil" class="nav-item" style="font-size: 12px; padding: 6px 12px;">
+       👤 Perfil
     </a>
 
     <button (click)="auth.logout()" class="btn-salir">
-      Salir
+      Cerrar sesión
     </button>
   </div>
 </nav>

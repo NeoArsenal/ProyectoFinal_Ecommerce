@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.EnvioDTO;
 import com.example.demo.model.Envios;
 import com.example.demo.model.Usuarios;
+import com.example.demo.repository.EnviosRepository;
+import com.example.demo.repository.UsuariosRepository;
 
 @Service
 public class EnviosServiceImp implements EnviosService {

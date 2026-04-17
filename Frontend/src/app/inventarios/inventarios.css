@@ -1,28 +1,66 @@
-.container { font-family: 'Segoe UI', sans-serif; padding: 20px; }
-h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+/* =============================================
+   INVENTARIOS — Diseño Premium
+   ============================================= */
 
-.formulario { 
-  background: #e9ecef; 
-  padding: 20px; 
-  border-radius: 8px; 
-  display: flex; 
-  gap: 15px; 
-  align-items: flex-end; 
-  margin-bottom: 20px;
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 30px;
+  animation: fadeInUp 0.4s ease-out;
 }
 
-.campo { display: flex; flex-direction: column; }
-label { font-weight: bold; font-size: 12px; margin-bottom: 5px; }
-select, input { padding: 8px; border-radius: 4px; border: 1px solid #ccc; min-width: 150px; }
+.container h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
 
-table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-th { background: #2c3e50; color: white; padding: 12px; text-align: left; }
-td { padding: 10px; border-bottom: 1px solid #eee; }
+.formulario { 
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+}
+
+.campo { display: flex; flex-direction: column; flex: 1; min-width: 140px; }
+
+.campo label {
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* Hereda table, input, select del global */
 
 .center { text-align: center; }
-.font-bold { font-weight: bold; color: #2980b9; }
-.vacio { text-align: center; padding: 20px; color: #777; }
+.font-bold { font-weight: 700; color: var(--primary); }
+.vacio { text-align: center; padding: 20px; color: var(--text-muted); }
 
-.btn-guardar { background: #2980b9; color: white; padding: 9px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-.btn-borrar { background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-button:disabled { background: #ccc; cursor: not-allowed; }
+.btn-guardar {
+  background: linear-gradient(135deg, var(--accent-sky), #0284c7);
+  color: white;
+  padding: 10px 22px;
+  font-weight: 600;
+  height: 42px;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.25);
+}
+.btn-guardar:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35); }
+
+.btn-borrar {
+  background: var(--accent-rose);
+  color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.btn-borrar:hover { background: #e11d48; }

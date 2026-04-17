@@ -1,18 +1,103 @@
-.container { font-family: Arial, sans-serif; padding: 20px; }
-.formulario { background: #f4f4f4; padding: 15px; border-radius: 8px; display: flex; gap: 15px; align-items: flex-start; flex-wrap: wrap;}
-.campo { display: flex; flex-direction: column; }
-label { font-weight: bold; font-size: 12px; margin-bottom: 4px; }
-input { padding: 6px; border: 1px solid #ccc; border-radius: 4px; width: 180px; }
-.error { color: red; font-size: 10px; }
+/* =============================================
+   PROVEEDORES — Diseño Premium
+   ============================================= */
 
-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-th { background: #444; color: white; padding: 10px; text-align: left; }
-td { padding: 8px; border-bottom: 1px solid #ddd; }
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 30px;
+  animation: fadeInUp 0.4s ease-out;
+}
 
-button { padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; color: white; font-weight: bold; }
-button[type="submit"] { background: #28a745; } /* Verde por defecto */
-.btn-edit { background: #ffc107 !important; color: black !important; } /* Amarillo si edita */
-.btn-limpiar { background: #6c757d; margin-left: 10px; }
-.btn-azul { background: #007bff; margin-right: 5px; padding: 4px 8px; font-size: 12px; }
-.btn-rojo { background: #dc3545; padding: 4px 8px; font-size: 12px; }
-button:disabled { background: #ccc; cursor: not-allowed; }
+.container h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  letter-spacing: -0.3px;
+}
+
+/* Formulario */
+.formulario {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  flex: 1;
+}
+
+.campo label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.error {
+  color: var(--accent-rose);
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 0;
+}
+
+/* Botones */
+.botones { display: flex; gap: 10px; align-items: flex-end; }
+
+button[type="submit"] {
+  background: linear-gradient(135deg, var(--accent-emerald), #059669);
+  color: white;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+}
+button[type="submit"]:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35); }
+
+.btn-edit {
+  background: linear-gradient(135deg, var(--accent-amber), #d97706) !important;
+  color: white !important;
+}
+
+.btn-limpiar {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  margin-left: 0;
+}
+.btn-limpiar:hover { background: var(--border-light); }
+
+.btn-azul {
+  background: var(--primary);
+  color: white;
+  padding: 6px 14px;
+  font-size: 12px;
+  margin-right: 6px;
+  font-weight: 600;
+}
+.btn-azul:hover { background: var(--primary-dark); }
+
+.btn-rojo {
+  background: var(--accent-rose);
+  color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.btn-rojo:hover { background: #e11d48; }

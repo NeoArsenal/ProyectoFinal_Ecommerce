@@ -1,60 +1,122 @@
-.login-container { display: flex; justify-content: center; padding-top: 50px; }
-.card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; text-align: center; }
-.form-group { margin-bottom: 15px; text-align: left; }
-input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
-button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; font-size: 16px; }
-.error-msg { color: red; font-size: 14px; }
-.footer { margin-top: 15px; font-size: 14px; }
+/* =============================================
+   LOGIN & REGISTRO — Diseño Premium
+   ============================================= */
 
-.login-container { display: flex; justify-content: center; padding-top: 50px; font-family: 'Segoe UI', sans-serif; }
-.card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; text-align: center; }
-.form-group { margin-bottom: 20px; text-align: left; }
-label { font-weight: bold; font-size: 14px; color: #555; }
-
-input { 
-  width: 100%; 
-  padding: 10px; 
-  margin-top: 5px; 
-  box-sizing: border-box; 
-  border: 1px solid #ccc; 
-  border-radius: 4px;
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 64px);
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  animation: fadeIn 0.4s ease;
 }
 
-button { 
-  width: 100%; 
-  padding: 12px; 
-  background: #007bff; 
-  color: white; 
-  border: none; 
-  cursor: pointer; 
-  font-size: 16px; 
-  border-radius: 4px; 
-  transition: background 0.3s;
+.card {
+  background: var(--bg-card);
+  padding: 40px 36px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  width: 400px;
+  max-width: 100%;
+  text-align: center;
+  animation: fadeInUp 0.5s ease-out;
+  border: 1px solid var(--border-light);
 }
-button:hover { background: #0056b3; }
-button:disabled { background: #ccc; cursor: not-allowed; }
 
-.footer { margin-top: 20px; font-size: 14px; color: #666; }
-a { color: #007bff; text-decoration: none; }
+.card h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
 
-/* ESTILOS DE ERROR (NUEVO) */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  display: block;
+  letter-spacing: 0.2px;
+}
+
+/* Inputs heredan del styles.css global, aquí solo ajustes */
+.card input {
+  margin-top: 6px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  letter-spacing: 0.3px;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+}
+
+button[type="submit"]:disabled {
+  background: var(--border-medium);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.footer {
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.footer a:hover {
+  color: var(--primary-dark);
+}
+
+/* Error styles inherit from global */
 .input-error {
-  border: 1px solid #dc3545 !important;
-  background-color: #fff8f8;
+  border-color: var(--accent-rose) !important;
+  background: var(--accent-rose-light) !important;
 }
 
 .msg-error {
-  color: #dc3545;
+  color: var(--accent-rose);
   font-size: 12px;
+  font-weight: 500;
+  margin-top: 4px;
   display: block;
-  margin-top: 2px;
 }
 
 .error-msg {
-  color: #dc3545;
-  background-color: #ffe6e6;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
+  color: var(--accent-rose);
+  background: var(--accent-rose-light);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
   font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(244, 63, 94, 0.15);
+  text-align: left;
 }

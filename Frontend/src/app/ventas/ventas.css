@@ -1,31 +1,142 @@
-.contenedor-ventas { font-family: Arial, sans-serif; padding: 20px; }
+/* =============================================
+   VENTAS (POS) — Diseño Premium
+   ============================================= */
 
-/* Panel superior */
-.panel-agregar { 
-    background: #f9f9f9; 
-    padding: 15px; 
-    border-radius: 5px; 
-    display: flex; 
-    gap: 15px; 
-    align-items: flex-end; /* Alinea los inputs con el botón */
-    border: 1px solid #ddd;
+.contenedor-ventas {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 30px;
+  animation: fadeInUp 0.4s ease-out;
 }
 
-.campo { display: flex; flex-direction: column; }
-label { font-size: 12px; font-weight: bold; margin-bottom: 5px; }
-input, select { padding: 5px; height: 30px;}
+.contenedor-ventas h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  letter-spacing: -0.3px;
+}
 
-/* Tabla */
-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-th { background: #333; color: white; padding: 10px; text-align: left; }
-td { padding: 8px; border-bottom: 1px solid #ddd; }
+/* Panel superior de selección */
+.panel-agregar { 
+  background: var(--bg-card);
+  padding: 20px 24px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 140px;
+}
+
+.campo label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* Inputs y selects heredan del global */
+.campo input, .campo select {
+  height: 42px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 24px 0;
+}
+
+/* Tabla del carrito (usa estilos globales de styles.css) */
+.contenedor-ventas table {
+  margin-top: 20px;
+}
+
 .num { text-align: right; }
 .center { text-align: center; }
 
 /* Botones */
-button { cursor: pointer; padding: 8px 15px; border: none; border-radius: 4px; }
-.btn-agregar { background: #28a745; color: white; height: 42px;} /* Verde */
-.btn-eliminar { background: #dc3545; color: white; padding: 4px 8px; } /* Rojo */
-.btn-finalizar { background: #007bff; color: white; font-size: 18px; padding: 15px 30px; font-weight: bold; } /* Azul */
+.btn-agregar {
+  background: linear-gradient(135deg, var(--accent-emerald), #059669);
+  color: white;
+  height: 42px;
+  padding: 0 20px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  white-space: nowrap;
+}
 
-.panel-total { margin-top: 20px; text-align: right; border-top: 2px solid #333; padding-top: 10px; }
+.btn-agregar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+}
+
+.btn-eliminar {
+  background: var(--accent-rose);
+  color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+.btn-eliminar:hover {
+  background: #e11d48;
+}
+
+.btn-finalizar {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  font-size: 16px;
+  padding: 14px 28px;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  letter-spacing: 0.3px;
+}
+
+.btn-finalizar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+}
+
+/* Panel total */
+.panel-total {
+  margin-top: 24px;
+  text-align: right;
+  border-top: 2px solid var(--border-light);
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+.panel-total h3 {
+  font-size: 20px;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .panel-agregar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .panel-total {
+    flex-direction: column;
+    text-align: center;
+  }
+}

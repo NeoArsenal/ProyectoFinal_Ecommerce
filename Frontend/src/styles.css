@@ -1,1 +1,261 @@
-/* You can add global styles to this file, and also import other style files */
+/* =============================================
+   SISTEMA DE DISEÑO GLOBAL — NeoArsenal E-commerce
+   ============================================= */
+
+/* --- CSS Variables (Design Tokens) --- */
+:root {
+  /* Colores Primarios */
+  --primary: #6366f1;        /* Indigo vibrante */
+  --primary-light: #818cf8;
+  --primary-dark: #4f46e5;
+  --primary-bg: #eef2ff;
+
+  /* Colores de Acento */
+  --accent-emerald: #10b981;
+  --accent-emerald-light: #d1fae5;
+  --accent-amber: #f59e0b;
+  --accent-amber-light: #fef3c7;
+  --accent-rose: #f43f5e;
+  --accent-rose-light: #ffe4e6;
+  --accent-sky: #0ea5e9;
+  --accent-sky-light: #e0f2fe;
+  --accent-violet: #8b5cf6;
+  --accent-violet-light: #ede9fe;
+  --accent-teal: #14b8a6;
+  --accent-orange: #f97316;
+
+  /* Superficies */
+  --bg-app: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fafbff;
+  --bg-surface: #f8fafc;
+  --bg-input: #f8fafc;
+  --bg-navbar: #0f172a;
+
+  /* Bordes */
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-focus: var(--primary);
+
+  /* Texto */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-inverse: #f8fafc;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+
+  /* Radios */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-full: 9999px;
+
+  /* Transiciones */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Tipografía */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* --- Reset y Base --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* --- Scrollbar Personalizada --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* --- Componentes Globales Reutilizables --- */
+
+/* Tablas */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+}
+
+thead th {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: var(--text-inverse);
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: none;
+}
+
+tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
+  color: var(--text-secondary);
+  transition: background var(--transition-fast);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover td {
+  background: var(--primary-bg);
+}
+
+/* Inputs y Selects */
+input, select, textarea {
+  font-family: var(--font-family);
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+  outline: none;
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  background: white;
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Botones Base */
+button {
+  font-family: var(--font-family);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  font-size: 14px;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Utilidades */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Validación de inputs */
+.input-error {
+  border-color: var(--accent-rose) !important;
+  background: var(--accent-rose-light) !important;
+}
+
+.msg-error {
+  color: var(--accent-rose);
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 4px;
+  display: block;
+  animation: slideDown var(--transition-fast);
+}
+
+.error-msg {
+  color: var(--accent-rose);
+  background: var(--accent-rose-light);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(244, 63, 94, 0.2);
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}

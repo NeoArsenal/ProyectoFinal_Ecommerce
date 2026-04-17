@@ -1,78 +1,96 @@
-/* Estilo base de la barra */
+/* =============================================
+   NAVBAR GLOBAL — Diseño Premium
+   ============================================= */
+
+/* Barra principal */
 .navbar {
-  background-color: #2c3e50; /* Azul oscuro elegante */
-  padding: 0 20px;
-  height: 60px;
+  background: var(--bg-navbar);
+  padding: 0 24px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* Contenedor de enlaces */
 .nav-links {
   display: flex;
-  gap: 15px;
+  gap: 4px;
   align-items: center;
 }
 
 /* Estilo de cada enlace */
 .nav-item {
-  color: #ecf0f1;
+  color: #94a3b8;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
   border: 1px solid transparent;
+  letter-spacing: 0.2px;
 }
 
 .nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+  color: white;
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.2);
+  transform: translateY(-1px);
 }
 
 /* Botón INICIO destacado */
 .home-btn {
-  background-color: rgba(255, 255, 255, 0.1);
-  margin-right: 10px;
-  border-left: 3px solid #3498db;
+  color: white;
+  background: rgba(99, 102, 241, 0.2);
+  border-left: 3px solid var(--primary);
+  margin-right: 8px;
+}
+
+.home-btn:hover {
+  background: rgba(99, 102, 241, 0.35);
 }
 
 /* Sección derecha */
 .user-info {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
 }
 
 .email-text {
-  color: #bdc3c7;
+  color: #64748b;
   font-size: 13px;
+  font-weight: 400;
 }
 
 .btn-salir {
-  background: #e74c3c;
+  background: linear-gradient(135deg, var(--accent-rose), #e11d48);
   color: white;
   border: none;
-  padding: 6px 15px;
-  border-radius: 20px; /* Redondeado moderno */
+  padding: 7px 18px;
+  border-radius: var(--radius-full);
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 12px;
-  transition: background 0.3s;
+  letter-spacing: 0.3px;
+  transition: all var(--transition-normal);
+  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.3);
 }
 
 .btn-salir:hover {
-  background: #c0392b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.4);
 }
 
+/* Contenido principal */
 .main-content {
-  padding: 20px;
-  background-color: #f8f9fa; /* Fondo gris muy suave para toda la app */
-  min-height: calc(100vh - 60px);}
+  padding: 0;
+  background-color: var(--bg-app);
+  min-height: calc(100vh - 64px);
+}

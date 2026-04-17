@@ -1,15 +1,53 @@
-.container { font-family: 'Segoe UI', sans-serif; padding: 20px; }
-h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+/* =============================================
+   CATEGORÍAS — Diseño Premium
+   ============================================= */
 
-.formulario { background: #f8f9fa; padding: 20px; border-radius: 8px; display: flex; gap: 15px; align-items: flex-end; margin-bottom: 20px; }
-.campo { display: flex; flex-direction: column; }
-label { font-size: 12px; font-weight: bold; margin-bottom: 5px; }
-input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 200px; }
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 30px;
+  animation: fadeInUp 0.4s ease-out;
+}
 
-table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; }
-th { background: #2c3e50; color: white; padding: 10px; text-align: left; }
-td { padding: 8px; border-bottom: 1px solid #eee; }
+.container h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.formulario {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+}
+
+.campo { display: flex; flex-direction: column; flex: 1; min-width: 160px; }
+
+.campo label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
 .center { text-align: center; }
 
-.btn-guardar { background: #27ae60; color: white; border: none; padding: 9px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; height: 35px; }
-button:disabled { background: #ccc; }
+.btn-guardar {
+  background: linear-gradient(135deg, var(--accent-emerald), #059669);
+  color: white;
+  padding: 10px 22px;
+  font-weight: 600;
+  height: 42px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+}
+.btn-guardar:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35); }

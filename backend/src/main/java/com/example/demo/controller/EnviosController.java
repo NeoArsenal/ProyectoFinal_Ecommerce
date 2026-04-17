@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.EnvioDTO;
-import com.example.demo.repository.EnviosService;
+import com.example.demo.service.EnviosService;
 
 @RestController
 @RequestMapping("/envios")
