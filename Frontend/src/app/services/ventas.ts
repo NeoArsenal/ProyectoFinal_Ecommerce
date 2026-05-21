@@ -2,30 +2,40 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// --- INTERFACES (Estructura de datos) ---
+// --- INTERFACES ---
 export interface VentaPayload {
   usuarioId: number;
+  metodoPago:    string;   // "Efectivo" | "Tarjeta" | "Yape"
+  metodoEnvioId: number;   // 1=Express, 2=Normal, etc.
   items: ItemVenta[];
 }
 
 export interface ItemVenta {
   productoId: number;
-  cantidad: number;
-  precio: number;
-  // Opcionales solo para la vista
+  cantidad:   number;
+  precio:     number;
+  // Solo para la vista local (no se envía al backend)
   nombreProducto?: string;
-  subtotal?: number;
+  subtotal?:       number;
+}
+
+export interface MetodoEnvio {
+  id:     number;
+  nombre: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class VentasService {
-  // Asegúrate que el puerto coincida con tu Spring Boot (8085)
-  private readonly url = 'http://localhost:8085/pedidos';
+  private readonly url       = 'http://localhost:8085/pedidos';
+  private readonly enviosUrl = 'http://localhost:8085/metodos-envio';
 
   constructor(private http: HttpClient) {}
 
   registrarVenta(venta: VentaPayload): Observable<any> {
-    // Usamos responseType: 'text' porque el backend devuelve un String plano
     return this.http.post(this.url, venta, { responseType: 'text' });
+  }
+
+  listarMetodosEnvio(): Observable<MetodoEnvio[]> {
+    return this.http.get<MetodoEnvio[]>(this.enviosUrl);
   }
 }

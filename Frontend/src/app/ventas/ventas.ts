@@ -1,120 +1,179 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule }      from '@angular/common';
+import { FormsModule }       from '@angular/forms';
+import { RouterOutlet }      from '@angular/router';
 
-// 1. IMPORTAR PRODUCTOS
-// ".." significa salir de la carpeta 'ventas' hacia 'app'
-// Buscamos 'productos.service.ts' que está en 'src/app/'
-import { ProductosService, ProductoDTO } from '../productos'; 
-
-// 2. IMPORTAR VENTAS (Servicio)
-// ".." salimos de 'ventas'
-// "services" entramos a la carpeta servicios
-// Buscamos 'ventas.service.ts'
-import { VentasService, ItemVenta, VentaPayload } from '../services/ventas';
-import { RouterOutlet } from '@angular/router';
+import { ProductosService, ProductoDTO } from '../productos';
+import { VentasService, ItemVenta, VentaPayload, MetodoEnvio } from '../services/ventas';
+import { AuthService } from '../services/auth';
 
 @Component({
-  selector: 'app-ventas',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet],
-  // Asegúrate que estos nombres coincidan con tus archivos reales en la carpeta 'ventas'
-  templateUrl: './ventas.html', 
-  styleUrls: ['./ventas.css']   
+  selector:    'app-ventas',
+  standalone:  true,
+  imports:     [CommonModule, FormsModule],
+  templateUrl: './ventas.html',
+  styleUrls:   ['./ventas.css']
 })
 export class Ventas implements OnInit {
-  
-  listaProductos: ProductoDTO[] = [];
-  
+
+  // --- Datos del formulario ---
+  listaProductos:       ProductoDTO[]  = [];
+  listaMetodosEnvio:    MetodoEnvio[]  = [];
   productoSeleccionadoId: number | null = null;
   cantidad: number = 1;
-  usuarioId: number = 1; // ID fijo del usuario SQL
 
-  carrito: ItemVenta[] = [];
-  totalVenta: number = 0.0;
+  // --- Sesión: tomamos el ID del usuario logueado ---
+  get usuarioId(): number {
+    return this.auth.usuario?.id ?? 1;
+  }
+  get usuarioEmail(): string {
+    return this.auth.usuario?.email ?? '';
+  }
+
+  // --- Carrito ---
+  carrito:     ItemVenta[] = [];
+  totalVenta:  number = 0;
+
+  // --- Pago y Envío ---
+  metodoPago:    string = '';
+  metodoEnvioId: number | null = null;
+
+  // Opciones de pago hardcodeadas (no requieren endpoint)
+  metodosPago = ['Efectivo', 'Tarjeta de Crédito', 'Yape', 'Plin'];
+
+  // --- Estados UI ---
+  paso: 'carrito' | 'pago' | 'confirmacion' = 'carrito';
+  mensajeError = '';
+  cargando = false;
+  pedidoConfirmado: any = null; // Datos de la boleta
 
   constructor(
     private productosService: ProductosService,
-    private ventasService: VentasService
+    private ventasService:    VentasService,
+    private auth:             AuthService
   ) {}
 
   ngOnInit(): void {
-    // Cargar productos al iniciar
     this.productosService.listar().subscribe(data => {
       this.listaProductos = data;
     });
+    this.ventasService.listarMetodosEnvio().subscribe(data => {
+      this.listaMetodosEnvio = data;
+    });
   }
+
+  // --- Paso 1: Carrito ---
 
   agregarAlCarrito() {
     if (!this.productoSeleccionadoId || this.cantidad <= 0) {
-      alert("Seleccione un producto y una cantidad válida");
+      this.mensajeError = 'Seleccione un producto y una cantidad válida.';
       return;
     }
+    this.mensajeError = '';
 
-    // Buscamos el producto en la lista cargada
-    const productoReal = this.listaProductos.find(p => p.id == this.productoSeleccionadoId);
+    const producto = this.listaProductos.find(p => p.id == this.productoSeleccionadoId);
+    if (!producto) return;
 
-    if (productoReal) {
-      // Verificar si ya existe en el carrito
-      const itemExistente = this.carrito.find(item => item.productoId == productoReal.id);
-
-      if (itemExistente) {
-        itemExistente.cantidad += this.cantidad;
-        itemExistente.subtotal = itemExistente.cantidad * itemExistente.precio;
-      } else {
-        // Crear nuevo item
-        const nuevoItem: ItemVenta = {
-          productoId: productoReal.id,
-          nombreProducto: productoReal.nombre,
-          precio: productoReal.precio,
-          cantidad: this.cantidad,
-          subtotal: this.cantidad * productoReal.precio
-        };
-        this.carrito.push(nuevoItem);
-      }
-
-      this.calcularTotal();
-      
-      // Limpiar inputs
-      this.productoSeleccionadoId = null;
-      this.cantidad = 1;
+    const existente = this.carrito.find(i => i.productoId == producto.id);
+    if (existente) {
+      existente.cantidad += this.cantidad;
+      existente.subtotal  = existente.cantidad * existente.precio;
+    } else {
+      this.carrito.push({
+        productoId:     producto.id,
+        nombreProducto: producto.nombre,
+        precio:         producto.precio,
+        cantidad:       this.cantidad,
+        subtotal:       this.cantidad * producto.precio
+      });
     }
+
+    this.calcularTotal();
+    this.productoSeleccionadoId = null;
+    this.cantidad = 1;
   }
 
-  eliminarDelCarrito(index: number) {
-    this.carrito.splice(index, 1);
+  eliminarDelCarrito(i: number) {
+    this.carrito.splice(i, 1);
     this.calcularTotal();
   }
 
   calcularTotal() {
-    this.totalVenta = this.carrito.reduce((acc, item) => acc + (item.subtotal || 0), 0);
+    this.totalVenta = this.carrito.reduce((acc, item) => acc + (item.subtotal ?? 0), 0);
   }
 
-  guardarVenta() {
-    if (this.carrito.length === 0) return;
+  irAPago() {
+    if (this.carrito.length === 0) {
+      this.mensajeError = 'El carrito está vacío.';
+      return;
+    }
+    this.mensajeError = '';
+    this.paso = 'pago';
+  }
 
-    if(!confirm(`¿Confirmar venta por S/ ${this.totalVenta}?`)) return;
+  volverAlCarrito() {
+    this.paso = 'carrito';
+    this.mensajeError = '';
+  }
 
-    // Preparamos el objeto limpio para el Backend
-    const ventaFinal: VentaPayload = {
-      usuarioId: this.usuarioId,
+  // --- Paso 2: Pago y Envío → Finalizar ---
+
+  confirmarPedido() {
+    if (!this.metodoPago) {
+      this.mensajeError = 'Selecciona un método de pago.';
+      return;
+    }
+    if (!this.metodoEnvioId) {
+      this.mensajeError = 'Selecciona un método de envío.';
+      return;
+    }
+
+    this.mensajeError = '';
+    this.cargando = true;
+
+    const payload: VentaPayload = {
+      usuarioId:     this.usuarioId,
+      metodoPago:    this.metodoPago,
+      metodoEnvioId: this.metodoEnvioId,
       items: this.carrito.map(item => ({
         productoId: item.productoId,
-        cantidad: item.cantidad,
-        precio: item.precio
+        cantidad:   item.cantidad,
+        precio:     item.precio
       }))
     };
 
-    this.ventasService.registrarVenta(ventaFinal).subscribe({
-      next: (respuesta) => {
-        alert(respuesta); // Mensaje del Backend
+    this.ventasService.registrarVenta(payload).subscribe({
+      next: () => {
+        this.cargando = false;
+        // Guardamos datos de la boleta antes de limpiar
+        this.pedidoConfirmado = {
+          fecha:         new Date().toLocaleDateString('es-PE', { dateStyle: 'long' }),
+          hora:          new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' }),
+          email:         this.usuarioEmail,
+          items:         [...this.carrito],
+          total:         this.totalVenta,
+          metodoPago:    this.metodoPago,
+          metodoEnvio:   this.listaMetodosEnvio.find(m => m.id == this.metodoEnvioId)?.nombre ?? ''
+        };
+        // Limpiar carrito y pasar a confirmación
         this.carrito = [];
-        this.calcularTotal();
+        this.totalVenta = 0;
+        this.paso = 'confirmacion';
       },
       error: (err) => {
-        console.error(err);
-        alert("Error al guardar la venta.");
+        this.cargando = false;
+        this.mensajeError = typeof err.error === 'string'
+          ? err.error
+          : 'Error al registrar la venta. Intenta nuevamente.';
       }
     });
+  }
+
+  nuevaVenta() {
+    this.paso              = 'carrito';
+    this.metodoPago        = '';
+    this.metodoEnvioId     = null;
+    this.pedidoConfirmado  = null;
+    this.mensajeError      = '';
   }
 }

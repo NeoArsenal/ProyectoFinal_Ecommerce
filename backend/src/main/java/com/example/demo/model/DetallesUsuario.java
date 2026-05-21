@@ -16,6 +16,9 @@ public class DetallesUsuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String nombre;
+    private String apellido;
+    private String genero;
     private String direccion;
     private String telefono;
     private String dni;
@@ -30,12 +33,25 @@ public class DetallesUsuario {
     // Getters y Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
+
+    public String getGenero() { return genero; }
+    public void setGenero(String genero) { this.genero = genero; }
+
     public String getDireccion() { return direccion; }
     public void setDireccion(String direccion) { this.direccion = direccion; }
+
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
+
     public String getDni() { return dni; }
     public void setDni(String dni) { this.dni = dni; }
+
     public Usuarios getUsuario() { return usuario; }
     public void setUsuario(Usuarios usuario) { this.usuario = usuario; }
 }

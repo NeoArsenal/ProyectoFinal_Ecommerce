@@ -45,17 +45,37 @@ public class UsuariosServiceImp implements UsuariosService {
 
     @Override
     public UsuariosDTO registrar(UsuariosDTO dto) {
-        // Verificamos si ya existe el correo
-        if(repository.findByEmail(dto.getEmail()).isPresent()) {
+
+        // --- VALIDACIÓN 1: Email duplicado ---
+        if (repository.findByEmail(dto.getEmail()).isPresent()) {
             throw new RuntimeException("El correo ya está registrado");
         }
 
+        // --- VALIDACIÓN 2: DNI duplicado (Caso de prueba #7) ---
+        if (dto.getDni() != null && detallesRepo.findByDni(dto.getDni()).isPresent()) {
+            throw new RuntimeException("El DNI ya está registrado en el sistema");
+        }
+
+        // --- GUARDAR USUARIO BASE ---
         Usuarios nuevo = new Usuarios();
         nuevo.setEmail(dto.getEmail());
         nuevo.setPassword(dto.getPassword());
-        
         Usuarios guardado = repository.save(nuevo);
-        return new UsuariosDTO(guardado.getId(), guardado.getEmail());
+
+        // --- GUARDAR DETALLES COMPLETOS (Actividad N°5: caso 9) ---
+        DetallesUsuario detalles = new DetallesUsuario();
+        detalles.setUsuario(guardado);
+        detalles.setNombre(dto.getNombre());
+        detalles.setApellido(dto.getApellido());
+        detalles.setGenero(dto.getGenero());
+        detalles.setDni(dto.getDni());
+        detallesRepo.save(detalles);
+
+        // --- RESPUESTA ---
+        UsuariosDTO respuesta = new UsuariosDTO(guardado.getId(), guardado.getEmail());
+        respuesta.setNombre(dto.getNombre());
+        respuesta.setApellido(dto.getApellido());
+        return respuesta;
     }
 
     @Override
@@ -88,11 +108,19 @@ public class UsuariosServiceImp implements UsuariosService {
         Usuarios u = usuarioOpt.get();
         DetallesUsuario d = u.getDetalles();
 
-        if (d == null) {
-            return new PerfilDTO("", "", "", u.getEmail());
+        PerfilDTO perfil = new PerfilDTO();
+        perfil.setEmail(u.getEmail());
+
+        if (d != null) {
+            perfil.setNombre(d.getNombre());
+            perfil.setApellido(d.getApellido());
+            perfil.setGenero(d.getGenero());
+            perfil.setDireccion(d.getDireccion());
+            perfil.setTelefono(d.getTelefono());
+            perfil.setDni(d.getDni());
         }
 
-        return new PerfilDTO(d.getDireccion(), d.getTelefono(), d.getDni(), u.getEmail());
+        return perfil;
     }
 
     @Override
@@ -108,9 +136,13 @@ public class UsuariosServiceImp implements UsuariosService {
             detalles.setUsuario(u);
         }
 
-        detalles.setDireccion(dto.getDireccion());
-        detalles.setTelefono(dto.getTelefono());
-        detalles.setDni(dto.getDni());
+        // Actualizar todos los campos incluyendo los nuevos
+        if (dto.getNombre()    != null) detalles.setNombre(dto.getNombre());
+        if (dto.getApellido()  != null) detalles.setApellido(dto.getApellido());
+        if (dto.getGenero()    != null) detalles.setGenero(dto.getGenero());
+        if (dto.getDireccion() != null) detalles.setDireccion(dto.getDireccion());
+        if (dto.getTelefono()  != null) detalles.setTelefono(dto.getTelefono());
+        if (dto.getDni()       != null) detalles.setDni(dto.getDni());
 
         detallesRepo.save(detalles);
         u.setDetalles(detalles);

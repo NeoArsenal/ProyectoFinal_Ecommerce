@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.LoginDTO;
 import com.example.demo.dto.PerfilDTO;
 import com.example.demo.dto.UsuariosDTO;
 import com.example.demo.service.UsuariosService;
@@ -28,8 +29,7 @@ public class UsuariosController {
 
     // --- 1. Login Validado ---
     @PostMapping("/login")
-    // Agregamos @Valid antes de @RequestBody
-    public ResponseEntity<?> login(@Valid @RequestBody UsuariosDTO credenciales) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginDTO credenciales) {
         UsuariosDTO usuario = service.login(credenciales.getEmail(), credenciales.getPassword());
         if (usuario != null) {
             return ResponseEntity.ok(usuario);

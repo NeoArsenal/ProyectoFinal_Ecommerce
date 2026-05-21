@@ -1,40 +1,182 @@
 <div class="login-container">
-  <div class="card">
-    <h2>Crear Cuenta Nueva</h2>
-    
+  <div class="card registro-card">
+
+    <!-- Encabezado -->
+    <div class="card-header">
+      <div class="icon-circle">🛒</div>
+      <h2>Crear Cuenta</h2>
+      <p class="subtitulo">Únete a NeoArsenal y empieza a comprar</p>
+    </div>
+
     <form #regForm="ngForm" (ngSubmit)="crearCuenta()">
-      
+
+      <!-- FILA: Nombre + Apellido -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre <span class="req">*</span></label>
+          <input
+            type="text"
+            id="reg-nombre"
+            name="nombre"
+            [(ngModel)]="datos.nombre"
+            required
+            minlength="3"
+            maxlength="30"
+            pattern="^[a-zA-Z\u00C0-\u024F ]+$"
+            #nombre="ngModel"
+            [class.input-error]="nombre.invalid && nombre.touched"
+            placeholder="Ej: Jose Carlos"
+            (keypress)="soloLetras($event)">
+          <small *ngIf="nombre.errors?.['required'] && nombre.touched" class="msg-error">
+            ⚠ El nombre es obligatorio
+          </small>
+          <small *ngIf="nombre.errors?.['minlength'] && nombre.touched" class="msg-error">
+            ⚠ El nombre debe tener al menos 3 letras (ej: "Ana")
+          </small>
+          <small *ngIf="nombre.errors?.['maxlength'] && nombre.touched" class="msg-error">
+            ⚠ Máximo 30 caracteres
+          </small>
+          <small *ngIf="nombre.errors?.['pattern'] && nombre.touched" class="msg-error">
+            ⚠ Solo letras, sin números ni símbolos
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>Apellido <span class="req">*</span></label>
+          <input
+            type="text"
+            id="reg-apellido"
+            name="apellido"
+            [(ngModel)]="datos.apellido"
+            required
+            minlength="3"
+            maxlength="30"
+            pattern="^[a-zA-Z\u00C0-\u024F ]+$"
+            #apellido="ngModel"
+            [class.input-error]="apellido.invalid && apellido.touched"
+            placeholder="Ej: Anicama Silva"
+            (keypress)="soloLetras($event)">
+          <small *ngIf="apellido.errors?.['required'] && apellido.touched" class="msg-error">
+            ⚠ El apellido es obligatorio
+          </small>
+          <small *ngIf="apellido.errors?.['minlength'] && apellido.touched" class="msg-error">
+            ⚠ El apellido debe tener al menos 3 letras (ej: "Gil")
+          </small>
+          <small *ngIf="apellido.errors?.['maxlength'] && apellido.touched" class="msg-error">
+            ⚠ Máximo 30 caracteres
+          </small>
+          <small *ngIf="apellido.errors?.['pattern'] && apellido.touched" class="msg-error">
+            ⚠ Solo letras, sin números ni símbolos
+          </small>
+        </div>
+      </div>
+
+      <!-- FILA: DNI + Género -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>DNI <span class="req">*</span></label>
+          <input
+            type="text"
+            id="reg-dni"
+            name="dni"
+            [(ngModel)]="datos.dni"
+            required
+            pattern="^\d{8}$"
+            maxlength="8"
+            #dni="ngModel"
+            [class.input-error]="dni.invalid && dni.touched"
+            placeholder="8 dígitos numéricos"
+            (keypress)="soloNumeros($event)">
+          <small *ngIf="dni.errors?.['required'] && dni.touched" class="msg-error">
+            ⚠ El DNI es obligatorio
+          </small>
+          <small *ngIf="dni.errors?.['pattern'] && dni.touched" class="msg-error">
+            ⚠ Solo 8 dígitos numéricos
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>Género <span class="req">*</span></label>
+          <select
+            id="reg-genero"
+            name="genero"
+            [(ngModel)]="datos.genero"
+            required
+            #genero="ngModel"
+            [class.input-error]="genero.invalid && genero.touched">
+            <option value="">-- Seleccionar --</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+          </select>
+          <small *ngIf="genero.invalid && genero.touched" class="msg-error">
+            ⚠ Selecciona un género
+          </small>
+        </div>
+      </div>
+
+      <!-- Email -->
       <div class="form-group">
-        <label>Email:</label>
-        <input type="email" name="email" [(ngModel)]="datos.email" 
-               required email #email="ngModel"
-               [class.input-error]="email.invalid && email.touched">
-        
-        <small *ngIf="email.invalid && email.touched" class="msg-error">
-          Formato incorrecto
+        <label>Correo Electrónico <span class="req">*</span></label>
+        <input
+          type="email"
+          id="reg-email"
+          name="email"
+          [(ngModel)]="datos.email"
+          required
+          email
+          #email="ngModel"
+          [class.input-error]="email.invalid && email.touched"
+          placeholder="jose@mail.com">
+        <small *ngIf="email.errors?.['required'] && email.touched" class="msg-error">
+          ⚠ El email es obligatorio
+        </small>
+        <small *ngIf="email.errors?.['email'] && email.touched" class="msg-error">
+          ⚠ Formato inválido (ej: usuario@mail.com)
         </small>
       </div>
 
+      <!-- Contraseña -->
       <div class="form-group">
-        <label>Contraseña:</label>
-        <input type="password" name="password" [(ngModel)]="datos.password" 
-               required minlength="6" #pass="ngModel"
-               [class.input-error]="pass.invalid && pass.touched">
-        
+        <label>Contraseña <span class="req">*</span></label>
+        <input
+          type="password"
+          id="reg-password"
+          name="password"
+          [(ngModel)]="datos.password"
+          required
+          minlength="6"
+          #pass="ngModel"
+          [class.input-error]="pass.invalid && pass.touched"
+          placeholder="Mínimo 6 caracteres">
         <small *ngIf="pass.invalid && pass.touched" class="msg-error">
-          Mínimo 6 caracteres
+          ⚠ Mínimo 6 caracteres
         </small>
       </div>
 
-      <p class="error-msg" *ngIf="mensajeError">⚠️ {{ mensajeError }}</p>
+      <!-- Alerta de error del Backend -->
+      <div class="error-msg" *ngIf="mensajeError">
+        ❌ {{ mensajeError }}
+      </div>
 
-      <button type="submit" style="background-color: #28a745;" [disabled]="regForm.invalid">
-        Registrarme
+      <!-- Alerta de éxito -->
+      <div class="success-msg" *ngIf="mensajeExito">
+        ✅ {{ mensajeExito }}
+      </div>
+
+      <!-- Contador de campos requeridos -->
+      <p class="campos-req">
+        <span class="req">*</span> Todos los campos son obligatorios
+      </p>
+
+      <button type="submit" id="btn-registrar" [disabled]="regForm.invalid || cargando">
+        <span *ngIf="!cargando">🚀 Crear mi cuenta</span>
+        <span *ngIf="cargando">⏳ Registrando...</span>
       </button>
+
     </form>
-    
+
     <p class="footer">
-      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión aquí</a>
     </p>
   </div>
 </div>

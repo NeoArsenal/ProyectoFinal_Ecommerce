@@ -1,71 +1,197 @@
-<div class="contenedor-ventas">
-  <h1>Registro de Nueva Venta</h1>
+<div class="ventas-page">
 
-  <!-- SECCIÓN 1: Agregar Productos -->
-  <div class="panel-agregar">
-    <div class="campo">
-      <label>Cliente (ID):</label>
-      <!-- Harcodeado al usuario 1 por ahora -->
-      <input type="number" [(ngModel)]="usuarioId" disabled title="Usuario fijo para prueba">
+  <!-- ======================== PASO 1: CARRITO ======================== -->
+  <div *ngIf="paso === 'carrito'" class="paso-contenedor">
+
+    <div class="page-header">
+      <h1>🛒 Nueva Venta</h1>
+      <p class="usuario-badge">👤 Cliente: <strong>{{ usuarioEmail || 'Usuario #' + usuarioId }}</strong></p>
     </div>
 
-    <div class="campo">
-      <label>Seleccionar Producto:</label>
-      <select [(ngModel)]="productoSeleccionadoId">
-        <option [ngValue]="null">-- Seleccione --</option>
-        <option *ngFor="let p of listaProductos" [value]="p.id">
-          {{ p.nombre }} - S/ {{ p.precio }}
-        </option>
-      </select>
+    <!-- Selector de producto -->
+    <div class="panel-agregar card-panel">
+      <h3>Agregar productos</h3>
+      <div class="form-row-ventas">
+        <div class="campo-grupo">
+          <label>Producto</label>
+          <select id="sel-producto" [(ngModel)]="productoSeleccionadoId">
+            <option [ngValue]="null">-- Seleccionar --</option>
+            <option *ngFor="let p of listaProductos" [value]="p.id">
+              {{ p.nombre }} — S/ {{ p.precio | number:'1.2-2' }}
+            </option>
+          </select>
+        </div>
+        <div class="campo-grupo campo-cant">
+          <label>Cantidad</label>
+          <input id="inp-cantidad" type="number" [(ngModel)]="cantidad" min="1">
+        </div>
+        <button id="btn-agregar" class="btn-agregar" (click)="agregarAlCarrito()">
+          + Agregar
+        </button>
+      </div>
+      <p class="msg-error-ventas" *ngIf="mensajeError">⚠ {{ mensajeError }}</p>
     </div>
 
-    <div class="campo">
-      <label>Cantidad:</label>
-      <input type="number" [(ngModel)]="cantidad" min="1" style="width: 60px;">
-    </div>
+    <!-- Tabla del carrito -->
+    <div class="card-panel">
+      <h3>Carrito</h3>
+      <table class="tabla-ventas">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th class="num">Precio Unit.</th>
+            <th class="center">Cant.</th>
+            <th class="num">Subtotal</th>
+            <th class="center">Quitar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of carrito; let i = index">
+            <td>{{ item.nombreProducto }}</td>
+            <td class="num">S/ {{ item.precio | number:'1.2-2' }}</td>
+            <td class="center">{{ item.cantidad }}</td>
+            <td class="num">S/ {{ item.subtotal | number:'1.2-2' }}</td>
+            <td class="center">
+              <button class="btn-quitar" (click)="eliminarDelCarrito(i)">✕</button>
+            </td>
+          </tr>
+          <tr *ngIf="carrito.length === 0">
+            <td colspan="5" class="carrito-vacio">El carrito está vacío</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <button (click)="agregarAlCarrito()" class="btn-agregar">
-      + Agregar al Carrito
-    </button>
+      <!-- Total y siguiente -->
+      <div class="panel-total" *ngIf="carrito.length > 0">
+        <span class="total-label">Total:</span>
+        <span class="total-monto">S/ {{ totalVenta | number:'1.2-2' }}</span>
+        <button id="btn-siguiente" class="btn-siguiente" (click)="irAPago()">
+          Continuar → Pago y Envío
+        </button>
+      </div>
+    </div>
   </div>
 
-  <hr>
+  <!-- ======================== PASO 2: PAGO Y ENVÍO ======================== -->
+  <div *ngIf="paso === 'pago'" class="paso-contenedor">
 
-  <!-- SECCIÓN 2: El Carrito (Tabla) -->
-  <table>
-    <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Precio Unit.</th>
-        <th>Cant.</th>
-        <th>Subtotal</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of carrito; let i = index">
-        <td>{{ item.nombreProducto }}</td>
-        <td class="num">S/ {{ item.precio | number:'1.2-2' }}</td>
-        <td class="center">{{ item.cantidad }}</td>
-        <td class="num">S/ {{ item.subtotal | number:'1.2-2' }}</td>
-        <td class="center">
-          <button (click)="eliminarDelCarrito(i)" class="btn-eliminar">X</button>
-        </td>
-      </tr>
-      <tr *ngIf="carrito.length === 0">
-        <td colspan="5" style="text-align:center; color: #888;">
-          El carrito está vacío
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="page-header">
+      <h1>💳 Pago y Envío</h1>
+      <p class="subtitulo-paso">Elige cómo pagarás y cómo recibirás tu pedido</p>
+    </div>
 
-  <!-- SECCIÓN 3: Totales y Guardar -->
-  <div class="panel-total" *ngIf="carrito.length > 0">
-    <h3>Total a Pagar: S/ {{ totalVenta | number:'1.2-2' }}</h3>
-    <button (click)="guardarVenta()" class="btn-finalizar">
-      $$ FINALIZAR COMPRA $$
-    </button>
+    <!-- Resumen del carrito (solo lectura) -->
+    <div class="card-panel resumen-mini">
+      <h3>Resumen del pedido</h3>
+      <div *ngFor="let item of carrito" class="item-resumen">
+        <span>{{ item.nombreProducto }} × {{ item.cantidad }}</span>
+        <span>S/ {{ item.subtotal | number:'1.2-2' }}</span>
+      </div>
+      <div class="total-resumen">
+        <strong>Total a pagar:</strong>
+        <strong class="monto-resumen">S/ {{ totalVenta | number:'1.2-2' }}</strong>
+      </div>
+    </div>
+
+    <!-- Método de Pago -->
+    <div class="card-panel">
+      <h3>Método de Pago</h3>
+      <div class="opciones-pago">
+        <label
+          *ngFor="let mp of metodosPago"
+          class="opcion-card"
+          [class.seleccionado]="metodoPago === mp">
+          <input type="radio" name="metodoPago" [(ngModel)]="metodoPago" [value]="mp">
+          <span class="icono-pago">
+            {{ mp === 'Efectivo' ? '💵' : mp === 'Tarjeta de Crédito' ? '💳' : mp === 'Yape' ? '📱' : '🔵' }}
+          </span>
+          <span>{{ mp }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Método de Envío -->
+    <div class="card-panel">
+      <h3>Método de Envío</h3>
+      <div class="opciones-envio">
+        <label
+          *ngFor="let me of listaMetodosEnvio"
+          class="opcion-card"
+          [class.seleccionado]="metodoEnvioId === me.id">
+          <input type="radio" name="metodoEnvio" [(ngModel)]="metodoEnvioId" [value]="me.id">
+          <span class="icono-pago">🚚</span>
+          <span>{{ me.nombre }}</span>
+        </label>
+        <!-- Fallback si no hay métodos de envío en BD -->
+        <p *ngIf="listaMetodosEnvio.length === 0" class="msg-error-ventas">
+          No hay métodos de envío disponibles
+        </p>
+      </div>
+    </div>
+
+    <p class="msg-error-ventas" *ngIf="mensajeError">⚠ {{ mensajeError }}</p>
+
+    <div class="botones-paso">
+      <button class="btn-volver" (click)="volverAlCarrito()">← Volver</button>
+      <button
+        id="btn-confirmar"
+        class="btn-confirmar"
+        (click)="confirmarPedido()"
+        [disabled]="cargando">
+        <span *ngIf="!cargando">✅ Confirmar Pedido</span>
+        <span *ngIf="cargando">⏳ Procesando...</span>
+      </button>
+    </div>
   </div>
+
+  <!-- ======================== PASO 3: BOLETA DE CONFIRMACIÓN ======================== -->
+  <div *ngIf="paso === 'confirmacion' && pedidoConfirmado" class="paso-contenedor">
+
+    <div class="boleta-card">
+      <div class="boleta-header">
+        <div class="check-circle">✅</div>
+        <h2>¡Pedido Registrado!</h2>
+        <p>Tu compra ha sido procesada exitosamente</p>
+      </div>
+
+      <div class="boleta-info">
+        <div class="boleta-fila">
+          <span>📅 Fecha:</span>
+          <span>{{ pedidoConfirmado.fecha }} — {{ pedidoConfirmado.hora }}</span>
+        </div>
+        <div class="boleta-fila">
+          <span>👤 Cliente:</span>
+          <span>{{ pedidoConfirmado.email }}</span>
+        </div>
+        <div class="boleta-fila">
+          <span>💳 Método de Pago:</span>
+          <span>{{ pedidoConfirmado.metodoPago }}</span>
+        </div>
+        <div class="boleta-fila">
+          <span>🚚 Método de Envío:</span>
+          <span>{{ pedidoConfirmado.metodoEnvio }}</span>
+        </div>
+      </div>
+
+      <hr class="boleta-hr">
+
+      <div class="boleta-items">
+        <h4>Productos comprados:</h4>
+        <div *ngFor="let item of pedidoConfirmado.items" class="boleta-item">
+          <span>{{ item.nombreProducto }} × {{ item.cantidad }}</span>
+          <span>S/ {{ item.subtotal | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <div class="boleta-total">
+        <span>Total Pagado:</span>
+        <span class="boleta-monto">S/ {{ pedidoConfirmado.total | number:'1.2-2' }}</span>
+      </div>
+
+      <button id="btn-nueva-venta" class="btn-nueva-venta" (click)="nuevaVenta()">
+        🛒 Realizar otra compra
+      </button>
+    </div>
+  </div>
+
 </div>
-<router-outlet>

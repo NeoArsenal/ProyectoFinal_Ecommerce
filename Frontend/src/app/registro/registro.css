@@ -1,0 +1,182 @@
+/* =============================================
+   REGISTRO — Diseño Premium NeoArsenal
+   ============================================= */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  animation: fadeIn 0.4s ease;
+}
+
+/* Card más ancha para el formulario de 2 columnas */
+.registro-card {
+  background: var(--bg-card);
+  padding: 40px 40px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  width: 560px;
+  max-width: 100%;
+  animation: fadeInUp 0.5s ease-out;
+  border: 1px solid var(--border-light);
+}
+
+/* Encabezado con ícono */
+.card-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.icon-circle {
+  font-size: 36px;
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--primary-bg), #ddd6fe);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  border: 2px solid var(--primary-light);
+}
+
+.card-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.subtitulo {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Layout de 2 columnas para pares de campos */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+label {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  display: block;
+  letter-spacing: 0.2px;
+}
+
+/* Asterisco de requerido */
+.req {
+  color: var(--accent-rose);
+  font-weight: 700;
+}
+
+.card input,
+.card select {
+  margin-top: 4px;
+}
+
+/* Botón principal */
+button[type="submit"] {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  letter-spacing: 0.3px;
+  margin-top: 6px;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+}
+
+button[type="submit"]:disabled {
+  background: var(--border-medium);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Mensajes */
+.error-msg {
+  color: var(--accent-rose);
+  background: var(--accent-rose-light);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  text-align: left;
+  animation: slideDown 0.2s ease;
+}
+
+.success-msg {
+  color: #065f46;
+  background: #d1fae5;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  text-align: left;
+  animation: slideDown 0.2s ease;
+}
+
+.campos-req {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  text-align: right;
+}
+
+/* Footer link */
+.footer {
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.footer a:hover {
+  color: var(--primary-dark);
+}
+
+/* Responsive: 1 columna en móvil */
+@media (max-width: 520px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .registro-card {
+    padding: 28px 22px;
+  }
+}
