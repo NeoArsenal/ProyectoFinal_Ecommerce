@@ -1,31 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule }       from '@angular/common';
+import { AuthService }        from '../services/auth';
 import { HistorialService, HistorialDTO } from '../services/historial';
 
 @Component({
-  selector: 'app-historial',
-  standalone: true,
-  imports: [CommonModule], // Importamos CommonModule para usar *ngFor y Pipes
+  selector:    'app-historial',
+  standalone:  true,
+  imports:     [CommonModule],
   templateUrl: './historial.html',
-  styleUrls: ['./historial.css']
+  styleUrls:   ['./historial.css']
 })
 export class Historial implements OnInit {
-  
-  pedidos: HistorialDTO[] = [];
 
-  constructor(private historialService: HistorialService) {}
+  pedidos:      HistorialDTO[] = [];
+  cargando:     boolean = true;
+  mensajeError: string  = '';
 
-  ngOnInit(): void {
-    this.cargarHistorial();
+  // Email del usuario logueado para filtrar visualmente
+  get emailUsuario(): string {
+    return this.auth.usuario?.email ?? '';
   }
 
-  cargarHistorial() {
+  constructor(
+    private historialService: HistorialService,
+    private auth:             AuthService
+  ) {}
+
+  ngOnInit(): void {
     this.historialService.listarHistorial().subscribe({
-      next: (data) => {
-        this.pedidos = data;
-        console.log('Historial cargado:', data);
-      },
-      error: (err) => console.error('Error al cargar historial', err)
+      next:  (data) => { this.pedidos = data; this.cargando = false; },
+      error: ()     => { this.mensajeError = 'No se pudo cargar el historial.'; this.cargando = false; }
     });
+  }
+
+  badgeClase(estado: string): string {
+    if (estado === 'PENDIENTE')  return 'badge-pendiente';
+    if (estado === 'ENVIADO')    return 'badge-enviado';
+    if (estado === 'ENTREGADO')  return 'badge-entregado';
+    return 'badge-default';
   }
 }

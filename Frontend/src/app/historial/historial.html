@@ -1,51 +1,70 @@
-<div class="container">
-  <h1>📜 Historial de Pedidos (Backoffice)</h1>
+<div class="historial-page">
 
-  <table >
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Fecha</th>
-        <th>Cliente</th>
-        <th>Total</th>
-        <th>Pago</th>
-        <th>Estado Envío</th>
-        <th>Tracking #</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let p of pedidos">
-        <td>#{{ p.idPedido }}</td>
-        <!-- Pipe de fecha para que se vea bonito -->
-        <td>{{ p.fecha | date:'short' }}</td>
-        <td>{{ p.emailUsuario }}</td>
-        <td class="num">S/ {{ p.total | number:'1.2-2' }}</td>
-        
-        <td>
-          <span class="badge pago">{{ p.metodoPago }}</span>
-        </td>
-        
-        <td>
-          <!-- Clases dinámicas según el estado -->
-          <span class="badge envio" 
-                [class.pendiente]="p.estadoEnvio === 'PENDIENTE'"
-                [class.enviado]="p.estadoEnvio === 'ENVIADO'"
-                [class.entregado]="p.estadoEnvio === 'ENTREGADO'">
-            {{ p.estadoEnvio }}
-          </span>
-        </td>
-        
-        <td style="font-family: monospace; font-weight: bold; color: #555;">
-          {{ p.tracking }}
-        </td>
-      </tr>
-      
-      <!-- Mensaje si no hay datos -->
-      <tr *ngIf="pedidos.length === 0">
-        <td colspan="7" style="text-align:center; padding: 20px; color: #888;">
-          No hay pedidos registrados todavía.
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="page-header">
+    <h1>📜 Historial de Pedidos</h1>
+    <p class="subtitulo" *ngIf="emailUsuario">
+      Mostrando todos los pedidos del sistema
+    </p>
+  </div>
+
+  <!-- Cargando -->
+  <div *ngIf="cargando" class="loading-state">
+    <div class="spinner"></div>
+    <p>Cargando historial...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="mensajeError && !cargando" class="error-state">
+    <p>❌ {{ mensajeError }}</p>
+  </div>
+
+  <!-- Tabla -->
+  <div *ngIf="!cargando && !mensajeError" class="tabla-wrapper">
+
+    <!-- Contador -->
+    <div class="contador">
+      <span class="badge-total">{{ pedidos.length }} pedido{{ pedidos.length !== 1 ? 's' : '' }}</span>
+    </div>
+
+    <table class="tabla-historial">
+      <thead>
+        <tr>
+          <th class="col-id">#</th>
+          <th>Fecha</th>
+          <th>Cliente</th>
+          <th class="col-num">Total</th>
+          <th>Pago</th>
+          <th>Estado Envío</th>
+          <th>Tracking</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of pedidos">
+          <td class="col-id id-pedido">#{{ p.idPedido }}</td>
+          <td class="fecha-cell">{{ p.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td class="email-cell">{{ p.emailUsuario }}</td>
+          <td class="col-num total-cell">S/ {{ p.total | number:'1.2-2' }}</td>
+          <td>
+            <span class="badge badge-pago">{{ p.metodoPago || '—' }}</span>
+          </td>
+          <td>
+            <span class="badge" [ngClass]="badgeClase(p.estadoEnvio)">
+              {{ p.estadoEnvio || 'No asignado' }}
+            </span>
+          </td>
+          <td class="tracking-cell">{{ p.tracking || '—' }}</td>
+        </tr>
+
+        <tr *ngIf="pedidos.length === 0">
+          <td colspan="7" class="vacio">
+            <div class="vacio-contenido">
+              <span class="vacio-icon">📦</span>
+              <p>No hay pedidos registrados todavía.</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>

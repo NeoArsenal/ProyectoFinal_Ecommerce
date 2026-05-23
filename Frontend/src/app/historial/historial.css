@@ -1,43 +1,179 @@
-/* =============================================
-   HISTORIAL — Diseño Premium
-   ============================================= */
-
-.container {
-  max-width: 1100px;
+.historial-page {
+  max-width: 960px;
   margin: 0 auto;
-  padding: 40px 30px;
-  animation: fadeInUp 0.4s ease-out;
+  padding: 24px 20px 48px;
+  animation: fadeIn 0.3s ease;
 }
 
-.container h1 {
-  font-size: 24px;
+.page-header { margin-bottom: 24px; }
+
+.page-header h1 {
+  font-size: 26px;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 24px;
-  letter-spacing: -0.3px;
+  margin-bottom: 4px;
 }
 
-/* Tabla hereda estilos globales */
-.num { text-align: right; font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.subtitulo { font-size: 13px; color: var(--text-muted); }
+
+/* Contador */
+.contador { margin-bottom: 12px; }
+
+.badge-total {
+  display: inline-block;
+  background: var(--primary-bg);
+  color: var(--primary);
+  border: 1px solid var(--primary-light);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Tabla */
+.tabla-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.tabla-historial {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-historial th {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tabla-historial td {
+  padding: 13px 14px;
+  font-size: 13px;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tabla-historial tr:last-child td { border-bottom: none; }
+
+.tabla-historial tr:hover td {
+  background: var(--bg-secondary);
+  transition: background 0.15s ease;
+}
+
+.col-id    { width: 55px; text-align: center; }
+.col-num   { text-align: right; }
+
+.id-pedido {
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+  font-family: monospace;
+}
+
+.fecha-cell  { color: var(--text-secondary); font-size: 12px; }
+.email-cell  { color: var(--text-secondary); font-size: 12px; }
+.total-cell  { font-weight: 700; color: var(--text-primary); }
+
+.tracking-cell {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
 
 /* Badges */
-.badge { 
-  padding: 5px 12px;
-  border-radius: var(--radius-full);
-  font-size: 11px;
-  font-weight: 600;
-  color: white;
-  text-transform: uppercase;
+.badge {
   display: inline-block;
-  min-width: 80px;
-  text-align: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.3px;
+  text-transform: uppercase;
 }
 
-.pago { background: linear-gradient(135deg, var(--accent-emerald), #059669); }
+.badge-pago {
+  background: rgba(99,102,241,0.1);
+  color: var(--primary);
+  border: 1px solid rgba(99,102,241,0.25);
+}
 
-/* Estados de Envío */
-.envio { background: #94a3b8; }
-.pendiente { background: linear-gradient(135deg, var(--accent-amber), #d97706); }
-.enviado { background: linear-gradient(135deg, var(--accent-sky), #0284c7); }
-.entregado { background: linear-gradient(135deg, var(--accent-emerald), #059669); }
+.badge-pendiente {
+  background: rgba(245,158,11,0.1);
+  color: #d97706;
+  border: 1px solid rgba(245,158,11,0.3);
+}
+
+.badge-enviado {
+  background: rgba(59,130,246,0.1);
+  color: #2563eb;
+  border: 1px solid rgba(59,130,246,0.3);
+}
+
+.badge-entregado {
+  background: rgba(16,185,129,0.1);
+  color: #059669;
+  border: 1px solid rgba(16,185,129,0.3);
+}
+
+.badge-default {
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+}
+
+/* Estado vacío */
+.vacio { padding: 40px !important; }
+
+.vacio-contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+}
+
+.vacio-icon { font-size: 36px; }
+
+/* Carga */
+.loading-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.error-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--accent-rose);
+  font-weight: 600;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 640px) {
+  .tabla-historial { font-size: 11px; }
+  .tabla-historial th,
+  .tabla-historial td { padding: 9px 8px; }
+}

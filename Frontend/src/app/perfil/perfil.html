@@ -1,35 +1,100 @@
-<div class="perfil-container">
-  <h1>👤 Mi Perfil</h1>
-  
-  <div class="card-perfil">
-    
-    <!-- Email (Solo lectura) -->
-    <div class="form-group">
-      <label>Email (No editable):</label>
-      <input type="text" [value]="perfil.email" disabled class="input-disabled">
-    </div>
+<div class="perfil-page">
 
-    <!-- DNI -->
-    <div class="form-group">
-      <label>DNI:</label>
-      <input type="text" [(ngModel)]="perfil.dni" placeholder="12345678">
-    </div>
-
-    <!-- Teléfono -->
-    <div class="form-group">
-      <label>Teléfono:</label>
-      <input type="text" [(ngModel)]="perfil.telefono" placeholder="999-999-999">
-    </div>
-
-    <!-- Dirección -->
-    <div class="form-group">
-      <label>Dirección de Envío:</label>
-      <textarea [(ngModel)]="perfil.direccion" rows="3" placeholder="Av. Principal 123..."></textarea>
-    </div>
-
-    <button (click)="guardar()" class="btn-guardar">
-      💾 Guardar Cambios
-    </button>
-
+  <!-- ===== CARGANDO ===== -->
+  <div *ngIf="cargando" class="loading-state">
+    <div class="spinner"></div>
+    <p>Cargando perfil...</p>
   </div>
+
+  <ng-container *ngIf="!cargando">
+
+    <!-- ===== ENCABEZADO ===== -->
+    <div class="perfil-header">
+      <div class="avatar-circle">
+        {{ (perfil.nombre || '?').charAt(0).toUpperCase() }}
+      </div>
+      <div class="perfil-info-header">
+        <h1>{{ perfil.nombre || 'Usuario' }} {{ perfil.apellido }}</h1>
+        <p class="email-badge">📧 {{ perfil.email }}</p>
+        <span class="genero-badge">{{ generoTexto }}</span>
+      </div>
+    </div>
+
+    <!-- ===== DATOS DE IDENTIDAD (Solo lectura) ===== -->
+    <div class="card-seccion">
+      <h3 class="seccion-titulo">🪪 Datos de Identidad</h3>
+      <div class="grid-2col">
+
+        <div class="campo-readonly">
+          <label>Nombre</label>
+          <div class="valor-readonly">{{ perfil.nombre || '—' }}</div>
+        </div>
+
+        <div class="campo-readonly">
+          <label>Apellido</label>
+          <div class="valor-readonly">{{ perfil.apellido || '—' }}</div>
+        </div>
+
+        <div class="campo-readonly">
+          <label>DNI</label>
+          <div class="valor-readonly dni-valor">{{ perfil.dni || '—' }}</div>
+        </div>
+
+        <div class="campo-readonly">
+          <label>Género</label>
+          <div class="valor-readonly">{{ generoTexto }}</div>
+        </div>
+
+        <div class="campo-readonly col-span-2">
+          <label>Correo Electrónico</label>
+          <div class="valor-readonly">{{ perfil.email || '—' }}</div>
+        </div>
+
+      </div>
+      <p class="nota-readonly">🔒 Estos datos son de solo lectura. Si necesitas modificarlos, contacta al administrador.</p>
+    </div>
+
+    <!-- ===== DATOS DE CONTACTO (Editables) ===== -->
+    <div class="card-seccion">
+      <h3 class="seccion-titulo">📞 Datos de Contacto</h3>
+      <div class="grid-2col">
+
+        <div class="form-group-perfil">
+          <label for="inp-telefono">Teléfono</label>
+          <input
+            id="inp-telefono"
+            type="text"
+            [(ngModel)]="perfil.telefono"
+            placeholder="999 999 999"
+            maxlength="15">
+        </div>
+
+        <div class="form-group-perfil col-span-2">
+          <label for="inp-direccion">Dirección de Envío</label>
+          <textarea
+            id="inp-direccion"
+            [(ngModel)]="perfil.direccion"
+            rows="3"
+            placeholder="Av. Principal 123, Lima, Perú...">
+          </textarea>
+        </div>
+
+      </div>
+
+      <!-- Mensajes -->
+      <p class="msg-ok"    *ngIf="mensajeOk">{{ mensajeOk }}</p>
+      <p class="msg-error" *ngIf="mensajeError">{{ mensajeError }}</p>
+
+      <button
+        id="btn-guardar-perfil"
+        class="btn-guardar"
+        (click)="guardar()"
+        [disabled]="guardando">
+        <span *ngIf="!guardando">💾 Guardar Cambios</span>
+        <span *ngIf="guardando">⏳ Guardando...</span>
+      </button>
+    </div>
+
+  </ng-container>
+
 </div>
