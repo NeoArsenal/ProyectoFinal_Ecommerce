@@ -16,8 +16,18 @@ import { filter } from 'rxjs';
 export class App {
 
   rutaActual: string = '';
+  modoDaltonico: boolean = false;
 
   constructor(public auth: AuthService, private router: Router) {}
+
+  toggleDaltonismo() {
+    this.modoDaltonico = !this.modoDaltonico;
+    if (this.modoDaltonico) {
+      document.body.classList.add('modo-daltonico');
+    } else {
+      document.body.classList.remove('modo-daltonico');
+    }
+  }
 
   ngOnInit() {
     // Escuchamos cada vez que cambia la URL

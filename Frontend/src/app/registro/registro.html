@@ -1,19 +1,29 @@
-<div class="login-container">
-  <div class="card registro-card">
+<main class="min-h-screen w-full luminous-gradient flex items-center justify-center p-6 relative overflow-hidden font-sans text-gray-900" role="main">
+  <!-- Fondo decorativo suave -->
+  <div class="absolute -top-40 -right-40 w-96 h-96 bg-white/20 rounded-full blur-[80px] pointer-events-none"></div>
+  <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-[#003b3b] opacity-30 rounded-full blur-[80px] pointer-events-none"></div>
 
-    <!-- Encabezado -->
-    <div class="card-header">
-      <div class="icon-circle">🛒</div>
-      <h2>Crear Cuenta</h2>
-      <p class="subtitulo">Únete a NeoArsenal y empieza a comprar</p>
+  <!-- Contenedor Principal (Glass Card) -->
+  <section class="glass-nav p-8 md:p-10 rounded-3xl w-full max-w-[600px] shadow-2xl relative z-10 animate-[fadeInUp_0.4s_ease-out] my-8 overflow-y-auto max-h-[90vh]" aria-labelledby="registro-title">
+    
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <div class="w-16 h-16 bg-[#172b4d] text-[#d97706] rounded-2xl mx-auto flex flex-col items-center justify-center mb-5 shadow-xl card-lift-sm border-2 border-white/20">
+        <span class="material-symbols-filled text-[32px] mt-0.5">person_add</span>
+      </div>
+      <h1 id="registro-title" class="text-3xl font-extrabold text-[#172b4d] tracking-tight drop-shadow-sm">Crear una cuenta</h1>
+      <p class="text-[#3e4948] mt-2 font-medium text-[15px]">Únete a NeoArsenal y empieza a gestionar tu tienda</p>
     </div>
 
-    <form #regForm="ngForm" (ngSubmit)="crearCuenta()">
-
-      <!-- FILA: Nombre + Apellido -->
-      <div class="form-row">
-        <div class="form-group">
-          <label>Nombre <span class="req">*</span></label>
+    <form #regForm="ngForm" (ngSubmit)="crearCuenta()" class="space-y-6" novalidate>
+      
+      <!-- Fila: Nombre y Apellido -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Campo Nombre -->
+        <div class="space-y-2">
+          <label for="reg-nombre" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+            Nombre <span class="text-red-500">*</span>
+          </label>
           <input
             type="text"
             id="reg-nombre"
@@ -24,25 +34,28 @@
             maxlength="30"
             pattern="^[a-zA-Z\u00C0-\u024F ]+$"
             #nombre="ngModel"
-            [class.input-error]="nombre.invalid && nombre.touched"
+            [class.border-red-400]="nombre.invalid && nombre.touched"
+            [class.focus:ring-red-400]="nombre.invalid && nombre.touched"
+            [class.border-gray-200]="!(nombre.invalid && nombre.touched)"
+            [class.focus:border-[#02696a]]="!(nombre.invalid && nombre.touched)"
+            [class.focus:ring-[#02696a]]="!(nombre.invalid && nombre.touched)"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
             placeholder="Ej: Jose Carlos"
-            (keypress)="soloLetras($event)">
-          <small *ngIf="nombre.errors?.['required'] && nombre.touched" class="msg-error">
-            ⚠ El nombre es obligatorio
-          </small>
-          <small *ngIf="nombre.errors?.['minlength'] && nombre.touched" class="msg-error">
-            ⚠ El nombre debe tener al menos 3 letras (ej: "Ana")
-          </small>
-          <small *ngIf="nombre.errors?.['maxlength'] && nombre.touched" class="msg-error">
-            ⚠ Máximo 30 caracteres
-          </small>
-          <small *ngIf="nombre.errors?.['pattern'] && nombre.touched" class="msg-error">
-            ⚠ Solo letras, sin números ni símbolos
+            (keypress)="soloLetras($event)"
+            aria-required="true">
+          
+          <small *ngIf="nombre.invalid && nombre.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
+            <span *ngIf="nombre.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
+            <span *ngIf="nombre.errors?.['minlength']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Mínimo 3 letras</span>
+            <span *ngIf="nombre.errors?.['pattern']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Solo letras</span>
           </small>
         </div>
 
-        <div class="form-group">
-          <label>Apellido <span class="req">*</span></label>
+        <!-- Campo Apellido -->
+        <div class="space-y-2">
+          <label for="reg-apellido" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+            Apellido <span class="text-red-500">*</span>
+          </label>
           <input
             type="text"
             id="reg-apellido"
@@ -53,28 +66,31 @@
             maxlength="30"
             pattern="^[a-zA-Z\u00C0-\u024F ]+$"
             #apellido="ngModel"
-            [class.input-error]="apellido.invalid && apellido.touched"
+            [class.border-red-400]="apellido.invalid && apellido.touched"
+            [class.focus:ring-red-400]="apellido.invalid && apellido.touched"
+            [class.border-gray-200]="!(apellido.invalid && apellido.touched)"
+            [class.focus:border-[#02696a]]="!(apellido.invalid && apellido.touched)"
+            [class.focus:ring-[#02696a]]="!(apellido.invalid && apellido.touched)"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
             placeholder="Ej: Anicama Silva"
-            (keypress)="soloLetras($event)">
-          <small *ngIf="apellido.errors?.['required'] && apellido.touched" class="msg-error">
-            ⚠ El apellido es obligatorio
-          </small>
-          <small *ngIf="apellido.errors?.['minlength'] && apellido.touched" class="msg-error">
-            ⚠ El apellido debe tener al menos 3 letras (ej: "Gil")
-          </small>
-          <small *ngIf="apellido.errors?.['maxlength'] && apellido.touched" class="msg-error">
-            ⚠ Máximo 30 caracteres
-          </small>
-          <small *ngIf="apellido.errors?.['pattern'] && apellido.touched" class="msg-error">
-            ⚠ Solo letras, sin números ni símbolos
+            (keypress)="soloLetras($event)"
+            aria-required="true">
+            
+          <small *ngIf="apellido.invalid && apellido.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
+            <span *ngIf="apellido.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
+            <span *ngIf="apellido.errors?.['minlength']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Mínimo 3 letras</span>
+            <span *ngIf="apellido.errors?.['pattern']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Solo letras</span>
           </small>
         </div>
       </div>
 
-      <!-- FILA: DNI + Género -->
-      <div class="form-row">
-        <div class="form-group">
-          <label>DNI <span class="req">*</span></label>
+      <!-- Fila: DNI y Género -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Campo DNI -->
+        <div class="space-y-2">
+          <label for="reg-dni" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+            DNI <span class="text-red-500">*</span>
+          </label>
           <input
             type="text"
             id="reg-dni"
@@ -84,99 +100,150 @@
             pattern="^\d{8}$"
             maxlength="8"
             #dni="ngModel"
-            [class.input-error]="dni.invalid && dni.touched"
+            [class.border-red-400]="dni.invalid && dni.touched"
+            [class.focus:ring-red-400]="dni.invalid && dni.touched"
+            [class.border-gray-200]="!(dni.invalid && dni.touched)"
+            [class.focus:border-[#02696a]]="!(dni.invalid && dni.touched)"
+            [class.focus:ring-[#02696a]]="!(dni.invalid && dni.touched)"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
             placeholder="8 dígitos numéricos"
-            (keypress)="soloNumeros($event)">
-          <small *ngIf="dni.errors?.['required'] && dni.touched" class="msg-error">
-            ⚠ El DNI es obligatorio
-          </small>
-          <small *ngIf="dni.errors?.['pattern'] && dni.touched" class="msg-error">
-            ⚠ Solo 8 dígitos numéricos
+            (keypress)="soloNumeros($event)"
+            aria-required="true">
+            
+          <small *ngIf="dni.invalid && dni.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
+            <span *ngIf="dni.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
+            <span *ngIf="dni.errors?.['pattern']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Exactamente 8 números</span>
           </small>
         </div>
 
-        <div class="form-group">
-          <label>Género <span class="req">*</span></label>
-          <select
-            id="reg-genero"
-            name="genero"
-            [(ngModel)]="datos.genero"
+        <!-- Campo Género -->
+        <div class="space-y-2">
+          <label for="reg-genero" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+            Género <span class="text-red-500">*</span>
+          </label>
+          <div class="relative">
+            <select
+              id="reg-genero"
+              name="genero"
+              [(ngModel)]="datos.genero"
+              required
+              #genero="ngModel"
+              [class.border-red-400]="genero.invalid && genero.touched"
+              [class.focus:ring-red-400]="genero.invalid && genero.touched"
+              [class.border-gray-200]="!(genero.invalid && genero.touched)"
+              [class.focus:border-[#02696a]]="!(genero.invalid && genero.touched)"
+              [class.focus:ring-[#02696a]]="!(genero.invalid && genero.touched)"
+              class="block w-full pl-4 pr-10 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner appearance-none cursor-pointer"
+              aria-required="true">
+              <option value="" disabled class="text-gray-400">Seleccionar género</option>
+              <option value="M" class="text-gray-900">Masculino</option>
+              <option value="F" class="text-gray-900">Femenino</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-500" aria-hidden="true">
+              <span class="material-symbols-outlined text-[20px]">expand_more</span>
+            </div>
+          </div>
+          <small *ngIf="genero.invalid && genero.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
+            <span><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Fila: Correo y Contraseña -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Campo Correo -->
+        <div class="space-y-2">
+          <label for="reg-email" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+            Correo <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            id="reg-email"
+            name="email"
+            [(ngModel)]="datos.email"
             required
-            #genero="ngModel"
-            [class.input-error]="genero.invalid && genero.touched">
-            <option value="">-- Seleccionar --</option>
-            <option value="M">Masculino</option>
-            <option value="F">Femenino</option>
-          </select>
-          <small *ngIf="genero.invalid && genero.touched" class="msg-error">
-            ⚠ Selecciona un género
+            email
+            #email="ngModel"
+            [class.border-red-400]="email.invalid && email.touched"
+            [class.focus:ring-red-400]="email.invalid && email.touched"
+            [class.border-gray-200]="!(email.invalid && email.touched)"
+            [class.focus:border-[#02696a]]="!(email.invalid && email.touched)"
+            [class.focus:ring-[#02696a]]="!(email.invalid && email.touched)"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            placeholder="ejemplo@correo.com"
+            aria-required="true">
+            
+          <small *ngIf="email.invalid && email.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
+            <span *ngIf="email.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
+            <span *ngIf="email.errors?.['email']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Formato inválido</span>
+          </small>
+        </div>
+
+        <!-- Campo Contraseña -->
+        <div class="space-y-2">
+          <label for="reg-password" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+            Contraseña <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="password"
+            id="reg-password"
+            name="password"
+            [(ngModel)]="datos.password"
+            required
+            minlength="6"
+            #pass="ngModel"
+            [class.border-red-400]="pass.invalid && pass.touched"
+            [class.focus:ring-red-400]="pass.invalid && pass.touched"
+            [class.border-gray-200]="!(pass.invalid && pass.touched)"
+            [class.focus:border-[#02696a]]="!(pass.invalid && pass.touched)"
+            [class.focus:ring-[#02696a]]="!(pass.invalid && pass.touched)"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            placeholder="Mínimo 6 caracteres"
+            aria-required="true">
+            
+          <small *ngIf="pass.invalid && pass.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
+            <span *ngIf="pass.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
+            <span *ngIf="pass.errors?.['minlength']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Mínimo 6 caracteres</span>
           </small>
         </div>
       </div>
 
-      <!-- Email -->
-      <div class="form-group">
-        <label>Correo Electrónico <span class="req">*</span></label>
-        <input
-          type="email"
-          id="reg-email"
-          name="email"
-          [(ngModel)]="datos.email"
-          required
-          email
-          #email="ngModel"
-          [class.input-error]="email.invalid && email.touched"
-          placeholder="jose@mail.com">
-        <small *ngIf="email.errors?.['required'] && email.touched" class="msg-error">
-          ⚠ El email es obligatorio
-        </small>
-        <small *ngIf="email.errors?.['email'] && email.touched" class="msg-error">
-          ⚠ Formato inválido (ej: usuario@mail.com)
-        </small>
+      <!-- Alertas -->
+      <div role="alert" aria-live="assertive" class="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-[14px] font-semibold shadow-sm" *ngIf="mensajeError">
+        <span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">warning</span>
+        <span>{{ mensajeError }}</span>
       </div>
 
-      <!-- Contraseña -->
-      <div class="form-group">
-        <label>Contraseña <span class="req">*</span></label>
-        <input
-          type="password"
-          id="reg-password"
-          name="password"
-          [(ngModel)]="datos.password"
-          required
-          minlength="6"
-          #pass="ngModel"
-          [class.input-error]="pass.invalid && pass.touched"
-          placeholder="Mínimo 6 caracteres">
-        <small *ngIf="pass.invalid && pass.touched" class="msg-error">
-          ⚠ Mínimo 6 caracteres
-        </small>
+      <div role="alert" aria-live="assertive" class="flex items-start gap-2 bg-[#e6f4f1] border border-[#b2dfd7] text-[#02696a] px-4 py-3 rounded-xl text-[14px] font-semibold shadow-sm" *ngIf="mensajeExito">
+        <span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">check_circle</span>
+        <span>{{ mensajeExito }}</span>
       </div>
 
-      <!-- Alerta de error del Backend -->
-      <div class="error-msg" *ngIf="mensajeError">
-        ❌ {{ mensajeError }}
-      </div>
-
-      <!-- Alerta de éxito -->
-      <div class="success-msg" *ngIf="mensajeExito">
-        ✅ {{ mensajeExito }}
-      </div>
-
-      <!-- Contador de campos requeridos -->
-      <p class="campos-req">
-        <span class="req">*</span> Todos los campos son obligatorios
-      </p>
-
-      <button type="submit" id="btn-registrar" [disabled]="regForm.invalid || cargando">
-        <span *ngIf="!cargando">🚀 Crear mi cuenta</span>
-        <span *ngIf="cargando">⏳ Registrando...</span>
+      <!-- Botón de Registro -->
+      <button
+        type="submit"
+        id="btn-registrar"
+        [disabled]="regForm.invalid || cargando"
+        class="w-full py-4 px-4 bg-[#172b4d] hover:bg-[#11213b] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 mt-4">
+        
+        <span *ngIf="!cargando" class="flex items-center gap-2">
+          <span>Crear mi cuenta</span>
+          <span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+        </span>
+        <span *ngIf="cargando" class="flex items-center gap-2">
+          <span class="material-symbols-outlined animate-spin text-[20px]">sync</span>
+          <span>Registrando...</span>
+        </span>
       </button>
 
     </form>
-
-    <p class="footer">
-      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión aquí</a>
-    </p>
-  </div>
-</div>
+    
+    <!-- Enlace a login -->
+    <div class="mt-8 pt-6 border-t border-gray-200/50 text-center">
+      <p class="text-[14px] text-gray-600 font-medium">
+        ¿Ya tienes cuenta? 
+        <a routerLink="/login" class="text-[#02696a] hover:text-[#004f50] font-bold transition-all focus-visible:outline-[#02696a] nav-link-hover pb-1">Inicia sesión aquí</a>
+      </p>
+    </div>
+  </section>
+</main>

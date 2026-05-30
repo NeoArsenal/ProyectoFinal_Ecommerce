@@ -1,40 +1,102 @@
-<div class="login-container">
-  <div class="card">
-    <h2>Iniciar Sesión</h2>
+<main class="min-h-screen w-full luminous-gradient flex items-center justify-center p-6 relative overflow-hidden font-sans text-gray-900" role="main">
+  <!-- Fondo decorativo suave -->
+  <div class="absolute -top-40 -left-40 w-96 h-96 bg-white/20 rounded-full blur-[80px] pointer-events-none"></div>
+  <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-[#003b3b] opacity-30 rounded-full blur-[80px] pointer-events-none"></div>
+
+  <!-- Contenedor Principal (Glass Card) -->
+  <section class="glass-nav p-10 md:p-12 rounded-3xl w-full max-w-[440px] shadow-2xl relative z-10 animate-[fadeInUp_0.4s_ease-out]" aria-labelledby="login-title">
     
-    <!-- Formulario Template-Driven -->
-    <form #loginForm="ngForm" (ngSubmit)="ingresar()">
+    <!-- Logo -->
+    <div class="text-center mb-10">
+      <div class="w-16 h-16 bg-[#172b4d] text-[#d97706] rounded-2xl mx-auto flex flex-col items-center justify-center mb-5 shadow-xl card-lift-sm border-2 border-white/20">
+        <span class="material-symbols-filled text-[32px] mt-0.5">shopping_bag</span>
+      </div>
+      <h1 id="login-title" class="text-3xl font-extrabold text-[#172b4d] tracking-tight drop-shadow-sm">NeoArsenal</h1>
+      <p class="text-[#3e4948] mt-2 font-medium text-[15px]">Ingresa a tu cuenta para continuar</p>
+    </div>
+
+    <form #loginForm="ngForm" (ngSubmit)="ingresar()" class="space-y-6" novalidate>
       
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" name="email" [(ngModel)]="credenciales.email" 
-               required email #email="ngModel"
-               [class.input-error]="email.invalid && email.touched">
-        
-        <small *ngIf="email.invalid && email.touched" class="msg-error">
-          Email inválido
+      <!-- Campo Correo -->
+      <div class="space-y-2">
+        <label for="login-email" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+          Correo Electrónico <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <input 
+            type="email" 
+            id="login-email"
+            name="email" 
+            [(ngModel)]="credenciales.email" 
+            required 
+            email 
+            #email="ngModel"
+            [class.border-red-400]="email.invalid && email.touched"
+            [class.focus:ring-red-400]="email.invalid && email.touched"
+            [class.border-gray-200]="!(email.invalid && email.touched)"
+            [class.focus:border-[#02696a]]="!(email.invalid && email.touched)"
+            [class.focus:ring-[#02696a]]="!(email.invalid && email.touched)"
+            class="block w-full px-4 py-3.5 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            placeholder="tu@correo.com"
+            aria-required="true">
+        </div>
+        <small *ngIf="email.invalid && email.touched" class="flex items-center gap-1.5 text-[12px] text-red-500 font-bold mt-1.5">
+          <span class="material-symbols-outlined text-[16px]">error</span>
+          El formato del correo no es válido
         </small>
       </div>
 
-      <div class="form-group">
-        <label>Contraseña:</label>
-        <input type="password" name="password" [(ngModel)]="credenciales.password" 
-               required minlength="6" #pass="ngModel"
-               [class.input-error]="pass.invalid && pass.touched">
-        
-        <small *ngIf="pass.invalid && pass.touched" class="msg-error">
+      <!-- Campo Contraseña -->
+      <div class="space-y-2">
+        <label for="login-password" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+          Contraseña <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <input 
+            type="password" 
+            id="login-password"
+            name="password" 
+            [(ngModel)]="credenciales.password" 
+            required 
+            minlength="6" 
+            #pass="ngModel"
+            [class.border-red-400]="pass.invalid && pass.touched"
+            [class.focus:ring-red-400]="pass.invalid && pass.touched"
+            [class.border-gray-200]="!(pass.invalid && pass.touched)"
+            [class.focus:border-[#02696a]]="!(pass.invalid && pass.touched)"
+            [class.focus:ring-[#02696a]]="!(pass.invalid && pass.touched)"
+            class="block w-full px-4 py-3.5 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            placeholder="••••••••"
+            aria-required="true">
+        </div>
+        <small *ngIf="pass.invalid && pass.touched" class="flex items-center gap-1.5 text-[12px] text-red-500 font-bold mt-1.5">
+          <span class="material-symbols-outlined text-[16px]">error</span>
           Mínimo 6 caracteres
         </small>
       </div>
 
-      <!-- Mensaje de error general (Backend) -->
-      <p class="error-msg" *ngIf="error">⚠️ {{ error }}</p>
+      <!-- Error Global -->
+      <div role="alert" aria-live="assertive" class="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-[14px] font-semibold shadow-sm" *ngIf="error">
+        <span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">warning</span>
+        <span>{{ error }}</span>
+      </div>
 
-      <button type="submit" [disabled]="loginForm.invalid">Ingresar</button>
+      <!-- Botón Ingresar -->
+      <button 
+        type="submit" 
+        [disabled]="loginForm.invalid"
+        class="w-full py-4 px-4 bg-[#172b4d] hover:bg-[#11213b] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 mt-4">
+        <span>Iniciar Sesión</span>
+        <span class="material-symbols-outlined text-[20px]">login</span>
+      </button>
     </form>
     
-    <p class="footer">
-      ¿No tienes cuenta? <a routerLink="/registro">Regístrate aquí</a>
-    </p>
-  </div>
-</div>
+    <!-- Enlace a registro -->
+    <div class="mt-8 pt-6 border-t border-gray-200/50 text-center">
+      <p class="text-[14px] text-gray-600 font-medium">
+        ¿No tienes una cuenta? 
+        <a routerLink="/registro" class="text-[#02696a] hover:text-[#004f50] font-bold transition-all focus-visible:outline-[#02696a] nav-link-hover pb-1">Regístrate ahora</a>
+      </p>
+    </div>
+  </section>
+</main>

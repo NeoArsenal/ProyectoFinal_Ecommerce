@@ -6,21 +6,25 @@
     <input type="hidden" formControlName="id">
 
     <div class="campo">
-      <label>Empresa:</label>
-      <input type="text" formControlName="empresa" placeholder="Ej: Sony Corp">
-      <small *ngIf="empresaCtl?.touched && empresaCtl?.invalid" class="error">Requerido</small>
+      <label for="inp-empresa">Empresa:</label>
+      <input id="inp-empresa" type="text" formControlName="empresa" placeholder="Ej: Sony Corp" [class.input-error]="empresaCtl?.touched && empresaCtl?.invalid">
+      <small *ngIf="empresaCtl?.touched && empresaCtl?.errors?.['required']" class="error msg-error" role="alert" aria-live="polite">Requerido</small>
+      <small *ngIf="empresaCtl?.touched && empresaCtl?.errors?.['minlength']" class="error msg-error" role="alert" aria-live="polite">Mínimo 3 letras</small>
     </div>
 
     <div class="campo">
-      <label>Contacto:</label>
-      <input type="text" formControlName="contacto" placeholder="Ej: Juan Pérez">
-      <small *ngIf="contactoCtl?.touched && contactoCtl?.invalid" class="error">Requerido</small>
+      <label for="inp-contacto">Contacto:</label>
+      <input id="inp-contacto" type="text" formControlName="contacto" placeholder="Ej: Juan Pérez" [class.input-error]="contactoCtl?.touched && contactoCtl?.invalid">
+      <small *ngIf="contactoCtl?.touched && contactoCtl?.errors?.['required']" class="error msg-error" role="alert" aria-live="polite">Requerido</small>
+      <small *ngIf="contactoCtl?.touched && contactoCtl?.errors?.['minlength']" class="error msg-error" role="alert" aria-live="polite">Mínimo 3 letras</small>
+      <small *ngIf="contactoCtl?.touched && contactoCtl?.errors?.['pattern']" class="error msg-error" role="alert" aria-live="polite">Solo letras válidas</small>
     </div>
 
     <div class="campo">
-      <label>Teléfono:</label>
-      <input type="text" formControlName="telefono" placeholder="Ej: 999888777">
-      <small *ngIf="telCtl?.touched && telCtl?.invalid" class="error">Solo números</small>
+      <label for="inp-telefono">Teléfono:</label>
+      <input id="inp-telefono" type="text" formControlName="telefono" placeholder="Ej: 999888777" [class.input-error]="telCtl?.touched && telCtl?.invalid">
+      <small *ngIf="telCtl?.touched && telCtl?.errors?.['required']" class="error msg-error" role="alert" aria-live="polite">Requerido</small>
+      <small *ngIf="telCtl?.touched && telCtl?.errors?.['pattern']" class="error msg-error" role="alert" aria-live="polite">Debe tener 7 a 9 números exactos</small>
     </div>
 
     <div class="botones">

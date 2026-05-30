@@ -1,5 +1,7 @@
 <div class="container">
-  <h1>🚚 Centro de Despachos</h1>
+  <h1 style="display: flex; align-items: center; gap: 8px;">
+    <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">local_shipping</span> Centro de Despachos
+  </h1>
   <p>Gestión de paquetes y logística de salida.</p>
 
   <table >
@@ -34,13 +36,13 @@
           <button *ngIf="e.estado === 'PENDIENTE'" 
                   (click)="cambiarEstado(e, 'ENVIADO')" 
                   class="btn-enviar">
-            📦 Despachar
+            <span class="material-symbols-outlined align-middle mr-1" style="font-size: 16px;" aria-hidden="true">package_2</span> Despachar
           </button>
 
           <button *ngIf="e.estado === 'ENVIADO'" 
                   (click)="cambiarEstado(e, 'ENTREGADO')" 
                   class="btn-entregar">
-            ✅ Confirmar Entrega
+            <span class="material-symbols-outlined align-middle mr-1" style="font-size: 16px;" aria-hidden="true">check_circle</span> Confirmar Entrega
           </button>
 
           <span *ngIf="e.estado === 'ENTREGADO'" class="text-ok">

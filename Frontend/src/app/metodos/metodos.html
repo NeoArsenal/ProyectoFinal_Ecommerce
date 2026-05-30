@@ -1,10 +1,12 @@
 <div class="container">
-  <h1>📦 Métodos de Envío</h1>
+  <h1 style="display: flex; align-items: center; gap: 8px;">
+    <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">local_shipping</span> Métodos de Envío
+  </h1>
 
   <div class="formulario">
     <div class="campo">
-      <label>Nuevo Método:</label>
-      <input type="text" [(ngModel)]="nombreNuevo" placeholder="Ej: Aéreo Express">
+      <label for="inp-nuevo-metodo">NUEVO MÉTODO:</label>
+      <input id="inp-nuevo-metodo" type="text" [(ngModel)]="nombreNuevo" placeholder="Ej: Aéreo Express">
     </div>
     <button (click)="guardar()" class="btn-guardar" [disabled]="!nombreNuevo">Agregar</button>
   </div>
@@ -22,7 +24,7 @@
         <td class="center">{{ m.id }}</td>
         <td>{{ m.nombre }}</td>
         <td class="center">
-          <button (click)="borrar(m.id)" class="btn-borrar">X</button>
+          <button (click)="borrar(m.id)" class="btn-borrar" aria-label="Eliminar método">X</button>
         </td>
       </tr>
     </tbody>

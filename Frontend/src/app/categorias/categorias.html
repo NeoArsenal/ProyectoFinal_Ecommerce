@@ -1,15 +1,17 @@
 <div class="container">
-  <h1>🏷️ Gestión de Categorías</h1>
+  <h1 style="display: flex; align-items: center; gap: 8px;">
+    <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">sell</span> Gestión de Categorías
+  </h1>
 
   <!-- Formulario -->
   <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
     <div class="campo">
-      <label>Nombre:</label>
-      <input type="text" formControlName="nombre" placeholder="Ej: Ropa">
+      <label for="inp-nombre">Nombre:</label>
+      <input id="inp-nombre" type="text" formControlName="nombre" placeholder="Ej: Ropa">
     </div>
     <div class="campo">
-      <label>Descripción:</label>
-      <input type="text" formControlName="descripcion" placeholder="Ej: Polos y pantalones">
+      <label for="inp-desc">Descripción:</label>
+      <input id="inp-desc" type="text" formControlName="descripcion" placeholder="Ej: Polos y pantalones">
     </div>
     <button type="submit" [disabled]="form.invalid" class="btn-guardar">Guardar</button>
   </form>

@@ -83,14 +83,14 @@
 
 .btn-agregar {
   padding: 10px 18px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, #02696a, #004f50);
   color: white;
   font-size: 14px;
   font-weight: 600;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   white-space: nowrap;
   height: 42px;
 }
@@ -173,15 +173,15 @@
 
 .btn-siguiente {
   padding: 11px 24px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, #02696a, #004f50);
   color: white;
   font-size: 14px;
   font-weight: 600;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   cursor: pointer;
-  transition: all var(--transition-normal);
-  box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(2, 105, 106, 0.3);
 }
 
 .btn-siguiente:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(99,102,241,0.4); }
@@ -377,15 +377,15 @@
 .btn-nueva-venta {
   width: 100%;
   padding: 13px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, #02696a, #004f50);
   color: white;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  transition: all var(--transition-normal);
-  box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 14px rgba(2, 105, 106, 0.35);
 }
 
 .btn-nueva-venta:hover {

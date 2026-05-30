@@ -1,58 +1,60 @@
 <div class="container">
-  <h1>📦 Gestión de Productos</h1>
+  <h1 style="display: flex; align-items: center; gap: 8px;">
+    <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">inventory_2</span> Gestión de Productos
+  </h1>
 
   <form [formGroup]="form" class="formulario">
     <input type="hidden" formControlName="id" />
     
     <div class="fila">
       <div class="campo">
-         <label>Nombre:</label>
-         <input type="text" formControlName="nombre" 
+         <label for="inp-nombre">Nombre:</label>
+         <input id="inp-nombre" type="text" formControlName="nombre" 
                 [class.input-error]="esInvalido('nombre')"/>
          
          <!-- MENSAJES DE ERROR -->
-         <small *ngIf="esInvalido('nombre')" class="msg-error">
+         <small *ngIf="esInvalido('nombre')" class="msg-error" role="alert" aria-live="polite">
             Mínimo 3 letras
          </small>
       </div>
 
       <div class="campo">
-         <label>Descripción:</label>
-         <input type="text" formControlName="descripcion" 
+         <label for="inp-desc">Descripción:</label>
+         <input id="inp-desc" type="text" formControlName="descripcion" 
                 [class.input-error]="esInvalido('descripcion')"/>
-         <small *ngIf="esInvalido('descripcion')" class="msg-error">Requerido</small>
+         <small *ngIf="esInvalido('descripcion')" class="msg-error" role="alert" aria-live="polite">Requerido</small>
       </div>
     </div>
 
     <div class="fila">
       <div class="campo">
-         <label>Precio:</label>
-         <input type="number" formControlName="precio" 
+         <label for="inp-precio">Precio:</label>
+         <input id="inp-precio" type="number" formControlName="precio" 
                 [class.input-error]="esInvalido('precio')"/>
-         <small *ngIf="esInvalido('precio')" class="msg-error">Debe ser mayor a 0</small>
+         <small *ngIf="esInvalido('precio')" class="msg-error" role="alert" aria-live="polite">Debe ser mayor a 0</small>
       </div>
 
       <div class="campo">
-         <label>Stock:</label>
-         <input type="number" formControlName="stock" 
+         <label for="inp-stock">Stock:</label>
+         <input id="inp-stock" type="number" formControlName="stock" 
                 [class.input-error]="esInvalido('stock')"/>
-         <small *ngIf="esInvalido('stock')" class="msg-error">No puede ser negativo</small>
+         <small *ngIf="esInvalido('stock')" class="msg-error" role="alert" aria-live="polite">No puede ser negativo</small>
       </div>
     </div>
 
     <div class="fila">
       <div class="campo">
-          <label>Categoría:</label>
-          <select formControlName="categoriaId" [class.input-error]="esInvalido('categoriaId')">
+          <label for="sel-cat">Categoría:</label>
+          <select id="sel-cat" formControlName="categoriaId" [class.input-error]="esInvalido('categoriaId')">
             <option [ngValue]="null">-- Seleccione --</option>
             <option *ngFor="let c of categorias" [value]="c.id">{{ c.nombre }}</option>
           </select>
-          <small *ngIf="esInvalido('categoriaId')" class="msg-error">Seleccione una</small>
+          <small *ngIf="esInvalido('categoriaId')" class="msg-error" role="alert" aria-live="polite">Seleccione una</small>
       </div>
 
       <div class="campo">
-          <label>Proveedores (Ctrl + Clic):</label>
-          <select formControlName="proveedorIds" multiple style="height: 80px;">
+          <label for="sel-prov">Proveedores (Ctrl + Clic):</label>
+          <select id="sel-prov" formControlName="proveedorIds" multiple style="height: 80px;">
             <option *ngFor="let p of proveedores" [value]="p.id">{{ p.empresa }}</option>
           </select>
       </div>
@@ -93,8 +95,8 @@
           
           <td class="num">S/ {{ p.precio | number:'1.2-2' }}</td>
           <td class="center">
-              <button (click)="seleccionar(p)" class="btn-azul-sm">Editar</button>
-              <button (click)="baja(p.id)" class="btn-rojo-sm">X</button>
+              <button (click)="seleccionar(p)" class="btn-azul-sm" aria-label="Editar producto">Editar</button>
+              <button (click)="baja(p.id)" class="btn-rojo-sm" aria-label="Eliminar producto">X</button>
           </td>
       </tr>
     </tbody>

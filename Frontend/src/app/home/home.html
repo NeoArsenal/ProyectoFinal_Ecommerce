@@ -1,138 +1,161 @@
-<div class="home-container">
+<div class="max-w-[1200px] mx-auto px-6 py-10 animate-[fadeInUp_0.4s_ease-out]">
   
   <!-- Header -->
-  <div class="home-header">
-    <h1>Panel de Control</h1>
-    <p class="subtitle">Resumen general de tu negocio</p>
+  <div class="mb-10">
+    <h1 class="text-[#191c1d] text-3xl font-bold tracking-tight mb-2">Panel de Control</h1>
+    <p class="text-[#3e4948] text-base">Resumen general de tu negocio</p>
   </div>
   
   <!-- SECCIÓN 1: DASHBOARD DE MÉTRICAS -->
-  <div class="stats-grid" *ngIf="stats">
-    <div class="stat-card stat-revenue">
-      <div class="stat-icon-wrapper revenue-icon">
-        <span class="stat-icon">💰</span>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12" *ngIf="stats">
+    
+    <!-- Ingresos Totales -->
+    <div class="glass-card rounded-2xl p-6 flex items-center gap-5 card-lift-sm relative overflow-hidden">
+      <!-- Decorative background glow -->
+      <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#02696a] opacity-5 rounded-full blur-2xl"></div>
+      
+      <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-emerald-50 text-emerald-600">
+        <span class="material-symbols-filled text-[28px]">payments</span>
       </div>
-      <div class="stat-info">
-        <p class="stat-label">Ingresos Totales</p>
-        <h3 class="stat-value">S/ {{ stats.totalVentas | number:'1.2-2' }}</h3>
+      <div>
+        <p class="text-[13px] font-medium text-gray-500 mb-1 tracking-wide">INGRESOS TOTALES</p>
+        <h3 class="text-2xl font-bold text-gray-800">S/ {{ stats.totalVentas | number:'1.2-2' }}</h3>
       </div>
     </div>
     
-    <div class="stat-card stat-orders">
-      <div class="stat-icon-wrapper orders-icon">
-        <span class="stat-icon">📦</span>
+    <!-- Pedidos Realizados -->
+    <div class="glass-card rounded-2xl p-6 flex items-center gap-5 card-lift-sm relative overflow-hidden">
+      <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-500 opacity-5 rounded-full blur-2xl"></div>
+      
+      <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-blue-50 text-blue-600">
+        <span class="material-symbols-filled text-[28px]">shopping_cart</span>
       </div>
-      <div class="stat-info">
-        <p class="stat-label">Pedidos Realizados</p>
-        <h3 class="stat-value">{{ stats.cantidadPedidos }}</h3>
+      <div>
+        <p class="text-[13px] font-medium text-gray-500 mb-1 tracking-wide">PEDIDOS REALIZADOS</p>
+        <h3 class="text-2xl font-bold text-gray-800">{{ stats.cantidadPedidos }}</h3>
       </div>
     </div>
     
-    <div class="stat-card stat-stock">
-      <div class="stat-icon-wrapper stock-icon">
-        <span class="stat-icon">⚠️</span>
+    <!-- Bajo Stock -->
+    <div class="glass-card rounded-2xl p-6 flex items-center gap-5 card-lift-sm relative overflow-hidden">
+      <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-500 opacity-5 rounded-full blur-2xl"></div>
+      
+      <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-amber-50 text-amber-600">
+        <span class="material-symbols-filled text-[28px]">warning</span>
       </div>
-      <div class="stat-info">
-        <p class="stat-label">Bajo Stock (< 5)</p>
-        <h3 class="stat-value">{{ stats.productosBajoStock }}</h3>
+      <div>
+        <p class="text-[13px] font-medium text-gray-500 mb-1 tracking-wide">BAJO STOCK (< 5)</p>
+        <h3 class="text-2xl font-bold text-gray-800">{{ stats.productosBajoStock }}</h3>
       </div>
     </div>
   </div>
 
   <!-- Loading state -->
-  <div class="stats-grid" *ngIf="!stats">
-    <div class="stat-card stat-loading">
-      <p style="color: var(--text-muted); font-size: 14px;">Cargando datos del sistema...</p>
+  <div class="grid grid-cols-1 mb-12" *ngIf="!stats">
+    <div class="glass-card rounded-2xl p-10 flex flex-col items-center justify-center text-center">
+      <span class="material-symbols-outlined text-[32px] text-[#72c1c1] animate-spin mb-3">progress_activity</span>
+      <p class="text-gray-500 text-sm font-medium">Cargando datos del sistema...</p>
     </div>
   </div>
   
   <!-- Separador con título de sección -->
-  <div class="section-header">
-    <h2>Módulos del Sistema</h2>
-    <p>Selecciona una opción para comenzar</p>
+  <div class="mb-8 border-b border-gray-200 pb-4">
+    <h2 class="text-xl font-bold text-[#191c1d] mb-1">Módulos del Sistema</h2>
+    <p class="text-sm text-[#3e4948]">Selecciona una opción para comenzar</p>
   </div>
 
   <!-- SECCIÓN 2: MENÚ DE NAVEGACIÓN -->
-  <div class="menu-grid">
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
      
-     <!-- Grupo: Operaciones -->
-     <div class="card" routerLink="/ventas">
-        <div class="card-accent accent-emerald"></div>
-        <div class="card-icon">🛒</div>
-        <h3>Punto de Venta</h3>
-        <p>Registrar nuevas compras</p>
+     <!-- Operaciones -->
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/ventas">
+        <div class="w-12 h-12 mx-auto rounded-full bg-emerald-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-emerald-600">point_of_sale</span>
+        </div>
+        <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Punto de Venta</h3>
+        <p class="text-[13px] text-gray-500 leading-tight">Registrar nuevas compras</p>
      </div>
      
-     <div class="card" routerLink="/productos">
-       <div class="card-accent accent-primary"></div>
-       <div class="card-icon">📱</div>
-       <h3>Catálogo</h3>
-       <p>Gestionar productos</p>
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/productos">
+        <div class="w-12 h-12 mx-auto rounded-full bg-[#eefcfc] flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-[#02696a]">inventory_2</span>
+        </div>
+        <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Catálogo</h3>
+        <p class="text-[13px] text-gray-500 leading-tight">Gestionar productos</p>
      </div>
 
-     <div class="card" routerLink="/categorias">
-        <div class="card-accent accent-violet"></div>
-        <div class="card-icon">🏷️</div>
-        <h3>Categorías</h3>
-        <p>Tipos de productos</p>
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/categorias">
+        <div class="w-12 h-12 mx-auto rounded-full bg-violet-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-violet-600">category</span>
+        </div>
+        <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Categorías</h3>
+        <p class="text-[13px] text-gray-500 leading-tight">Tipos de productos</p>
      </div>
 
-     <div class="card" routerLink="/metodos">
-        <div class="card-accent accent-teal"></div>
-        <div class="card-icon">📬</div>
-        <h3>Métodos de Envío</h3>
-        <p>Configurar opciones</p>
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/metodos">
+        <div class="w-12 h-12 mx-auto rounded-full bg-teal-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-teal-600">mark_email_read</span>
+        </div>
+        <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Métodos Envío</h3>
+        <p class="text-[13px] text-gray-500 leading-tight">Configurar opciones</p>
      </div>
 
-     <!-- Grupo: Logística -->
-     <div class="card" routerLink="/almacenes">
-       <div class="card-accent accent-amber"></div>
-       <div class="card-icon">🏭</div>
-       <h3>Almacenes</h3>
-       <p>Gestionar sedes</p>
+     <!-- Logística -->
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/almacenes">
+       <div class="w-12 h-12 mx-auto rounded-full bg-amber-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-amber-600">warehouse</span>
+        </div>
+       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Almacenes</h3>
+       <p class="text-[13px] text-gray-500 leading-tight">Gestionar sedes</p>
      </div>
 
-     <div class="card" routerLink="/inventarios">
-       <div class="card-accent accent-orange"></div>
-       <div class="card-icon">📊</div>
-       <h3>Distribución</h3>
-       <p>Stock por almacén</p>
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/inventarios">
+       <div class="w-12 h-12 mx-auto rounded-full bg-orange-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-orange-600">analytics</span>
+        </div>
+       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Distribución</h3>
+       <p class="text-[13px] text-gray-500 leading-tight">Stock por almacén</p>
      </div>
 
-     <div class="card" routerLink="/envios">
-       <div class="card-accent accent-sky"></div>
-       <div class="card-icon">📤</div>
-       <h3>Despachos</h3>
-       <p>Logística de salida</p>
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/envios">
+       <div class="w-12 h-12 mx-auto rounded-full bg-sky-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-sky-600">local_shipping</span>
+        </div>
+       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Despachos</h3>
+       <p class="text-[13px] text-gray-500 leading-tight">Logística de salida</p>
      </div>
 
-     <div class="card" routerLink="/historial">
-       <div class="card-accent accent-amber"></div>
-       <div class="card-icon">📜</div>
-       <h3>Historial</h3>
-       <p>Ver reportes de ventas</p>
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/historial">
+       <div class="w-12 h-12 mx-auto rounded-full bg-rose-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-rose-600">history</span>
+        </div>
+       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Historial</h3>
+       <p class="text-[13px] text-gray-500 leading-tight">Ver reportes ventas</p>
      </div>
 
-     <!-- Grupo: Administración -->
-     <div class="card" routerLink="/proveedores">
-       <div class="card-accent accent-rose"></div>
-       <div class="card-icon">🚚</div>
-       <h3>Proveedores</h3>
-       <p>Agenda de contactos</p>
+     <!-- Administración -->
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/proveedores">
+       <div class="w-12 h-12 mx-auto rounded-full bg-indigo-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-indigo-600">domain</span>
+        </div>
+       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Proveedores</h3>
+       <p class="text-[13px] text-gray-500 leading-tight">Contactos de marca</p>
      </div>
 
-     <div class="card" routerLink="/usuarios">
-       <div class="card-accent accent-primary"></div>
-       <div class="card-icon">👥</div>
-       <h3>Usuarios</h3>
-       <p>Gestión de cuentas</p>
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/usuarios">
+       <div class="w-12 h-12 mx-auto rounded-full bg-blue-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-blue-600">group</span>
+        </div>
+       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Usuarios</h3>
+       <p class="text-[13px] text-gray-500 leading-tight">Gestión de cuentas</p>
      </div>
 
-     <div class="card" routerLink="/roles">
-       <div class="card-accent accent-slate"></div>
-       <div class="card-icon">🛡️</div>
-       <h3>Seguridad</h3>
-       <p>Gestionar roles</p>
+     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/roles">
+       <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+          <span class="material-symbols-outlined text-[28px] text-slate-600">shield</span>
+        </div>
+       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Seguridad</h3>
+       <p class="text-[13px] text-gray-500 leading-tight">Gestionar roles</p>
      </div>
 
   </div>

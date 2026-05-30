@@ -18,9 +18,9 @@ export class Proveedores implements OnInit {
   constructor(private fb: FormBuilder, private service: ProveedoresService) {
     this.form = this.fb.group({
       id: [0],
-      empresa: ['', [Validators.required, Validators.maxLength(100)]],
-      contacto: ['', [Validators.required]],
-      telefono: ['', [Validators.required, Validators.pattern('^[0-9]*$')]] // Solo números
+      empresa: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      contacto: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z\\u00C0-\\u024F\\s]+$')]],
+      telefono: ['', [Validators.required, Validators.pattern('^[0-9]{7,9}$')]]
     });
   }
 

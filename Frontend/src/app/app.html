@@ -1,58 +1,76 @@
 <!-- BARRA DE NAVEGACIÓN -->
-<nav class="navbar" *ngIf="auth.estaLogueado">
+<nav role="navigation" aria-label="Menú principal" class="w-full sticky top-0 z-[100] bg-[#02696a]/85 backdrop-blur-md border-b border-white/20 shadow-lg" *ngIf="auth.estaLogueado">
   
-  <!-- LADO IZQUIERDO: Menú Contextual -->
-  <div class="nav-links">
-    <a *ngIf="!esHome" routerLink="/home" class="nav-item home-btn">
-      🏠 Inicio
-    </a>
-
-    <ng-container *ngIf="!esHome">
-      
-      <a *ngIf="noEsRuta('/ventas')" routerLink="/ventas" class="nav-item">
-        🛒 Ventas
-      </a>
-      <a *ngIf="noEsRuta('/productos')" routerLink="/productos" class="nav-item">
-        📦 Productos
-      </a>
-      <a *ngIf="noEsRuta('/historial')" routerLink="/historial" class="nav-item">
-        📜 Historial
-      </a>
-      <a *ngIf="noEsRuta('/proveedores')" routerLink="/proveedores" class="nav-item">
-        🚚 Proveedores
-      </a>
-      <a *ngIf="noEsRuta('/almacenes')" routerLink="/almacenes" class="nav-item">
-        🏭 Almacenes
-      </a>
-      <a *ngIf="noEsRuta('/inventarios')" routerLink="/inventarios" class="nav-item">
-        📊 Inventario
-      </a>
-      
-      <!-- BOTÓN USUARIOS -->
-      <a *ngIf="noEsRuta('/usuarios')" routerLink="/usuarios" class="nav-item">
-        👥 Usuarios
-      </a>
-
-    </ng-container>
-  </div>
-
-  <!-- LADO DERECHO -->
-  <div class="user-info">
-    <span class="email-text">
-      {{ auth.usuario?.email }}
-    </span>
+  <div class="max-w-[1500px] mx-auto px-6 h-[72px] flex justify-between items-center gap-8">
     
-    <a routerLink="/perfil" class="nav-item" style="font-size: 12px; padding: 6px 12px;">
-       👤 Perfil
+    <!-- LADO IZQUIERDO: LOGO -->
+    <a routerLink="/home" class="flex items-center gap-3 shrink-0 cursor-pointer group">
+      <div class="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300">
+        <span class="material-symbols-filled text-[26px] text-[#02696a]" aria-hidden="true">shopping_bag</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-[16px] font-extrabold text-white tracking-tight leading-none drop-shadow-sm">NEO</span>
+        <span class="text-[12px] font-bold text-[#b2dfd7] tracking-widest drop-shadow-sm">ARSENAL</span>
+      </div>
     </a>
 
-    <button (click)="auth.logout()" class="btn-salir">
-      Cerrar sesión
-    </button>
+    <!-- CENTRO: Enlaces de Navegación -->
+    <div class="hidden md:flex items-center justify-center gap-1 flex-1 px-4">
+      
+      <a *ngIf="!esHome" routerLink="/home" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[18px]">home</span> Inicio
+      </a>
+      
+      <ng-container *ngIf="!esHome">
+        <a *ngIf="noEsRuta('/ventas')" routerLink="/ventas" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">point_of_sale</span> Ventas
+        </a>
+        <a *ngIf="noEsRuta('/productos')" routerLink="/productos" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">inventory_2</span> Productos
+        </a>
+        <a *ngIf="noEsRuta('/proveedores')" routerLink="/proveedores" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">local_shipping</span> Proveedores
+        </a>
+        <a *ngIf="noEsRuta('/almacenes')" routerLink="/almacenes" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">warehouse</span> Almacenes
+        </a>
+        <a *ngIf="noEsRuta('/inventarios')" routerLink="/inventarios" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">fact_check</span> Inventario
+        </a>
+        <a *ngIf="noEsRuta('/historial')" routerLink="/historial" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">history</span> Historial
+        </a>
+        <a *ngIf="noEsRuta('/usuarios')" routerLink="/usuarios" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">group</span> Usuarios
+        </a>
+      </ng-container>
+
+    </div>
+
+    <!-- LADO DERECHO: Perfil y Botón -->
+    <div class="flex items-center gap-4 shrink-0">
+      
+      <a routerLink="/perfil" class="hover:bg-white/10 transition-colors text-[13px] flex items-center gap-1.5 bg-white/5 text-white px-3 py-1.5 rounded-full font-medium border border-white/10">
+        <span class="material-symbols-outlined text-[18px] text-[#b2dfd7]">account_circle</span>
+        {{ auth.usuario?.email || 'Perfil' }}
+      </a>
+      
+      <!-- Botón de Accesibilidad (Daltonismo) -->
+      <button (click)="toggleDaltonismo()" class="hover:bg-white/10 text-white p-2 rounded-full flex items-center justify-center transition-all border border-transparent hover:border-white/20 hover:shadow-lg" title="Modo Accesibilidad (Daltonismo)">
+        <span class="material-symbols-outlined text-[20px]" *ngIf="!modoDaltonico">visibility</span>
+        <span class="material-symbols-outlined text-[20px]" *ngIf="modoDaltonico">visibility_off</span>
+      </button>
+      
+      <button (click)="auth.logout()" class="bg-white/10 hover:bg-[#ba1a1a] text-white px-4 py-2 rounded-full font-bold text-[13px] flex items-center gap-1.5 transition-all shadow-sm border border-white/20 hover:border-[#ba1a1a] hover:shadow-lg hover:-translate-y-0.5">
+        Salir <span class="material-symbols-outlined text-[18px]">logout</span>
+      </button>
+
+    </div>
+
   </div>
 </nav>
 
-<!-- Contenido -->
-<div class="main-content">
+<!-- Contenido Principal -->
+<main role="main" class="min-h-screen bg-[#f8fafa] flex flex-col pt-8">
   <router-outlet></router-outlet>
-</div>
+</main>

@@ -1,28 +1,30 @@
 <div class="container">
-  <h1>📦 Gestión de Stock por Almacén</h1>
+  <h1 style="display: flex; align-items: center; gap: 8px;">
+    <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">fact_check</span> Gestión de Stock por Almacén
+  </h1>
 
   <!-- Formulario -->
   <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
     
     <div class="campo">
-      <label>Producto:</label>
-      <select formControlName="productoId">
+      <label for="sel-producto">Producto:</label>
+      <select id="sel-producto" formControlName="productoId">
         <option [ngValue]="null">-- Seleccione --</option>
         <option *ngFor="let p of listaProductos" [value]="p.id">{{ p.nombre }}</option>
       </select>
     </div>
 
     <div class="campo">
-      <label>Almacén:</label>
-      <select formControlName="almacenId">
+      <label for="sel-almacen">Almacén:</label>
+      <select id="sel-almacen" formControlName="almacenId">
         <option [ngValue]="null">-- Seleccione --</option>
         <option *ngFor="let a of listaAlmacenes" [value]="a.id">{{ a.nombre }}</option>
       </select>
     </div>
 
     <div class="campo">
-      <label>Cantidad:</label>
-      <input type="number" formControlName="cantidad" min="1" style="width: 80px;">
+      <label for="inp-cantidad">Cantidad:</label>
+      <input id="inp-cantidad" type="number" formControlName="cantidad" min="1" style="width: 80px;">
     </div>
 
     <button type="submit" [disabled]="form.invalid" class="btn-guardar">
@@ -48,7 +50,7 @@
         <td>{{ item.almacenNombre }}</td>
         <td class="center font-bold">{{ item.cantidad }}</td>
         <td class="center">
-          <button (click)="borrar(item.id)" class="btn-borrar">X</button>
+          <button (click)="borrar(item.id)" class="btn-borrar" aria-label="Eliminar inventario">X</button>
         </td>
       </tr>
       <tr *ngIf="listaInventario.length === 0">

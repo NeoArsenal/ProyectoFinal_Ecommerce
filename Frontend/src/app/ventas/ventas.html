@@ -4,7 +4,9 @@
   <div *ngIf="paso === 'carrito'" class="paso-contenedor">
 
     <div class="page-header">
-      <h1>🛒 Nueva Venta</h1>
+      <h1 style="display: flex; align-items: center; gap: 8px;">
+        <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">shopping_cart</span> Nueva Venta
+      </h1>
       <p class="usuario-badge">👤 Cliente: <strong>{{ usuarioEmail || 'Usuario #' + usuarioId }}</strong></p>
     </div>
 
@@ -13,7 +15,7 @@
       <h3>Agregar productos</h3>
       <div class="form-row-ventas">
         <div class="campo-grupo">
-          <label>Producto</label>
+          <label for="sel-producto">Producto</label>
           <select id="sel-producto" [(ngModel)]="productoSeleccionadoId">
             <option [ngValue]="null">-- Seleccionar --</option>
             <option *ngFor="let p of listaProductos" [value]="p.id">
@@ -22,14 +24,14 @@
           </select>
         </div>
         <div class="campo-grupo campo-cant">
-          <label>Cantidad</label>
+          <label for="inp-cantidad">Cantidad</label>
           <input id="inp-cantidad" type="number" [(ngModel)]="cantidad" min="1">
         </div>
         <button id="btn-agregar" class="btn-agregar" (click)="agregarAlCarrito()">
           + Agregar
         </button>
       </div>
-      <p class="msg-error-ventas" *ngIf="mensajeError">⚠ {{ mensajeError }}</p>
+      <p class="msg-error-ventas" *ngIf="mensajeError" role="alert" aria-live="assertive">⚠ {{ mensajeError }}</p>
     </div>
 
     <!-- Tabla del carrito -->
@@ -52,7 +54,7 @@
             <td class="center">{{ item.cantidad }}</td>
             <td class="num">S/ {{ item.subtotal | number:'1.2-2' }}</td>
             <td class="center">
-              <button class="btn-quitar" (click)="eliminarDelCarrito(i)">✕</button>
+              <button class="btn-quitar" (click)="eliminarDelCarrito(i)" aria-label="Quitar producto del carrito">✕</button>
             </td>
           </tr>
           <tr *ngIf="carrito.length === 0">
@@ -76,7 +78,9 @@
   <div *ngIf="paso === 'pago'" class="paso-contenedor">
 
     <div class="page-header">
-      <h1>💳 Pago y Envío</h1>
+      <h1 style="display: flex; align-items: center; gap: 8px;">
+        <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">payment</span> Pago y Envío
+      </h1>
       <p class="subtitulo-paso">Elige cómo pagarás y cómo recibirás tu pedido</p>
     </div>
 
@@ -102,8 +106,11 @@
           class="opcion-card"
           [class.seleccionado]="metodoPago === mp">
           <input type="radio" name="metodoPago" [(ngModel)]="metodoPago" [value]="mp">
-          <span class="icono-pago">
-            {{ mp === 'Efectivo' ? '💵' : mp === 'Tarjeta de Crédito' ? '💳' : mp === 'Yape' ? '📱' : '🔵' }}
+          <span class="icono-pago" aria-hidden="true">
+            <span class="material-symbols-outlined text-[#02696a] text-[20px]" *ngIf="mp === 'Efectivo'">payments</span>
+            <span class="material-symbols-outlined text-[#02696a] text-[20px]" *ngIf="mp === 'Tarjeta de Crédito'">credit_card</span>
+            <span class="material-symbols-outlined text-[#02696a] text-[20px]" *ngIf="mp === 'Yape'">smartphone</span>
+            <span class="material-symbols-outlined text-[#02696a] text-[20px]" *ngIf="mp !== 'Efectivo' && mp !== 'Tarjeta de Crédito' && mp !== 'Yape'">wallet</span>
           </span>
           <span>{{ mp }}</span>
         </label>
@@ -119,7 +126,7 @@
           class="opcion-card"
           [class.seleccionado]="metodoEnvioId === me.id">
           <input type="radio" name="metodoEnvio" [(ngModel)]="metodoEnvioId" [value]="me.id">
-          <span class="icono-pago">🚚</span>
+          <span class="icono-pago material-symbols-outlined text-[20px]" aria-hidden="true">local_shipping</span>
           <span>{{ me.nombre }}</span>
         </label>
         <!-- Fallback si no hay métodos de envío en BD -->
@@ -129,7 +136,7 @@
       </div>
     </div>
 
-    <p class="msg-error-ventas" *ngIf="mensajeError">⚠ {{ mensajeError }}</p>
+    <p class="msg-error-ventas" *ngIf="mensajeError" role="alert" aria-live="assertive">⚠ {{ mensajeError }}</p>
 
     <div class="botones-paso">
       <button class="btn-volver" (click)="volverAlCarrito()">← Volver</button>
@@ -164,11 +171,11 @@
           <span>{{ pedidoConfirmado.email }}</span>
         </div>
         <div class="boleta-fila">
-          <span>💳 Método de Pago:</span>
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">payment</span> Método de Pago:</span>
           <span>{{ pedidoConfirmado.metodoPago }}</span>
         </div>
         <div class="boleta-fila">
-          <span>🚚 Método de Envío:</span>
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">local_shipping</span> Método de Envío:</span>
           <span>{{ pedidoConfirmado.metodoEnvio }}</span>
         </div>
       </div>
@@ -189,7 +196,7 @@
       </div>
 
       <button id="btn-nueva-venta" class="btn-nueva-venta" (click)="nuevaVenta()">
-        🛒 Realizar otra compra
+        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">shopping_cart</span> Realizar otra compra
       </button>
     </div>
   </div>

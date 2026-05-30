@@ -1,5 +1,7 @@
 <div class="container">
-  <h1>👥 Gestión de Usuarios y Permisos</h1>
+  <h1 style="display: flex; align-items: center; gap: 8px;">
+    <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">group</span> Gestión de Usuarios y Permisos
+  </h1>
 
   <!-- FORMULARIO FLOTANTE DE ASIGNACIÓN -->
   <!-- Solo se muestra si hay un usuario seleccionado (*ngIf) -->
@@ -10,10 +12,10 @@
     </h3>
     
     <div class="campo">
-      <label>Seleccionar Roles (Mantén presionado Ctrl para varios):</label>
+      <label for="sel-roles">Seleccionar Roles (Mantén presionado Ctrl para varios):</label>
       
       <!-- Select Múltiple -->
-      <select multiple [(ngModel)]="rolesSeleccionados" style="height: 120px; padding: 5px;">
+      <select id="sel-roles" multiple [(ngModel)]="rolesSeleccionados" style="height: 120px; padding: 5px;">
         <option *ngFor="let r of rolesDisponibles" [value]="r.id">
           {{ r.nombre }}
         </option>
@@ -25,7 +27,7 @@
     </div>
 
     <div class="botones">
-      <button (click)="guardarRoles()" class="btn-verde">💾 Guardar Cambios</button>
+      <button (click)="guardarRoles()" class="btn-verde flex items-center gap-1 justify-center"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">save</span> Guardar Cambios</button>
       <button (click)="usuarioSeleccionado = null" class="btn-gris">Cancelar</button>
     </div>
   </div>
@@ -61,8 +63,8 @@
         </td>
         
         <td class="center">
-          <button (click)="seleccionar(u)" class="btn-azul-sm">
-            🛡️ Asignar Roles
+          <button (click)="seleccionar(u)" class="btn-azul-sm flex items-center gap-1 mx-auto" aria-label="Asignar roles al usuario">
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">shield</span> Asignar Roles
           </button>
         </td>
       </tr>

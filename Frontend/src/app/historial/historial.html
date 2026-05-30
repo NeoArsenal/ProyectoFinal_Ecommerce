@@ -1,7 +1,9 @@
 <div class="historial-page">
 
   <div class="page-header">
-    <h1>📜 Historial de Pedidos</h1>
+    <h1 style="display: flex; align-items: center; gap: 8px;">
+      <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">receipt_long</span> Historial de Pedidos
+    </h1>
     <p class="subtitulo" *ngIf="emailUsuario">
       Mostrando todos los pedidos del sistema
     </p>
@@ -15,7 +17,7 @@
 
   <!-- Error -->
   <div *ngIf="mensajeError && !cargando" class="error-state">
-    <p>❌ {{ mensajeError }}</p>
+    <p role="alert" aria-live="polite" class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">error</span> {{ mensajeError }}</p>
   </div>
 
   <!-- Tabla -->
@@ -58,7 +60,7 @@
         <tr *ngIf="pedidos.length === 0">
           <td colspan="7" class="vacio">
             <div class="vacio-contenido">
-              <span class="vacio-icon">📦</span>
+              <span class="material-symbols-outlined text-gray-300" style="font-size: 48px;" aria-hidden="true">receipt_long</span>
               <p>No hay pedidos registrados todavía.</p>
             </div>
           </td>

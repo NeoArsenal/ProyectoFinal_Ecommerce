@@ -1,17 +1,19 @@
 <div class="container">
-  <h1>🏭 Gestión de Almacenes</h1>
+  <h1 style="display: flex; align-items: center; gap: 8px;">
+    <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">warehouse</span> Gestión de Almacenes
+  </h1>
 
   <!-- Formulario de Registro -->
   <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
     
     <div class="campo">
-      <label>Nombre del Almacén:</label>
-      <input type="text" formControlName="nombre" placeholder="Ej: Almacén Norte">
+      <label for="inp-nombre-almacen">Nombre del Almacén:</label>
+      <input id="inp-nombre-almacen" type="text" formControlName="nombre" placeholder="Ej: Almacén Norte">
     </div>
 
     <div class="campo">
-      <label>Ubicación Física:</label>
-      <input type="text" formControlName="ubicacion" placeholder="Ej: Av. Industrial 123">
+      <label for="inp-ubicacion">Ubicación Física:</label>
+      <input id="inp-ubicacion" type="text" formControlName="ubicacion" placeholder="Ej: Av. Industrial 123">
     </div>
 
     <button type="submit" [disabled]="form.invalid" class="btn-guardar">
