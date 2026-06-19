@@ -67,7 +67,7 @@ public class UsuariosController {
     }
 
     // --- 5. Perfil (Guardar) ---
-    @PostMapping("/{id}/perfil")
+    @org.springframework.web.bind.annotation.PutMapping("/{id}/perfil")
     public ResponseEntity<?> guardarPerfil(@PathVariable Integer id, @RequestBody PerfilDTO dto) {
         int ok = service.guardarPerfil(id, dto);
         if (ok == 1) {

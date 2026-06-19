@@ -109,9 +109,11 @@ public class PedidosServiceImp implements PedidosService {
                 DetallesPedido detalle = new DetallesPedido();
                 detalle.setProducto(productoReal);
                 detalle.setCantidad(item.getCantidad());
-                detalle.setPrecioUnitario(item.getPrecio());
+                // CORRECCIÓN DE SEGURIDAD (QA): Nunca confiar en el precio enviado desde el frontend.
+                // Siempre extraer el precio directamente de la base de datos.
+                detalle.setPrecioUnitario(productoReal.getPrecio());
                 
-                totalCalculado += (item.getCantidad() * item.getPrecio());
+                totalCalculado += (item.getCantidad() * productoReal.getPrecio());
                 pedido.agregarDetalle(detalle);
             }
             

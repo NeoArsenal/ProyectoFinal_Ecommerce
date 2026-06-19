@@ -1,11 +1,11 @@
-<div class="ventas-page">
+﻿<div class="ventas-page">
 
   <!-- ======================== PASO 1: CARRITO ======================== -->
   <div *ngIf="paso === 'carrito'" class="paso-contenedor">
 
     <div class="page-header">
       <h1 style="display: flex; align-items: center; gap: 8px;">
-        <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">shopping_cart</span> Nueva Venta
+        <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">shopping_cart</span> Nueva Venta
       </h1>
       <p class="usuario-badge">👤 Cliente: <strong>{{ usuarioEmail || 'Usuario #' + usuarioId }}</strong></p>
     </div>
@@ -79,7 +79,7 @@
 
     <div class="page-header">
       <h1 style="display: flex; align-items: center; gap: 8px;">
-        <span class="material-symbols-outlined text-[28px] text-[#02696a]" aria-hidden="true">payment</span> Pago y Envío
+        <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">payment</span> Pago y Envío
       </h1>
       <p class="subtitulo-paso">Elige cómo pagarás y cómo recibirás tu pedido</p>
     </div>
@@ -107,10 +107,10 @@
           [class.seleccionado]="metodoPago === mp">
           <input type="radio" name="metodoPago" [(ngModel)]="metodoPago" [value]="mp">
           <span class="icono-pago" aria-hidden="true">
-            <span class="material-symbols-outlined text-[#02696a] text-[20px]" *ngIf="mp === 'Efectivo'">payments</span>
-            <span class="material-symbols-outlined text-[#02696a] text-[20px]" *ngIf="mp === 'Tarjeta de Crédito'">credit_card</span>
-            <span class="material-symbols-outlined text-[#02696a] text-[20px]" *ngIf="mp === 'Yape'">smartphone</span>
-            <span class="material-symbols-outlined text-[#02696a] text-[20px]" *ngIf="mp !== 'Efectivo' && mp !== 'Tarjeta de Crédito' && mp !== 'Yape'">wallet</span>
+            <span class="material-symbols-outlined text-[#02696a] text-[1.25rem]" *ngIf="mp === 'Efectivo'">payments</span>
+            <span class="material-symbols-outlined text-[#02696a] text-[1.25rem]" *ngIf="mp === 'Tarjeta de Crédito'">credit_card</span>
+            <span class="material-symbols-outlined text-[#02696a] text-[1.25rem]" *ngIf="mp === 'Yape'">smartphone</span>
+            <span class="material-symbols-outlined text-[#02696a] text-[1.25rem]" *ngIf="mp !== 'Efectivo' && mp !== 'Tarjeta de Crédito' && mp !== 'Yape'">wallet</span>
           </span>
           <span>{{ mp }}</span>
         </label>
@@ -126,7 +126,7 @@
           class="opcion-card"
           [class.seleccionado]="metodoEnvioId === me.id">
           <input type="radio" name="metodoEnvio" [(ngModel)]="metodoEnvioId" [value]="me.id">
-          <span class="icono-pago material-symbols-outlined text-[20px]" aria-hidden="true">local_shipping</span>
+          <span class="icono-pago material-symbols-outlined text-[1.25rem]" aria-hidden="true">local_shipping</span>
           <span>{{ me.nombre }}</span>
         </label>
         <!-- Fallback si no hay métodos de envío en BD -->
@@ -171,11 +171,11 @@
           <span>{{ pedidoConfirmado.email }}</span>
         </div>
         <div class="boleta-fila">
-          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">payment</span> Método de Pago:</span>
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[1.125rem]" aria-hidden="true">payment</span> Método de Pago:</span>
           <span>{{ pedidoConfirmado.metodoPago }}</span>
         </div>
         <div class="boleta-fila">
-          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">local_shipping</span> Método de Envío:</span>
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[1.125rem]" aria-hidden="true">local_shipping</span> Método de Envío:</span>
           <span>{{ pedidoConfirmado.metodoEnvio }}</span>
         </div>
       </div>
@@ -196,7 +196,7 @@
       </div>
 
       <button id="btn-nueva-venta" class="btn-nueva-venta" (click)="nuevaVenta()">
-        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">shopping_cart</span> Realizar otra compra
+        <span class="material-symbols-outlined text-[1.25rem]" aria-hidden="true">shopping_cart</span> Realizar otra compra
       </button>
     </div>
   </div>

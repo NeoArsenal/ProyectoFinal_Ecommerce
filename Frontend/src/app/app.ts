@@ -18,6 +18,11 @@ export class App {
   rutaActual: string = '';
   modoDaltonico: boolean = false;
 
+  // ── Control de Tamaño de Fuente — WCAG 2.1 Criterio 1.4.4 ──
+  // 0 = pequeño (13px) | 1 = normal (16px) | 2 = grande (22px)
+  nivelFuente: number = 1;
+  private readonly tamanosFuente = ['13px', '16px', '22px'];
+
   constructor(public auth: AuthService, private router: Router) {}
 
   toggleDaltonismo() {
@@ -27,6 +32,33 @@ export class App {
     } else {
       document.body.classList.remove('modo-daltonico');
     }
+  }
+
+  // Reduce el tamaño de fuente un nivel (mínimo nivel 0)
+  reducirFuente() {
+    if (this.nivelFuente > 0) {
+      this.nivelFuente--;
+      this.aplicarFuente();
+    }
+  }
+
+  // Aumenta el tamaño de fuente un nivel (máximo nivel 2)
+  aumentarFuente() {
+    if (this.nivelFuente < 2) {
+      this.nivelFuente++;
+      this.aplicarFuente();
+    }
+  }
+
+  // Restaura el tamaño normal (16px)
+  resetFuente() {
+    this.nivelFuente = 1;
+    this.aplicarFuente();
+  }
+
+  // Aplica el tamaño al elemento raíz — todos los rem del sistema escalan
+  private aplicarFuente() {
+    document.documentElement.style.fontSize = this.tamanosFuente[this.nivelFuente];
   }
 
   ngOnInit() {

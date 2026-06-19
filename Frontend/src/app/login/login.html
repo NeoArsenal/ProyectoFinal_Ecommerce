@@ -1,4 +1,4 @@
-<main class="min-h-screen w-full luminous-gradient flex items-center justify-center p-6 relative overflow-hidden font-sans text-gray-900" role="main">
+﻿<main class="min-h-screen w-full luminous-gradient flex items-center justify-center p-6 relative overflow-hidden font-sans text-gray-900" role="main">
   <!-- Fondo decorativo suave -->
   <div class="absolute -top-40 -left-40 w-96 h-96 bg-white/20 rounded-full blur-[80px] pointer-events-none"></div>
   <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-[#003b3b] opacity-30 rounded-full blur-[80px] pointer-events-none"></div>
@@ -9,17 +9,17 @@
     <!-- Logo -->
     <div class="text-center mb-10">
       <div class="w-16 h-16 bg-[#172b4d] text-[#d97706] rounded-2xl mx-auto flex flex-col items-center justify-center mb-5 shadow-xl card-lift-sm border-2 border-white/20">
-        <span class="material-symbols-filled text-[32px] mt-0.5">shopping_bag</span>
+        <span class="material-symbols-filled text-[2rem] mt-0.5">shopping_bag</span>
       </div>
       <h1 id="login-title" class="text-3xl font-extrabold text-[#172b4d] tracking-tight drop-shadow-sm">NeoArsenal</h1>
-      <p class="text-[#3e4948] mt-2 font-medium text-[15px]">Ingresa a tu cuenta para continuar</p>
+      <p class="text-[#3e4948] mt-2 font-medium text-[0.9375rem]">Ingresa a tu cuenta para continuar</p>
     </div>
 
     <form #loginForm="ngForm" (ngSubmit)="ingresar()" class="space-y-6" novalidate>
       
       <!-- Campo Correo -->
       <div class="space-y-2">
-        <label for="login-email" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+        <label for="login-email" class="block text-[0.8125rem] font-bold text-[#172b4d] uppercase tracking-wide">
           Correo Electrónico <span class="text-red-500">*</span>
         </label>
         <div class="relative">
@@ -36,19 +36,19 @@
             [class.border-gray-200]="!(email.invalid && email.touched)"
             [class.focus:border-[#02696a]]="!(email.invalid && email.touched)"
             [class.focus:ring-[#02696a]]="!(email.invalid && email.touched)"
-            class="block w-full px-4 py-3.5 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            class="block w-full px-4 py-3.5 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[0.9375rem] shadow-inner"
             placeholder="tu@correo.com"
             aria-required="true">
         </div>
-        <small *ngIf="email.invalid && email.touched" class="flex items-center gap-1.5 text-[12px] text-red-500 font-bold mt-1.5">
-          <span class="material-symbols-outlined text-[16px]">error</span>
+        <small *ngIf="email.invalid && email.touched" class="flex items-center gap-1.5 text-[0.75rem] text-red-500 font-bold mt-1.5">
+          <span class="material-symbols-outlined text-[1rem]">error</span>
           El formato del correo no es válido
         </small>
       </div>
 
       <!-- Campo Contraseña -->
       <div class="space-y-2">
-        <label for="login-password" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+        <label for="login-password" class="block text-[0.8125rem] font-bold text-[#172b4d] uppercase tracking-wide">
           Contraseña <span class="text-red-500">*</span>
         </label>
         <div class="relative">
@@ -65,19 +65,19 @@
             [class.border-gray-200]="!(pass.invalid && pass.touched)"
             [class.focus:border-[#02696a]]="!(pass.invalid && pass.touched)"
             [class.focus:ring-[#02696a]]="!(pass.invalid && pass.touched)"
-            class="block w-full px-4 py-3.5 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            class="block w-full px-4 py-3.5 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[0.9375rem] shadow-inner"
             placeholder="••••••••"
             aria-required="true">
         </div>
-        <small *ngIf="pass.invalid && pass.touched" class="flex items-center gap-1.5 text-[12px] text-red-500 font-bold mt-1.5">
-          <span class="material-symbols-outlined text-[16px]">error</span>
+        <small *ngIf="pass.invalid && pass.touched" class="flex items-center gap-1.5 text-[0.75rem] text-red-500 font-bold mt-1.5">
+          <span class="material-symbols-outlined text-[1rem]">error</span>
           Mínimo 6 caracteres
         </small>
       </div>
 
       <!-- Error Global -->
-      <div role="alert" aria-live="assertive" class="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-[14px] font-semibold shadow-sm" *ngIf="error">
-        <span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">warning</span>
+      <div role="alert" aria-live="assertive" class="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-[0.875rem] font-semibold shadow-sm" *ngIf="error">
+        <span class="material-symbols-outlined text-[1.25rem] shrink-0 mt-0.5">warning</span>
         <span>{{ error }}</span>
       </div>
 
@@ -87,13 +87,13 @@
         [disabled]="loginForm.invalid"
         class="w-full py-4 px-4 bg-[#172b4d] hover:bg-[#11213b] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 mt-4">
         <span>Iniciar Sesión</span>
-        <span class="material-symbols-outlined text-[20px]">login</span>
+        <span class="material-symbols-outlined text-[1.25rem]">login</span>
       </button>
     </form>
     
     <!-- Enlace a registro -->
     <div class="mt-8 pt-6 border-t border-gray-200/50 text-center">
-      <p class="text-[14px] text-gray-600 font-medium">
+      <p class="text-[0.875rem] text-gray-600 font-medium">
         ¿No tienes una cuenta? 
         <a routerLink="/registro" class="text-[#02696a] hover:text-[#004f50] font-bold transition-all focus-visible:outline-[#02696a] nav-link-hover pb-1">Regístrate ahora</a>
       </p>

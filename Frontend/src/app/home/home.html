@@ -1,4 +1,4 @@
-<div class="max-w-[1200px] mx-auto px-6 py-10 animate-[fadeInUp_0.4s_ease-out]">
+﻿<div class="max-w-[1200px] mx-auto px-6 py-10 animate-[fadeInUp_0.4s_ease-out]">
   
   <!-- Header -->
   <div class="mb-10">
@@ -15,10 +15,10 @@
       <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#02696a] opacity-5 rounded-full blur-2xl"></div>
       
       <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-emerald-50 text-emerald-600">
-        <span class="material-symbols-filled text-[28px]">payments</span>
+        <span class="material-symbols-filled text-[1.75rem]">payments</span>
       </div>
       <div>
-        <p class="text-[13px] font-medium text-gray-500 mb-1 tracking-wide">INGRESOS TOTALES</p>
+        <p class="text-[0.8125rem] font-medium text-gray-500 mb-1 tracking-wide">INGRESOS TOTALES</p>
         <h3 class="text-2xl font-bold text-gray-800">S/ {{ stats.totalVentas | number:'1.2-2' }}</h3>
       </div>
     </div>
@@ -28,10 +28,10 @@
       <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-500 opacity-5 rounded-full blur-2xl"></div>
       
       <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-blue-50 text-blue-600">
-        <span class="material-symbols-filled text-[28px]">shopping_cart</span>
+        <span class="material-symbols-filled text-[1.75rem]">shopping_cart</span>
       </div>
       <div>
-        <p class="text-[13px] font-medium text-gray-500 mb-1 tracking-wide">PEDIDOS REALIZADOS</p>
+        <p class="text-[0.8125rem] font-medium text-gray-500 mb-1 tracking-wide">PEDIDOS REALIZADOS</p>
         <h3 class="text-2xl font-bold text-gray-800">{{ stats.cantidadPedidos }}</h3>
       </div>
     </div>
@@ -41,10 +41,10 @@
       <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-500 opacity-5 rounded-full blur-2xl"></div>
       
       <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-amber-50 text-amber-600">
-        <span class="material-symbols-filled text-[28px]">warning</span>
+        <span class="material-symbols-filled text-[1.75rem]">warning</span>
       </div>
       <div>
-        <p class="text-[13px] font-medium text-gray-500 mb-1 tracking-wide">BAJO STOCK (< 5)</p>
+        <p class="text-[0.8125rem] font-medium text-gray-500 mb-1 tracking-wide">BAJO STOCK (< 5)</p>
         <h3 class="text-2xl font-bold text-gray-800">{{ stats.productosBajoStock }}</h3>
       </div>
     </div>
@@ -53,7 +53,7 @@
   <!-- Loading state -->
   <div class="grid grid-cols-1 mb-12" *ngIf="!stats">
     <div class="glass-card rounded-2xl p-10 flex flex-col items-center justify-center text-center">
-      <span class="material-symbols-outlined text-[32px] text-[#72c1c1] animate-spin mb-3">progress_activity</span>
+      <span class="material-symbols-outlined text-[2rem] text-[#72c1c1] animate-spin mb-3">progress_activity</span>
       <p class="text-gray-500 text-sm font-medium">Cargando datos del sistema...</p>
     </div>
   </div>
@@ -65,98 +65,122 @@
   </div>
 
   <!-- SECCIÓN 2: MENÚ DE NAVEGACIÓN -->
+  <!-- WCAG 2.1 Criterio 2.1.1: Se usan <a> nativos en lugar de <div> para
+       garantizar que todas las tarjetas sean navegables y activables con teclado -->
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-     
+
      <!-- Operaciones -->
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/ventas">
+     <a routerLink="/ventas"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Punto de Venta: Registrar nuevas compras">
         <div class="w-12 h-12 mx-auto rounded-full bg-emerald-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-emerald-600">point_of_sale</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-emerald-600" aria-hidden="true">point_of_sale</span>
         </div>
-        <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Punto de Venta</h3>
-        <p class="text-[13px] text-gray-500 leading-tight">Registrar nuevas compras</p>
-     </div>
-     
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/productos">
+        <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Punto de Venta</h3>
+        <p class="text-[0.8125rem] text-gray-500 leading-tight">Registrar nuevas compras</p>
+     </a>
+
+     <a routerLink="/productos"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Catálogo: Gestionar productos">
         <div class="w-12 h-12 mx-auto rounded-full bg-[#eefcfc] flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-[#02696a]">inventory_2</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">inventory_2</span>
         </div>
-        <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Catálogo</h3>
-        <p class="text-[13px] text-gray-500 leading-tight">Gestionar productos</p>
-     </div>
+        <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Catálogo</h3>
+        <p class="text-[0.8125rem] text-gray-500 leading-tight">Gestionar productos</p>
+     </a>
 
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/categorias">
+     <a routerLink="/categorias"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Categorías: Tipos de productos">
         <div class="w-12 h-12 mx-auto rounded-full bg-violet-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-violet-600">category</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-violet-600" aria-hidden="true">category</span>
         </div>
-        <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Categorías</h3>
-        <p class="text-[13px] text-gray-500 leading-tight">Tipos de productos</p>
-     </div>
+        <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Categorías</h3>
+        <p class="text-[0.8125rem] text-gray-500 leading-tight">Tipos de productos</p>
+     </a>
 
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/metodos">
+     <a routerLink="/metodos"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Métodos de Envío: Configurar opciones">
         <div class="w-12 h-12 mx-auto rounded-full bg-teal-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-teal-600">mark_email_read</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-teal-600" aria-hidden="true">mark_email_read</span>
         </div>
-        <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Métodos Envío</h3>
-        <p class="text-[13px] text-gray-500 leading-tight">Configurar opciones</p>
-     </div>
+        <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Métodos Envío</h3>
+        <p class="text-[0.8125rem] text-gray-500 leading-tight">Configurar opciones</p>
+     </a>
 
      <!-- Logística -->
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/almacenes">
+     <a routerLink="/almacenes"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Almacenes: Gestionar sedes">
        <div class="w-12 h-12 mx-auto rounded-full bg-amber-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-amber-600">warehouse</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-amber-600" aria-hidden="true">warehouse</span>
         </div>
-       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Almacenes</h3>
-       <p class="text-[13px] text-gray-500 leading-tight">Gestionar sedes</p>
-     </div>
+       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Almacenes</h3>
+       <p class="text-[0.8125rem] text-gray-500 leading-tight">Gestionar sedes</p>
+     </a>
 
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/inventarios">
+     <a routerLink="/inventarios"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Distribución: Stock por almacén">
        <div class="w-12 h-12 mx-auto rounded-full bg-orange-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-orange-600">analytics</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-orange-600" aria-hidden="true">analytics</span>
         </div>
-       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Distribución</h3>
-       <p class="text-[13px] text-gray-500 leading-tight">Stock por almacén</p>
-     </div>
+       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Distribución</h3>
+       <p class="text-[0.8125rem] text-gray-500 leading-tight">Stock por almacén</p>
+     </a>
 
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/envios">
+     <a routerLink="/envios"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Despachos: Logística de salida">
        <div class="w-12 h-12 mx-auto rounded-full bg-sky-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-sky-600">local_shipping</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-sky-600" aria-hidden="true">local_shipping</span>
         </div>
-       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Despachos</h3>
-       <p class="text-[13px] text-gray-500 leading-tight">Logística de salida</p>
-     </div>
+       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Despachos</h3>
+       <p class="text-[0.8125rem] text-gray-500 leading-tight">Logística de salida</p>
+     </a>
 
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/historial">
+     <a routerLink="/historial"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Historial: Ver reportes de ventas">
        <div class="w-12 h-12 mx-auto rounded-full bg-rose-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-rose-600">history</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-rose-600" aria-hidden="true">history</span>
         </div>
-       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Historial</h3>
-       <p class="text-[13px] text-gray-500 leading-tight">Ver reportes ventas</p>
-     </div>
+       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Historial</h3>
+       <p class="text-[0.8125rem] text-gray-500 leading-tight">Ver reportes ventas</p>
+     </a>
 
      <!-- Administración -->
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/proveedores">
+     <a routerLink="/proveedores"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Proveedores: Contactos de marca">
        <div class="w-12 h-12 mx-auto rounded-full bg-indigo-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-indigo-600">domain</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-indigo-600" aria-hidden="true">domain</span>
         </div>
-       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Proveedores</h3>
-       <p class="text-[13px] text-gray-500 leading-tight">Contactos de marca</p>
-     </div>
+       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Proveedores</h3>
+       <p class="text-[0.8125rem] text-gray-500 leading-tight">Contactos de marca</p>
+     </a>
 
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/usuarios">
+     <a routerLink="/usuarios"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Usuarios: Gestión de cuentas">
        <div class="w-12 h-12 mx-auto rounded-full bg-blue-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-blue-600">group</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-blue-600" aria-hidden="true">group</span>
         </div>
-       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Usuarios</h3>
-       <p class="text-[13px] text-gray-500 leading-tight">Gestión de cuentas</p>
-     </div>
+       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Usuarios</h3>
+       <p class="text-[0.8125rem] text-gray-500 leading-tight">Gestión de cuentas</p>
+     </a>
 
-     <div class="glass-card rounded-2xl p-6 text-center cursor-pointer card-lift group" routerLink="/roles">
+     <a routerLink="/roles"
+        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
+        aria-label="Ir a Seguridad: Gestionar roles">
        <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[28px] text-slate-600">shield</span>
+          <span class="material-symbols-outlined text-[1.75rem] text-slate-600" aria-hidden="true">shield</span>
         </div>
-       <h3 class="text-[15px] font-semibold text-gray-800 mb-1">Seguridad</h3>
-       <p class="text-[13px] text-gray-500 leading-tight">Gestionar roles</p>
-     </div>
+       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Seguridad</h3>
+       <p class="text-[0.8125rem] text-gray-500 leading-tight">Gestionar roles</p>
+     </a>
 
   </div>
 </div>

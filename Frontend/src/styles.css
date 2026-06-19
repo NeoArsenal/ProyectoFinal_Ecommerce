@@ -214,3 +214,219 @@ body.modo-daltonico .luminous-gradient-hover:hover {
   background: linear-gradient(135deg, #003a80 0%, #005bbb 100%) !important;
 }
 
+/* ─────────────────────────────────────────────
+   ACCESIBILIDAD: NAVEGACIÓN POR TECLADO
+   WCAG 2.1 — Criterio 2.4.7 (Focus Visible)
+───────────────────────────────────────────── */
+
+/* Foco visible global para todos los elementos interactivos */
+*:focus-visible {
+  outline: 3px solid #005bbb;
+  outline-offset: 3px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 5px rgba(0, 91, 187, 0.2);
+}
+
+/* Foco visible dentro del modo daltónico: usa naranja (seguro para daltonismo) */
+body.modo-daltonico *:focus-visible {
+  outline-color: #d55e00;
+  box-shadow: 0 0 0 5px rgba(213, 94, 0, 0.2);
+}
+
+/* Foco visible específico para botones del navbar (fondo oscuro) */
+nav button:focus-visible,
+nav a:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+/* Foco visible para inputs y selects del formulario */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #02696a;
+  outline-offset: 0;
+  box-shadow: 0 0 0 4px rgba(2, 105, 106, 0.15);
+}
+
+/* Foco para radio buttons y checkboxes */
+input[type="radio"]:focus-visible,
+input[type="checkbox"]:focus-visible {
+  outline: 3px solid #005bbb;
+  outline-offset: 2px;
+}
+
+/* Tooltip del botón de accesibilidad en el navbar */
+.btn-accesibilidad {
+  position: relative;
+}
+
+.btn-accesibilidad::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -36px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.85);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 999;
+}
+
+.btn-accesibilidad:hover::after,
+.btn-accesibilidad:focus-visible::after {
+  opacity: 1;
+}
+
+/* Estado activo del modo daltónico: borde dorado en el botón */
+.btn-accesibilidad.activo {
+  background-color: rgba(255, 200, 0, 0.2) !important;
+  border-color: #ffc800 !important;
+}
+
+/* ─────────────────────────────────────────────
+   TARJETAS DE MÓDULO: <a> que actúa como card
+   (Reemplazo accesible de <div routerLink>)
+───────────────────────────────────────────── */
+
+/* Elimina estilos de enlace para que las tarjetas se vean igual que antes */
+a.no-underline {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Las tarjetas <a> necesitan cursor pointer igual que los <div> */
+a.glass-card {
+  cursor: pointer;
+  display: block;
+}
+
+/* El texto interno conserva sus colores originales, no el azul de enlace */
+a.glass-card h3,
+a.glass-card p {
+  color: inherit;
+}
+
+/* ─────────────────────────────────────────────
+   SKIP NAVIGATION LINK — WCAG 2.1 Criterio 2.4.1
+   Oculto visualmente hasta recibir foco con Tab.
+   Al activarse, aparece con animación sobre el navbar.
+───────────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: -100px;               /* Oculto fuera de la pantalla */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;             /* Por encima del navbar sticky */
+  background: #02696a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 0 0 12px 12px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  transition: top 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+
+/* Al recibir foco con Tab → desciende y se hace visible */
+.skip-link:focus-visible {
+  top: 0;
+  outline: 3px solid #ffffff;
+  outline-offset: -3px;
+}
+
+/* En modo daltónico, el skip link usa el color accesible */
+body.modo-daltonico .skip-link {
+  background: #005bbb;
+}
+
+/* ─────────────────────────────────────────────
+   CONTROLES DE TAMAÑO DE FUENTE — WCAG 2.1 Criterio 1.4.4
+   Botones A- / A / A+ en el navbar
+───────────────────────────────────────────── */
+.controles-fuente {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  padding: 3px 6px;
+}
+
+.btn-fuente {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  padding: 3px 7px;
+  border-radius: 9999px;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1;
+  position: relative;
+}
+
+/* El botón central "A" es de tamaño normal */
+.btn-fuente-normal {
+  font-size: 15px;
+}
+
+/* El A- es más pequeño, el A+ es más grande */
+.btn-fuente:first-child { font-size: 11px; }
+.btn-fuente:last-child  { font-size: 19px; }
+
+.btn-fuente:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.btn-fuente:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Estado activo — botón A del tamaño actual seleccionado */
+.btn-fuente.activo-fuente {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Tooltip reutilizando el mismo mecanismo que .btn-accesibilidad */
+.btn-fuente::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 999;
+}
+
+.btn-fuente:hover::after,
+.btn-fuente:focus-visible::after {
+  opacity: 1;
+}
+

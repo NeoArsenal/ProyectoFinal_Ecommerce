@@ -1,3 +1,15 @@
+﻿<!-- ═══════════════════════════════════════════════════════════
+     SKIP NAVIGATION LINK — WCAG 2.1 Criterio 2.4.1 Bypass Blocks
+     Primer elemento del DOM. Solo visible al recibir foco con Tab.
+     Permite a usuarios de teclado saltar el navbar directamente al contenido.
+════════════════════════════════════════════════════════════ -->
+<a href="#contenido-principal"
+   class="skip-link"
+   *ngIf="auth.estaLogueado">
+  <span class="material-symbols-outlined text-[1.125rem]" aria-hidden="true">arrow_downward</span>
+  Saltar al contenido principal
+</a>
+
 <!-- BARRA DE NAVEGACIÓN -->
 <nav role="navigation" aria-label="Menú principal" class="w-full sticky top-0 z-[100] bg-[#02696a]/85 backdrop-blur-md border-b border-white/20 shadow-lg" *ngIf="auth.estaLogueado">
   
@@ -6,63 +18,97 @@
     <!-- LADO IZQUIERDO: LOGO -->
     <a routerLink="/home" class="flex items-center gap-3 shrink-0 cursor-pointer group">
       <div class="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300">
-        <span class="material-symbols-filled text-[26px] text-[#02696a]" aria-hidden="true">shopping_bag</span>
+        <span class="material-symbols-filled text-[1.625rem] text-[#02696a]" aria-hidden="true">shopping_bag</span>
       </div>
       <div class="flex flex-col">
-        <span class="text-[16px] font-extrabold text-white tracking-tight leading-none drop-shadow-sm">NEO</span>
-        <span class="text-[12px] font-bold text-[#b2dfd7] tracking-widest drop-shadow-sm">ARSENAL</span>
+        <span class="text-[1rem] font-extrabold text-white tracking-tight leading-none drop-shadow-sm">NEO</span>
+        <span class="text-[0.75rem] font-bold text-[#b2dfd7] tracking-widest drop-shadow-sm">ARSENAL</span>
       </div>
     </a>
 
     <!-- CENTRO: Enlaces de Navegación -->
     <div class="hidden md:flex items-center justify-center gap-1 flex-1 px-4">
       
-      <a *ngIf="!esHome" routerLink="/home" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
-        <span class="material-symbols-outlined text-[18px]">home</span> Inicio
+      <a *ngIf="!esHome" routerLink="/home" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[0.875rem] transition-all flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[1.125rem]">home</span> Inicio
       </a>
       
       <ng-container *ngIf="!esHome">
-        <a *ngIf="noEsRuta('/ventas')" routerLink="/ventas" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[18px]">point_of_sale</span> Ventas
+        <a *ngIf="noEsRuta('/ventas')" routerLink="/ventas" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[0.875rem] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[1.125rem]">point_of_sale</span> Ventas
         </a>
-        <a *ngIf="noEsRuta('/productos')" routerLink="/productos" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[18px]">inventory_2</span> Productos
+        <a *ngIf="noEsRuta('/productos')" routerLink="/productos" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[0.875rem] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[1.125rem]">inventory_2</span> Productos
         </a>
-        <a *ngIf="noEsRuta('/proveedores')" routerLink="/proveedores" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[18px]">local_shipping</span> Proveedores
+        <a *ngIf="noEsRuta('/proveedores')" routerLink="/proveedores" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[0.875rem] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[1.125rem]">local_shipping</span> Proveedores
         </a>
-        <a *ngIf="noEsRuta('/almacenes')" routerLink="/almacenes" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[18px]">warehouse</span> Almacenes
+        <a *ngIf="noEsRuta('/almacenes')" routerLink="/almacenes" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[0.875rem] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[1.125rem]">warehouse</span> Almacenes
         </a>
-        <a *ngIf="noEsRuta('/inventarios')" routerLink="/inventarios" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[18px]">fact_check</span> Inventario
+        <a *ngIf="noEsRuta('/inventarios')" routerLink="/inventarios" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[0.875rem] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[1.125rem]">fact_check</span> Inventario
         </a>
-        <a *ngIf="noEsRuta('/historial')" routerLink="/historial" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[18px]">history</span> Historial
+        <a *ngIf="noEsRuta('/historial')" routerLink="/historial" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[0.875rem] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[1.125rem]">history</span> Historial
         </a>
-        <a *ngIf="noEsRuta('/usuarios')" routerLink="/usuarios" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[14px] transition-all flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[18px]">group</span> Usuarios
+        <a *ngIf="noEsRuta('/usuarios')" routerLink="/usuarios" class="px-3 py-2 rounded-lg text-white/90 hover:text-white hover:bg-white/10 font-semibold text-[0.875rem] transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[1.125rem]">group</span> Usuarios
         </a>
       </ng-container>
 
     </div>
 
-    <!-- LADO DERECHO: Perfil y Botón -->
-    <div class="flex items-center gap-4 shrink-0">
-      
-      <a routerLink="/perfil" class="hover:bg-white/10 transition-colors text-[13px] flex items-center gap-1.5 bg-white/5 text-white px-3 py-1.5 rounded-full font-medium border border-white/10">
-        <span class="material-symbols-outlined text-[18px] text-[#b2dfd7]">account_circle</span>
+    <!-- LADO DERECHO: Controles de accesibilidad + Perfil + Salir -->
+    <div class="flex items-center gap-3 shrink-0">
+
+      <!-- Control de Tamaño de Fuente — WCAG 2.1 Criterio 1.4.4 Resize Text -->
+      <div class="controles-fuente" role="group" aria-label="Tamaño de texto">
+        <button
+          (click)="reducirFuente()"
+          [disabled]="nivelFuente === 0"
+          class="btn-fuente"
+          aria-label="Reducir tamaño de texto"
+          data-tooltip="Texto pequeño">
+          <span aria-hidden="true">A<sup>−</sup></span>
+        </button>
+        <button
+          (click)="resetFuente()"
+          class="btn-fuente btn-fuente-normal"
+          [class.activo-fuente]="nivelFuente === 1"
+          aria-label="Tamaño de texto normal"
+          data-tooltip="Texto normal">
+          <span aria-hidden="true">A</span>
+        </button>
+        <button
+          (click)="aumentarFuente()"
+          [disabled]="nivelFuente === 2"
+          class="btn-fuente"
+          aria-label="Aumentar tamaño de texto"
+          data-tooltip="Texto grande">
+          <span aria-hidden="true">A<sup>+</sup></span>
+        </button>
+      </div>
+
+      <a routerLink="/perfil" class="hover:bg-white/10 transition-colors text-[0.8125rem] flex items-center gap-1.5 bg-white/5 text-white px-3 py-1.5 rounded-full font-medium border border-white/10">
+        <span class="material-symbols-outlined text-[1.125rem] text-[#b2dfd7]">account_circle</span>
         {{ auth.usuario?.email || 'Perfil' }}
       </a>
       
-      <!-- Botón de Accesibilidad (Daltonismo) -->
-      <button (click)="toggleDaltonismo()" class="hover:bg-white/10 text-white p-2 rounded-full flex items-center justify-center transition-all border border-transparent hover:border-white/20 hover:shadow-lg" title="Modo Accesibilidad (Daltonismo)">
-        <span class="material-symbols-outlined text-[20px]" *ngIf="!modoDaltonico">visibility</span>
-        <span class="material-symbols-outlined text-[20px]" *ngIf="modoDaltonico">visibility_off</span>
+      <!-- Botón de Accesibilidad (Daltonismo) — WCAG 2.1: Criterio 1.4.1 y 2.4.7 -->
+      <button
+        (click)="toggleDaltonismo()"
+        class="btn-accesibilidad hover:bg-white/10 text-white p-2 rounded-full flex items-center justify-center transition-all border border-transparent hover:border-white/20 hover:shadow-lg"
+        [class.activo]="modoDaltonico"
+        [attr.aria-pressed]="modoDaltonico"
+        [attr.aria-label]="modoDaltonico ? 'Desactivar modo accesibilidad visual' : 'Activar modo accesibilidad visual'"
+        [attr.data-tooltip]="modoDaltonico ? 'Modo accesibilidad: ON' : 'Modo accesibilidad: OFF'">
+        <span class="material-symbols-outlined text-[1.25rem]" aria-hidden="true" *ngIf="!modoDaltonico">visibility</span>
+        <span class="material-symbols-outlined text-[1.25rem]" aria-hidden="true" *ngIf="modoDaltonico">visibility_off</span>
       </button>
       
-      <button (click)="auth.logout()" class="bg-white/10 hover:bg-[#ba1a1a] text-white px-4 py-2 rounded-full font-bold text-[13px] flex items-center gap-1.5 transition-all shadow-sm border border-white/20 hover:border-[#ba1a1a] hover:shadow-lg hover:-translate-y-0.5">
-        Salir <span class="material-symbols-outlined text-[18px]">logout</span>
+      <button (click)="auth.logout()" class="bg-white/10 hover:bg-[#ba1a1a] text-white px-4 py-2 rounded-full font-bold text-[0.8125rem] flex items-center gap-1.5 transition-all shadow-sm border border-white/20 hover:border-[#ba1a1a] hover:shadow-lg hover:-translate-y-0.5">
+        Salir <span class="material-symbols-outlined text-[1.125rem]">logout</span>
       </button>
 
     </div>
@@ -70,7 +116,7 @@
   </div>
 </nav>
 
-<!-- Contenido Principal -->
-<main role="main" class="min-h-screen bg-[#f8fafa] flex flex-col pt-8">
+<!-- Contenido Principal — id requerido por el Skip Link -->
+<main id="contenido-principal" role="main" class="min-h-screen bg-[#f8fafa] flex flex-col pt-8" tabindex="-1">
   <router-outlet></router-outlet>
 </main>

@@ -58,6 +58,6 @@ export class AuthService {
   }
 
   guardarPerfil(id: number, datos: any): Observable<any> {
-    return this.http.post(`${this.url}/${id}/perfil`, datos, { responseType: 'text' });
+    return this.http.put(`${this.url}/${id}/perfil`, datos, { responseType: 'text' });
   }
 }

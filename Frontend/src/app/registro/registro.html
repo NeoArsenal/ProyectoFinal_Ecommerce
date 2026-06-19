@@ -1,4 +1,4 @@
-<main class="min-h-screen w-full luminous-gradient flex items-center justify-center p-6 relative overflow-hidden font-sans text-gray-900" role="main">
+﻿<main class="min-h-screen w-full luminous-gradient flex items-center justify-center p-6 relative overflow-hidden font-sans text-gray-900" role="main">
   <!-- Fondo decorativo suave -->
   <div class="absolute -top-40 -right-40 w-96 h-96 bg-white/20 rounded-full blur-[80px] pointer-events-none"></div>
   <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-[#003b3b] opacity-30 rounded-full blur-[80px] pointer-events-none"></div>
@@ -9,10 +9,10 @@
     <!-- Logo -->
     <div class="text-center mb-8">
       <div class="w-16 h-16 bg-[#172b4d] text-[#d97706] rounded-2xl mx-auto flex flex-col items-center justify-center mb-5 shadow-xl card-lift-sm border-2 border-white/20">
-        <span class="material-symbols-filled text-[32px] mt-0.5">person_add</span>
+        <span class="material-symbols-filled text-[2rem] mt-0.5">person_add</span>
       </div>
       <h1 id="registro-title" class="text-3xl font-extrabold text-[#172b4d] tracking-tight drop-shadow-sm">Crear una cuenta</h1>
-      <p class="text-[#3e4948] mt-2 font-medium text-[15px]">Únete a NeoArsenal y empieza a gestionar tu tienda</p>
+      <p class="text-[#3e4948] mt-2 font-medium text-[0.9375rem]">Únete a NeoArsenal y empieza a gestionar tu tienda</p>
     </div>
 
     <form #regForm="ngForm" (ngSubmit)="crearCuenta()" class="space-y-6" novalidate>
@@ -21,8 +21,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <!-- Campo Nombre -->
         <div class="space-y-2">
-          <label for="reg-nombre" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
-            Nombre <span class="text-red-500">*</span>
+          <label for="reg-nombre" class="block text-[0.8125rem] font-bold text-[#172b4d] uppercase tracking-wide">
+            Nombre <span class="text-red-500" aria-hidden="true">*</span>
           </label>
           <input
             type="text"
@@ -39,22 +39,24 @@
             [class.border-gray-200]="!(nombre.invalid && nombre.touched)"
             [class.focus:border-[#02696a]]="!(nombre.invalid && nombre.touched)"
             [class.focus:ring-[#02696a]]="!(nombre.invalid && nombre.touched)"
-            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[0.9375rem] shadow-inner"
             placeholder="Ej: Jose Carlos"
             (keypress)="soloLetras($event)"
-            aria-required="true">
+            aria-required="true"
+            aria-describedby="error-nombre"
+            [attr.aria-invalid]="nombre.invalid && nombre.touched">
           
-          <small *ngIf="nombre.invalid && nombre.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
-            <span *ngIf="nombre.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
-            <span *ngIf="nombre.errors?.['minlength']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Mínimo 3 letras</span>
-            <span *ngIf="nombre.errors?.['pattern']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Solo letras</span>
+          <small id="error-nombre" *ngIf="nombre.invalid && nombre.touched" class="flex flex-col gap-1 text-[0.75rem] text-red-500 font-bold mt-1.5" role="alert">
+            <span *ngIf="nombre.errors?.['required']"><span class="material-symbols-outlined text-[0.875rem] align-middle" aria-hidden="true">error</span> Requerido</span>
+            <span *ngIf="nombre.errors?.['minlength']"><span class="material-symbols-outlined text-[0.875rem] align-middle" aria-hidden="true">error</span> Mínimo 3 letras</span>
+            <span *ngIf="nombre.errors?.['pattern']"><span class="material-symbols-outlined text-[0.875rem] align-middle" aria-hidden="true">error</span> Solo letras</span>
           </small>
         </div>
 
         <!-- Campo Apellido -->
         <div class="space-y-2">
-          <label for="reg-apellido" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
-            Apellido <span class="text-red-500">*</span>
+          <label for="reg-apellido" class="block text-[0.8125rem] font-bold text-[#172b4d] uppercase tracking-wide">
+            Apellido <span class="text-red-500" aria-hidden="true">*</span>
           </label>
           <input
             type="text"
@@ -71,15 +73,17 @@
             [class.border-gray-200]="!(apellido.invalid && apellido.touched)"
             [class.focus:border-[#02696a]]="!(apellido.invalid && apellido.touched)"
             [class.focus:ring-[#02696a]]="!(apellido.invalid && apellido.touched)"
-            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[0.9375rem] shadow-inner"
             placeholder="Ej: Anicama Silva"
             (keypress)="soloLetras($event)"
-            aria-required="true">
+            aria-required="true"
+            aria-describedby="error-apellido"
+            [attr.aria-invalid]="apellido.invalid && apellido.touched">
             
-          <small *ngIf="apellido.invalid && apellido.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
-            <span *ngIf="apellido.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
-            <span *ngIf="apellido.errors?.['minlength']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Mínimo 3 letras</span>
-            <span *ngIf="apellido.errors?.['pattern']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Solo letras</span>
+          <small id="error-apellido" *ngIf="apellido.invalid && apellido.touched" class="flex flex-col gap-1 text-[0.75rem] text-red-500 font-bold mt-1.5" role="alert">
+            <span *ngIf="apellido.errors?.['required']"><span class="material-symbols-outlined text-[0.875rem] align-middle" aria-hidden="true">error</span> Requerido</span>
+            <span *ngIf="apellido.errors?.['minlength']"><span class="material-symbols-outlined text-[0.875rem] align-middle" aria-hidden="true">error</span> Mínimo 3 letras</span>
+            <span *ngIf="apellido.errors?.['pattern']"><span class="material-symbols-outlined text-[0.875rem] align-middle" aria-hidden="true">error</span> Solo letras</span>
           </small>
         </div>
       </div>
@@ -88,8 +92,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <!-- Campo DNI -->
         <div class="space-y-2">
-          <label for="reg-dni" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
-            DNI <span class="text-red-500">*</span>
+          <label for="reg-dni" class="block text-[0.8125rem] font-bold text-[#172b4d] uppercase tracking-wide">
+            DNI <span class="text-red-500" aria-hidden="true">*</span>
           </label>
           <input
             type="text"
@@ -105,20 +109,22 @@
             [class.border-gray-200]="!(dni.invalid && dni.touched)"
             [class.focus:border-[#02696a]]="!(dni.invalid && dni.touched)"
             [class.focus:ring-[#02696a]]="!(dni.invalid && dni.touched)"
-            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[0.9375rem] shadow-inner"
             placeholder="8 dígitos numéricos"
             (keypress)="soloNumeros($event)"
-            aria-required="true">
+            aria-required="true"
+            aria-describedby="error-dni"
+            [attr.aria-invalid]="dni.invalid && dni.touched">
             
-          <small *ngIf="dni.invalid && dni.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
-            <span *ngIf="dni.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
-            <span *ngIf="dni.errors?.['pattern']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Exactamente 8 números</span>
+          <small id="error-dni" *ngIf="dni.invalid && dni.touched" class="flex flex-col gap-1 text-[0.75rem] text-red-500 font-bold mt-1.5" role="alert">
+            <span *ngIf="dni.errors?.['required']"><span class="material-symbols-outlined text-[0.875rem] align-middle" aria-hidden="true">error</span> Requerido</span>
+            <span *ngIf="dni.errors?.['pattern']"><span class="material-symbols-outlined text-[0.875rem] align-middle" aria-hidden="true">error</span> Exactamente 8 números</span>
           </small>
         </div>
 
         <!-- Campo Género -->
         <div class="space-y-2">
-          <label for="reg-genero" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+          <label for="reg-genero" class="block text-[0.8125rem] font-bold text-[#172b4d] uppercase tracking-wide">
             Género <span class="text-red-500">*</span>
           </label>
           <div class="relative">
@@ -133,18 +139,18 @@
               [class.border-gray-200]="!(genero.invalid && genero.touched)"
               [class.focus:border-[#02696a]]="!(genero.invalid && genero.touched)"
               [class.focus:ring-[#02696a]]="!(genero.invalid && genero.touched)"
-              class="block w-full pl-4 pr-10 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner appearance-none cursor-pointer"
+              class="block w-full pl-4 pr-10 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[0.9375rem] shadow-inner appearance-none cursor-pointer"
               aria-required="true">
               <option value="" disabled class="text-gray-400">Seleccionar género</option>
               <option value="M" class="text-gray-900">Masculino</option>
               <option value="F" class="text-gray-900">Femenino</option>
             </select>
             <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-500" aria-hidden="true">
-              <span class="material-symbols-outlined text-[20px]">expand_more</span>
+              <span class="material-symbols-outlined text-[1.25rem]">expand_more</span>
             </div>
           </div>
-          <small *ngIf="genero.invalid && genero.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
-            <span><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
+          <small *ngIf="genero.invalid && genero.touched" class="flex flex-col gap-1 text-[0.75rem] text-red-500 font-bold mt-1.5">
+            <span><span class="material-symbols-outlined text-[0.875rem] align-middle">error</span> Requerido</span>
           </small>
         </div>
       </div>
@@ -153,7 +159,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <!-- Campo Correo -->
         <div class="space-y-2">
-          <label for="reg-email" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+          <label for="reg-email" class="block text-[0.8125rem] font-bold text-[#172b4d] uppercase tracking-wide">
             Correo <span class="text-red-500">*</span>
           </label>
           <input
@@ -169,19 +175,19 @@
             [class.border-gray-200]="!(email.invalid && email.touched)"
             [class.focus:border-[#02696a]]="!(email.invalid && email.touched)"
             [class.focus:ring-[#02696a]]="!(email.invalid && email.touched)"
-            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[0.9375rem] shadow-inner"
             placeholder="ejemplo@correo.com"
             aria-required="true">
             
-          <small *ngIf="email.invalid && email.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
-            <span *ngIf="email.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
-            <span *ngIf="email.errors?.['email']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Formato inválido</span>
+          <small *ngIf="email.invalid && email.touched" class="flex flex-col gap-1 text-[0.75rem] text-red-500 font-bold mt-1.5">
+            <span *ngIf="email.errors?.['required']"><span class="material-symbols-outlined text-[0.875rem] align-middle">error</span> Requerido</span>
+            <span *ngIf="email.errors?.['email']"><span class="material-symbols-outlined text-[0.875rem] align-middle">error</span> Formato inválido</span>
           </small>
         </div>
 
         <!-- Campo Contraseña -->
         <div class="space-y-2">
-          <label for="reg-password" class="block text-[13px] font-bold text-[#172b4d] uppercase tracking-wide">
+          <label for="reg-password" class="block text-[0.8125rem] font-bold text-[#172b4d] uppercase tracking-wide">
             Contraseña <span class="text-red-500">*</span>
           </label>
           <input
@@ -197,25 +203,25 @@
             [class.border-gray-200]="!(pass.invalid && pass.touched)"
             [class.focus:border-[#02696a]]="!(pass.invalid && pass.touched)"
             [class.focus:ring-[#02696a]]="!(pass.invalid && pass.touched)"
-            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[15px] shadow-inner"
+            class="block w-full px-4 py-3 bg-white/70 backdrop-blur-sm border rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-opacity-20 transition-all duration-200 outline-none text-[0.9375rem] shadow-inner"
             placeholder="Mínimo 6 caracteres"
             aria-required="true">
             
-          <small *ngIf="pass.invalid && pass.touched" class="flex flex-col gap-1 text-[12px] text-red-500 font-bold mt-1.5">
-            <span *ngIf="pass.errors?.['required']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Requerido</span>
-            <span *ngIf="pass.errors?.['minlength']"><span class="material-symbols-outlined text-[14px] align-middle">error</span> Mínimo 6 caracteres</span>
+          <small *ngIf="pass.invalid && pass.touched" class="flex flex-col gap-1 text-[0.75rem] text-red-500 font-bold mt-1.5">
+            <span *ngIf="pass.errors?.['required']"><span class="material-symbols-outlined text-[0.875rem] align-middle">error</span> Requerido</span>
+            <span *ngIf="pass.errors?.['minlength']"><span class="material-symbols-outlined text-[0.875rem] align-middle">error</span> Mínimo 6 caracteres</span>
           </small>
         </div>
       </div>
 
       <!-- Alertas -->
-      <div role="alert" aria-live="assertive" class="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-[14px] font-semibold shadow-sm" *ngIf="mensajeError">
-        <span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">warning</span>
+      <div role="alert" aria-live="assertive" class="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-[0.875rem] font-semibold shadow-sm" *ngIf="mensajeError">
+        <span class="material-symbols-outlined text-[1.25rem] shrink-0 mt-0.5">warning</span>
         <span>{{ mensajeError }}</span>
       </div>
 
-      <div role="alert" aria-live="assertive" class="flex items-start gap-2 bg-[#e6f4f1] border border-[#b2dfd7] text-[#02696a] px-4 py-3 rounded-xl text-[14px] font-semibold shadow-sm" *ngIf="mensajeExito">
-        <span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">check_circle</span>
+      <div role="alert" aria-live="assertive" class="flex items-start gap-2 bg-[#e6f4f1] border border-[#b2dfd7] text-[#02696a] px-4 py-3 rounded-xl text-[0.875rem] font-semibold shadow-sm" *ngIf="mensajeExito">
+        <span class="material-symbols-outlined text-[1.25rem] shrink-0 mt-0.5">check_circle</span>
         <span>{{ mensajeExito }}</span>
       </div>
 
@@ -228,10 +234,10 @@
         
         <span *ngIf="!cargando" class="flex items-center gap-2">
           <span>Crear mi cuenta</span>
-          <span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+          <span class="material-symbols-outlined text-[1.25rem]">how_to_reg</span>
         </span>
         <span *ngIf="cargando" class="flex items-center gap-2">
-          <span class="material-symbols-outlined animate-spin text-[20px]">sync</span>
+          <span class="material-symbols-outlined animate-spin text-[1.25rem]">sync</span>
           <span>Registrando...</span>
         </span>
       </button>
@@ -240,7 +246,7 @@
     
     <!-- Enlace a login -->
     <div class="mt-8 pt-6 border-t border-gray-200/50 text-center">
-      <p class="text-[14px] text-gray-600 font-medium">
+      <p class="text-[0.875rem] text-gray-600 font-medium">
         ¿Ya tienes cuenta? 
         <a routerLink="/login" class="text-[#02696a] hover:text-[#004f50] font-bold transition-all focus-visible:outline-[#02696a] nav-link-hover pb-1">Inicia sesión aquí</a>
       </p>
