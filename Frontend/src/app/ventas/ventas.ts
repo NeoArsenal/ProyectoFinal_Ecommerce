@@ -132,6 +132,7 @@ export class Ventas implements OnInit {
     this.cargando = true;
 
     const payload: VentaPayload = {
+      usuarioId:     this.usuarioId,
       metodoPago:    this.metodoPago,
       metodoEnvioId: this.metodoEnvioId,
       items: this.carrito.map(item => ({
