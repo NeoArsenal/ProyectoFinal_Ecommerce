@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 // --- INTERFACES ---
 export interface VentaPayload {
-  usuarioId: number;
   metodoPago:    string;   // "Efectivo" | "Tarjeta" | "Yape"
   metodoEnvioId: number;   // 1=Express, 2=Normal, etc.
   items: ItemVenta[];

@@ -19,6 +19,12 @@ import com.example.demo.service.UsuariosService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import com.example.demo.security.JwtProvider;
+import com.example.demo.dto.AuthResponseDTO;
+
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -27,13 +33,25 @@ public class UsuariosController {
     @Autowired
     private UsuariosService service;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtProvider jwtProvider;
+
     // --- 1. Login Validado ---
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDTO credenciales) {
-        UsuariosDTO usuario = service.login(credenciales.getEmail(), credenciales.getPassword());
-        if (usuario != null) {
-            return ResponseEntity.ok(usuario);
-        } else {
+        try {
+            Authentication auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(credenciales.getEmail(), credenciales.getPassword())
+            );
+            
+            String token = jwtProvider.generarToken(auth);
+            UsuariosDTO usuario = service.login(credenciales.getEmail(), credenciales.getPassword());
+            
+            return ResponseEntity.ok(new AuthResponseDTO(token, usuario));
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Credenciales incorrectas");
         }
     }
