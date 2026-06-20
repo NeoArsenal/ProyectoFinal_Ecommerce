@@ -11,12 +11,19 @@ export interface DashboardDTO {
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
-  // Asegúrate de que el puerto sea 8085 (o el que estés usando en Spring Boot)
-  private url = 'http://localhost:8085/dashboard/resumen';
+  private url = 'http://localhost:8085/dashboard';
 
   constructor(private http: HttpClient) {}
 
   obtenerResumen(): Observable<DashboardDTO> {
-    return this.http.get<DashboardDTO>(this.url);
+    return this.http.get<DashboardDTO>(`${this.url}/resumen`);
+  }
+
+  obtenerTendencia(): Observable<number[]> {
+    return this.http.get<number[]>(`${this.url}/tendencia`);
+  }
+
+  obtenerActividades(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/actividades`);
   }
 }

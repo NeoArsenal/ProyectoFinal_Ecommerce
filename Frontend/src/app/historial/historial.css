@@ -1,163 +1,313 @@
-.historial-page {
-  max-width: 960px;
+/* ==========================================================================
+   HISTORIAL DE PEDIDOS — Diseño Premium (Cohesivo con DERMQ)
+   ========================================================================== */
+
+/* --- Contenedor Principal --- */
+.container {
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 24px 20px 48px;
-  animation: fadeIn 0.3s ease;
+  padding: 32px 24px;
 }
 
-.page-header { margin-bottom: 24px; }
+/* --- Animaciones del Sistema --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-.page-header h1 {
+.animate-fade-in {
+  animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- Header de la Vista --- */
+.view-header {
+  margin-bottom: 28px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  font-size: 2.25rem;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-header h1 {
   font-size: 26px;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 4px;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.5px;
 }
 
-.subtitulo { font-size: 13px; color: var(--text-muted); }
-
-/* Contador */
-.contador { margin-bottom: 12px; }
-
-.badge-total {
-  display: inline-block;
-  background: var(--primary-bg);
-  color: var(--primary);
-  border: 1px solid var(--primary-light);
-  border-radius: 20px;
-  padding: 4px 14px;
-  font-size: 12px;
-  font-weight: 700;
+.view-header .subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
-/* Tabla */
-.tabla-wrapper {
+/* --- Contenedor Principal Full Ancho --- */
+.dashboard-full-width {
+  width: 100%;
+}
+
+/* --- Tarjetas Estilo Glassmorphism / Premium --- */
+.glass-card {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition-normal) ease, border-color var(--transition-normal) ease;
 }
 
-.tabla-historial {
+.glass-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-medium);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0));
+}
+
+.card-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.icon-accent {
+  font-size: 1.5rem;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 4px;
+  border-radius: 6px;
+}
+
+/* --- Tabla de Historial --- */
+.table-header-flex {
+  justify-content: space-between;
+}
+
+.title-flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shipping-counter {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--primary-light);
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabla-moderna {
   width: 100%;
   border-collapse: collapse;
-}
-
-.tabla-historial th {
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  padding: 12px 14px;
   text-align: left;
-  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
 }
 
-.tabla-historial td {
-  padding: 13px 14px;
-  font-size: 13px;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border-light);
-}
-
-.tabla-historial tr:last-child td { border-bottom: none; }
-
-.tabla-historial tr:hover td {
+.tabla-moderna th {
   background: var(--bg-secondary);
-  transition: background 0.15s ease;
-}
-
-.col-id    { width: 55px; text-align: center; }
-.col-num   { text-align: right; }
-
-.id-pedido {
-  font-weight: 700;
-  color: var(--primary);
-  text-align: center;
-  font-family: monospace;
-}
-
-.fecha-cell  { color: var(--text-secondary); font-size: 12px; }
-.email-cell  { color: var(--text-secondary); font-size: 12px; }
-.total-cell  { font-weight: 700; color: var(--text-primary); }
-
-.tracking-cell {
-  font-family: monospace;
-  font-weight: 700;
-  font-size: 12px;
   color: var(--text-secondary);
-  letter-spacing: 1px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
 }
 
-/* Badges */
-.badge {
+.tabla-moderna td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--on-surface);
+  vertical-align: middle;
+}
+
+.table-row-hover {
+  transition: background-color var(--transition-fast);
+}
+
+.table-row-hover:hover {
+  background-color: rgba(2, 105, 106, 0.02);
+}
+
+/* Badge de ID */
+.id-badge {
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 20px;
+  background-color: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+}
+
+/* Fecha */
+.date-cell-flex {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.date-icon {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.date-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Cliente Cell */
+.client-cell {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* Celda de Precio */
+.price-cell {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.price-symbol {
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-right: 2px;
+}
+
+/* Badges de Pago */
+.payment-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(99, 102, 241, 0.08);
+  color: var(--primary);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
   font-size: 11px;
   font-weight: 700;
+  text-transform: uppercase;
+}
+
+.payment-icon {
+  font-size: 0.95rem;
+}
+
+/* Badges de Estado Dinámicos */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
   letter-spacing: 0.3px;
   text-transform: uppercase;
 }
 
-.badge-pago {
-  background: rgba(99,102,241,0.1);
-  color: var(--primary);
-  border: 1px solid rgba(99,102,241,0.25);
+.status-icon {
+  font-size: 0.95rem;
 }
 
-.badge-pendiente {
-  background: rgba(245,158,11,0.1);
+.status-pending {
+  background-color: #fef3c7;
   color: #d97706;
-  border: 1px solid rgba(245,158,11,0.3);
+  border: 1px solid rgba(217, 119, 6, 0.15);
 }
 
-.badge-enviado {
-  background: rgba(59,130,246,0.1);
-  color: #2563eb;
-  border: 1px solid rgba(59,130,246,0.3);
+.status-shipped {
+  background-color: var(--primary-bg);
+  color: var(--primary);
+  border: 1px solid var(--primary-light);
 }
 
-.badge-entregado {
-  background: rgba(16,185,129,0.1);
-  color: #059669;
-  border: 1px solid rgba(16,185,129,0.3);
+.status-delivered {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.15);
 }
 
-.badge-default {
-  background: var(--bg-secondary);
+/* Tracking Cell (Monospace) */
+.tracking-cell {
+  font-weight: 700;
+}
+
+.tracking-code {
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--primary);
+  background-color: var(--primary-bg);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--primary-light);
+}
+
+.no-tracking {
+  font-size: 12px;
   color: var(--text-muted);
-  border: 1px solid var(--border-light);
 }
 
-/* Estado vacío */
-.vacio { padding: 40px !important; }
-
-.vacio-contenido {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+/* Tabla vacía */
+.table-empty {
+  text-align: center;
+  padding: 48px 16px !important;
   color: var(--text-muted);
 }
 
-.vacio-icon { font-size: 36px; }
+.empty-icon {
+  font-size: 2.5rem;
+  color: var(--border-medium);
+  margin-bottom: 8px;
+}
 
-/* Carga */
+.table-empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Carga & Spinner */
 .loading-state {
   text-align: center;
-  padding: 60px 20px;
+  padding: 60px 24px;
   color: var(--text-muted);
-}
-
-.error-state {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--accent-rose);
-  font-weight: 600;
+  font-size: 14px;
 }
 
 .spinner {
@@ -167,13 +317,29 @@
   border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
-  margin: 0 auto 12px;
+  margin: 0 auto 16px;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
-
-@media (max-width: 640px) {
-  .tabla-historial { font-size: 11px; }
-  .tabla-historial th,
-  .tabla-historial td { padding: 9px 8px; }
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
+
+/* Error State */
+.error-state {
+  text-align: center;
+  padding: 40px 24px;
+  color: var(--accent-rose);
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.error-icon {
+  font-size: 2.5rem;
+}
+
+/* --- Utilidades --- */
+.center { text-align: center; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }

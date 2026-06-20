@@ -1,68 +1,184 @@
-<div class="container">
-  <h1>Gestión de Proveedores</h1>
-
-  <!-- Formulario -->
-  <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
-    <input type="hidden" formControlName="id">
-
-    <div class="campo">
-      <label for="inp-empresa">Empresa:</label>
-      <input id="inp-empresa" type="text" formControlName="empresa" placeholder="Ej: Sony Corp" [class.input-error]="empresaCtl?.touched && empresaCtl?.invalid">
-      <small *ngIf="empresaCtl?.touched && empresaCtl?.errors?.['required']" class="error msg-error" role="alert" aria-live="polite">Requerido</small>
-      <small *ngIf="empresaCtl?.touched && empresaCtl?.errors?.['minlength']" class="error msg-error" role="alert" aria-live="polite">Mínimo 3 letras</small>
+<div class="container animate-fade-in">
+  <!-- Header de la Vista -->
+  <header class="view-header">
+    <div class="header-title">
+      <span class="material-symbols-outlined header-icon" aria-hidden="true">business</span>
+      <div>
+        <h1>Gestión de Proveedores</h1>
+        <p class="subtitle">Administra la información de contacto y detalles de las empresas proveedoras del catálogo.</p>
+      </div>
     </div>
+  </header>
 
-    <div class="campo">
-      <label for="inp-contacto">Contacto:</label>
-      <input id="inp-contacto" type="text" formControlName="contacto" placeholder="Ej: Juan Pérez" [class.input-error]="contactoCtl?.touched && contactoCtl?.invalid">
-      <small *ngIf="contactoCtl?.touched && contactoCtl?.errors?.['required']" class="error msg-error" role="alert" aria-live="polite">Requerido</small>
-      <small *ngIf="contactoCtl?.touched && contactoCtl?.errors?.['minlength']" class="error msg-error" role="alert" aria-live="polite">Mínimo 3 letras</small>
-      <small *ngIf="contactoCtl?.touched && contactoCtl?.errors?.['pattern']" class="error msg-error" role="alert" aria-live="polite">Solo letras válidas</small>
-    </div>
+  <!-- Layout Principal en Grid -->
+  <div class="dashboard-grid">
+    
+    <!-- Columna Izquierda: Formulario -->
+    <aside class="form-container">
+      <div class="glass-card form-card">
+        <div class="card-header">
+          <span class="material-symbols-outlined icon-accent" aria-hidden="true">
+            {{ esEdicion ? 'edit_note' : 'add_box' }}
+          </span>
+          <h2>{{ esEdicion ? 'Modificar Proveedor' : 'Nuevo Proveedor' }}</h2>
+        </div>
 
-    <div class="campo">
-      <label for="inp-telefono">Teléfono:</label>
-      <input id="inp-telefono" type="text" formControlName="telefono" placeholder="Ej: 999888777" [class.input-error]="telCtl?.touched && telCtl?.invalid">
-      <small *ngIf="telCtl?.touched && telCtl?.errors?.['required']" class="error msg-error" role="alert" aria-live="polite">Requerido</small>
-      <small *ngIf="telCtl?.touched && telCtl?.errors?.['pattern']" class="error msg-error" role="alert" aria-live="polite">Debe tener 7 a 9 números exactos</small>
-    </div>
+        <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario-moderno">
+          <input type="hidden" formControlName="id">
 
-    <div class="botones">
-      <button type="submit" [disabled]="form.invalid" [class.btn-edit]="esEdicion">
-        {{ esEdicion ? 'Actualizar' : 'Registrar' }}
-      </button>
-      <button type="button" (click)="limpiar()" class="btn-limpiar">Limpiar</button>
-    </div>
-  </form>
+          <!-- Campo: Empresa -->
+          <div class="campo">
+            <label for="inp-empresa">Empresa</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">store</span>
+              <input id="inp-empresa" type="text" formControlName="empresa" 
+                     placeholder="Ej. Sony Corp, Samsung S.A."
+                     [class.input-error]="esInvalido('empresa')"/>
+            </div>
+            <small *ngIf="empresaCtl?.touched && empresaCtl?.errors?.['required']" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Empresa es requerida.
+            </small>
+            <small *ngIf="empresaCtl?.touched && empresaCtl?.errors?.['minlength']" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Mínimo 3 letras.
+            </small>
+          </div>
 
-  <hr>
+          <!-- Campo: Contacto -->
+          <div class="campo">
+            <label for="inp-contacto">Contacto Responsable</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">person</span>
+              <input id="inp-contacto" type="text" formControlName="contacto" 
+                     placeholder="Ej. Juan Pérez"
+                     [class.input-error]="esInvalido('contacto')"/>
+            </div>
+            <small *ngIf="contactoCtl?.touched && contactoCtl?.errors?.['required']" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Contacto es requerido.
+            </small>
+            <small *ngIf="contactoCtl?.touched && contactoCtl?.errors?.['minlength']" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Mínimo 3 letras.
+            </small>
+            <small *ngIf="contactoCtl?.touched && contactoCtl?.errors?.['pattern']" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Solo letras válidas.
+            </small>
+          </div>
 
-  <!-- Tabla -->
-  <table >
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Empresa</th>
-        <th>Contacto</th>
-        <th>Teléfono</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let p of proveedores">
-        <td>{{ p.id }}</td>
-        <td>{{ p.empresa }}</td>
-        <td>{{ p.contacto }}</td>
-        <td>{{ p.telefono }}</td>
-        <td>
-          <button (click)="editar(p)" class="btn-azul">Editar</button>
-          <button (click)="borrar(p.id)" class="btn-rojo">Eliminar</button>
-        </td>
-      </tr>
-      <tr *ngIf="proveedores.length === 0">
-        <td colspan="5" style="text-align:center">No hay proveedores registrados.</td>
-      </tr>
-    </tbody>
-  </table>
+          <!-- Campo: Teléfono -->
+          <div class="campo">
+            <label for="inp-telefono">Teléfono</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">call</span>
+              <input id="inp-telefono" type="text" formControlName="telefono" 
+                     placeholder="Ej. 999888777"
+                     [class.input-error]="esInvalido('telefono')"/>
+            </div>
+            <small *ngIf="telCtl?.touched && telCtl?.errors?.['required']" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Teléfono es requerido.
+            </small>
+            <small *ngIf="telCtl?.touched && telCtl?.errors?.['pattern']" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Debe tener de 7 a 9 números exactos.
+            </small>
+          </div>
+
+          <!-- Botones de Acción -->
+          <div class="botones-container">
+            <button *ngIf="!esEdicion" type="submit" [disabled]="form.invalid" class="btn-primary animate-scale-up">
+              <span class="material-symbols-outlined">add_circle</span>
+              <span>Registrar</span>
+            </button>
+            
+            <button *ngIf="esEdicion" type="submit" [disabled]="form.invalid" class="btn-warning animate-scale-up">
+              <span class="material-symbols-outlined">save</span>
+              <span>Actualizar</span>
+            </button>
+
+            <button type="button" (click)="limpiar()" class="btn-secondary">
+              <span class="material-symbols-outlined">restart_alt</span>
+              <span>{{ esEdicion ? 'Cancelar' : 'Limpiar' }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Columna Derecha: Listado de Proveedores -->
+    <main class="table-container">
+      <div class="glass-card table-card">
+        <div class="card-header table-header-flex">
+          <div class="title-flex">
+            <span class="material-symbols-outlined icon-accent" aria-hidden="true">list_alt</span>
+            <h2>Proveedores Registrados</h2>
+          </div>
+          <span class="supplier-counter">
+            {{ proveedores.length }} {{ proveedores.length === 1 ? 'proveedor' : 'proveedores' }}
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="tabla-moderna">
+            <thead>
+              <tr>
+                <th class="center" style="width: 80px;">ID</th>
+                <th>Empresa</th>
+                <th>Contacto</th>
+                <th>Teléfono</th>
+                <th class="center" style="width: 140px;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of proveedores" class="table-row-hover">
+                <!-- ID con Badge Estilizado -->
+                <td class="center">
+                  <span class="id-badge">#{{ p.id }}</span>
+                </td>
+                
+                <!-- Empresa -->
+                <td>
+                  <span class="supplier-name-cell">{{ p.empresa }}</span>
+                </td>
+                
+                <!-- Contacto -->
+                <td>
+                  <div class="contact-flex-cell">
+                    <span class="material-symbols-outlined contact-icon">person</span>
+                    <span>{{ p.contacto }}</span>
+                  </div>
+                </td>
+                
+                <!-- Teléfono -->
+                <td>
+                  <div class="phone-flex-cell">
+                    <span class="material-symbols-outlined phone-icon">call</span>
+                    <span class="phone-number">{{ p.telefono }}</span>
+                  </div>
+                </td>
+                
+                <!-- Acciones -->
+                <td class="center">
+                  <div class="action-buttons">
+                    <button (click)="editar(p)" class="btn-action btn-edit" title="Editar proveedor" aria-label="Editar proveedor">
+                      <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button (click)="borrar(p.id)" class="btn-action btn-delete" title="Eliminar proveedor" aria-label="Eliminar proveedor">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Mensaje cuando la tabla está vacía -->
+              <tr *ngIf="proveedores.length === 0">
+                <td colspan="5" class="table-empty">
+                  <span class="material-symbols-outlined empty-icon">business</span>
+                  <p>No hay proveedores registrados en este momento.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+  </div>
 </div>
+
 

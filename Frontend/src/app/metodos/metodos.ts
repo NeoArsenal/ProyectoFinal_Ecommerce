@@ -8,7 +8,7 @@ import { MetodosService, MetodoDTO } from '../services/metodos';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './metodos.html',
-  styleUrls: ['../almacenes/almacenes.css'] // Reusamos estilos de almacenes
+  styleUrls: ['./metodos.css']
 })
 export class Metodos implements OnInit {
   metodos: MetodoDTO[] = [];

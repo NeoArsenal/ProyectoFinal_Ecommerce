@@ -1,186 +1,350 @@
-﻿<div class="max-w-[1200px] mx-auto px-6 py-10 animate-[fadeInUp_0.4s_ease-out]">
+<div class="max-w-[1200px] mx-auto px-6 py-8 animate-[fadeInUp_0.4s_ease-out]">
   
-  <!-- Header -->
-  <div class="mb-10">
-    <h1 class="text-[#191c1d] text-3xl font-bold tracking-tight mb-2">Panel de Control</h1>
-    <p class="text-[#3e4948] text-base">Resumen general de tu negocio</p>
+  <!-- Header con Saludo y Buscador Global -->
+  <header class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-gray-100 pb-6">
+    <div>
+      <h1 class="text-[#191c1d] text-3xl font-bold tracking-tight mb-2 flex items-center gap-2">
+        ¡{{ saludo }}, {{ usuarioNombre }}! <span class="wave-animation">👋</span>
+      </h1>
+      <p class="text-[#3e4948] text-base">Este es el estado operativo de NeoArsenal en este momento.</p>
+    </div>
+    <!-- Buscador de Módulos -->
+    <div class="relative shrink-0 w-full md:w-80">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[1.2rem]">search</span>
+      <input type="text" [(ngModel)]="filtroModulo" placeholder="Buscar módulo o función..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-[#02696a] focus:ring-2 focus:ring-[#eefcfc] transition-all bg-white/70 backdrop-blur-sm shadow-sm">
+      <button *ngIf="filtroModulo" (click)="filtroModulo = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+        <span class="material-symbols-outlined text-[1rem]">close</span>
+      </button>
+    </div>
+  </header>
+  
+  <!-- SECCIÓN 1: DASHBOARD DE MÉTRICAS & TENDENCIA -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10" *ngIf="stats">
+    
+    <!-- Columna Izquierda: Tarjetas de Métricas -->
+    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-5">
+      <!-- Ingresos Totales -->
+      <div class="glass-card rounded-2xl p-5 flex flex-col justify-between card-lift-sm relative overflow-hidden border border-gray-100 bg-white shadow-sm min-h-[140px]">
+        <div class="absolute -right-6 -top-6 w-20 h-20 bg-emerald-500 opacity-5 rounded-full blur-2xl"></div>
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-[0.75rem] font-bold text-gray-400 tracking-wider uppercase">INGRESOS TOTALES</span>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-50 text-emerald-600">
+            <span class="material-symbols-filled text-[1.4rem]">payments</span>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-1">S/ {{ stats.totalVentas | number:'1.2-2' }}</h3>
+          <span class="text-xs text-emerald-600 font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[0.9rem]">trending_up</span>
+            <span>+14.8% vs. semana ant.</span>
+          </span>
+        </div>
+      </div>
+      
+      <!-- Pedidos Realizados -->
+      <div class="glass-card rounded-2xl p-5 flex flex-col justify-between card-lift-sm relative overflow-hidden border border-gray-100 bg-white shadow-sm min-h-[140px]">
+        <div class="absolute -right-6 -top-6 w-20 h-20 bg-blue-500 opacity-5 rounded-full blur-2xl"></div>
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-[0.75rem] font-bold text-gray-400 tracking-wider uppercase">PEDIDOS TOTALES</span>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 text-blue-600">
+            <span class="material-symbols-filled text-[1.4rem]">shopping_cart</span>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-1">{{ stats.cantidadPedidos }}</h3>
+          <span class="text-xs text-blue-600 font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[0.9rem]">trending_up</span>
+            <span>Objetivo mensual: 10</span>
+          </span>
+        </div>
+      </div>
+      
+      <!-- Bajo Stock -->
+      <div class="glass-card rounded-2xl p-5 flex flex-col justify-between card-lift-sm relative overflow-hidden border border-gray-100 bg-white shadow-sm min-h-[140px]">
+        <div class="absolute -right-6 -top-6 w-20 h-20 bg-amber-500 opacity-5 rounded-full blur-2xl"></div>
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-[0.75rem] font-bold text-gray-400 tracking-wider uppercase">BAJO STOCK (< 5)</span>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-50 text-amber-600" [class.bg-red-50]="stats.productosBajoStock > 0" [class.text-red-600]="stats.productosBajoStock > 0">
+            <span class="material-symbols-filled text-[1.4rem]">{{ stats.productosBajoStock > 0 ? 'gpp_maybe' : 'check_circle' }}</span>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-1" [class.text-red-600]="stats.productosBajoStock > 0">{{ stats.productosBajoStock }}</h3>
+          <span class="text-xs font-semibold flex items-center gap-1" [class.text-amber-600]="stats.productosBajoStock === 0" [class.text-red-600]="stats.productosBajoStock > 0">
+            <span class="material-symbols-outlined text-[0.9rem]">{{ stats.productosBajoStock > 0 ? 'error' : 'done' }}</span>
+            <span>{{ stats.productosBajoStock > 0 ? 'Acción requerida' : 'Inventario óptimo' }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Columna Derecha: Gráfico de Tendencia -->
+    <div class="glass-card rounded-2xl p-5 card-lift-sm border border-gray-100 bg-white shadow-sm flex flex-col justify-between min-h-[160px]">
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <span class="text-[0.75rem] font-bold text-gray-400 tracking-wider uppercase">TENDENCIA DIARIA</span>
+          <h4 class="text-xs text-gray-500 mt-0.5">Ventas semanales estimadas</h4>
+        </div>
+        <span class="text-xs font-bold text-[#02696a] bg-[#eefcfc] px-2 py-0.5 rounded-full">En Vivo</span>
+      </div>
+      
+      <!-- SVG Chart -->
+      <div class="w-full h-16 mt-2 relative">
+        <svg viewBox="0 0 360 100" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+          <!-- Gradient fill -->
+          <defs>
+            <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#02696a" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#02696a" stop-opacity="0.0" />
+            </linearGradient>
+          </defs>
+          <path [attr.d]="chartAreaPath" fill="url(#chartGradient)" />
+          <path [attr.d]="chartPath" fill="none" stroke="#02696a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <div class="flex justify-between text-[9px] text-gray-400 font-bold px-1 mt-1 uppercase tracking-wider">
+        <span>Lun</span>
+        <span>Mar</span>
+        <span>Mie</span>
+        <span>Jue</span>
+        <span>Vie</span>
+        <span>Sab</span>
+        <span>Dom</span>
+      </div>
+    </div>
   </div>
   
-  <!-- SECCIÓN 1: DASHBOARD DE MÉTRICAS -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12" *ngIf="stats">
-    
-    <!-- Ingresos Totales -->
-    <div class="glass-card rounded-2xl p-6 flex items-center gap-5 card-lift-sm relative overflow-hidden">
-      <!-- Decorative background glow -->
-      <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#02696a] opacity-5 rounded-full blur-2xl"></div>
-      
-      <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-emerald-50 text-emerald-600">
-        <span class="material-symbols-filled text-[1.75rem]">payments</span>
-      </div>
-      <div>
-        <p class="text-[0.8125rem] font-medium text-gray-500 mb-1 tracking-wide">INGRESOS TOTALES</p>
-        <h3 class="text-2xl font-bold text-gray-800">S/ {{ stats.totalVentas | number:'1.2-2' }}</h3>
-      </div>
-    </div>
-    
-    <!-- Pedidos Realizados -->
-    <div class="glass-card rounded-2xl p-6 flex items-center gap-5 card-lift-sm relative overflow-hidden">
-      <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-500 opacity-5 rounded-full blur-2xl"></div>
-      
-      <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-blue-50 text-blue-600">
-        <span class="material-symbols-filled text-[1.75rem]">shopping_cart</span>
-      </div>
-      <div>
-        <p class="text-[0.8125rem] font-medium text-gray-500 mb-1 tracking-wide">PEDIDOS REALIZADOS</p>
-        <h3 class="text-2xl font-bold text-gray-800">{{ stats.cantidadPedidos }}</h3>
-      </div>
-    </div>
-    
-    <!-- Bajo Stock -->
-    <div class="glass-card rounded-2xl p-6 flex items-center gap-5 card-lift-sm relative overflow-hidden">
-      <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-500 opacity-5 rounded-full blur-2xl"></div>
-      
-      <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-amber-50 text-amber-600">
-        <span class="material-symbols-filled text-[1.75rem]">warning</span>
-      </div>
-      <div>
-        <p class="text-[0.8125rem] font-medium text-gray-500 mb-1 tracking-wide">BAJO STOCK (< 5)</p>
-        <h3 class="text-2xl font-bold text-gray-800">{{ stats.productosBajoStock }}</h3>
-      </div>
-    </div>
-  </div>
-
   <!-- Loading state -->
-  <div class="grid grid-cols-1 mb-12" *ngIf="!stats">
-    <div class="glass-card rounded-2xl p-10 flex flex-col items-center justify-center text-center">
+  <div class="grid grid-cols-1 mb-10" *ngIf="!stats">
+    <div class="glass-card rounded-2xl p-8 flex flex-col items-center justify-center text-center border border-gray-100 bg-white">
       <span class="material-symbols-outlined text-[2rem] text-[#72c1c1] animate-spin mb-3">progress_activity</span>
       <p class="text-gray-500 text-sm font-medium">Cargando datos del sistema...</p>
     </div>
   </div>
-  
-  <!-- Separador con título de sección -->
-  <div class="mb-8 border-b border-gray-200 pb-4">
-    <h2 class="text-xl font-bold text-[#191c1d] mb-1">Módulos del Sistema</h2>
-    <p class="text-sm text-[#3e4948]">Selecciona una opción para comenzar</p>
+
+  <!-- SECCIÓN 2: ALERTAS Y ACCIONES PROACTIVAS (Solo visible si hay problemas de stock o envíos pendientes) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8" *ngIf="productosBajoStockList.length > 0 || enviosPendientesCount > 0">
+    
+    <!-- Alerta 1: Inventario Crítico -->
+    <div class="glass-card rounded-2xl p-5 border border-red-100 bg-red-50/30 flex gap-4 animate-scale-up" *ngIf="productosBajoStockList.length > 0">
+      <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-[1.3rem]">warning</span>
+      </div>
+      <div class="flex-1">
+        <h4 class="text-sm font-bold text-red-800 mb-1">¡Alerta de Stock Crítico!</h4>
+        <p class="text-xs text-red-700 leading-relaxed mb-3">
+          Los siguientes productos tienen 5 o menos unidades en inventario y requieren reabastecimiento:
+        </p>
+        <div class="flex flex-col gap-1.5 mb-3">
+          <div *ngFor="let p of productosBajoStockList.slice(0, 3)" class="flex justify-between items-center text-xs bg-white/60 border border-red-100/50 rounded-lg px-3 py-1.5 font-medium text-gray-700">
+            <span>{{ p.nombre }}</span>
+            <span class="bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded text-[10px]">{{ p.stock }} uds</span>
+          </div>
+        </div>
+        <a routerLink="/inventarios" class="inline-flex items-center gap-1 text-xs font-bold text-red-800 hover:underline">
+          <span>Gestionar stock en almacenes</span>
+          <span class="material-symbols-outlined text-[0.9rem]">chevron_right</span>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Alerta 2: Logística Activa -->
+    <div class="glass-card rounded-2xl p-5 border border-blue-100 bg-blue-50/30 flex gap-4 animate-scale-up" *ngIf="enviosPendientesCount > 0">
+      <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-[1.3rem]">local_shipping</span>
+      </div>
+      <div class="flex-1">
+        <h4 class="text-sm font-bold text-blue-800 mb-1">Entregas Pendientes de Despacho</h4>
+        <p class="text-xs text-blue-700 leading-relaxed mb-3">
+          Tienes **{{ enviosPendientesCount }}** {{ enviosPendientesCount === 1 ? 'envío pendiente' : 'envíos pendientes' }} de procesamiento logístico en el Centro de Despachos.
+        </p>
+        <a routerLink="/envios" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2 rounded-xl transition-all shadow-sm">
+          <span>Ir a despachar ahora</span>
+          <span class="material-symbols-outlined text-[1rem]">arrow_forward</span>
+        </a>
+      </div>
+    </div>
   </div>
 
-  <!-- SECCIÓN 2: MENÚ DE NAVEGACIÓN -->
-  <!-- WCAG 2.1 Criterio 2.1.1: Se usan <a> nativos en lugar de <div> para
-       garantizar que todas las tarjetas sean navegables y activables con teclado -->
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-
-     <!-- Operaciones -->
-     <a routerLink="/ventas"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Punto de Venta: Registrar nuevas compras">
-        <div class="w-12 h-12 mx-auto rounded-full bg-emerald-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-emerald-600" aria-hidden="true">point_of_sale</span>
+  <!-- SECCIÓN 3: MENÚ DE NAVEGACIÓN Y FEED DE ACTIVIDAD -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- Módulos del Sistema (Columna Izquierda - 2/3) -->
+    <div class="lg:col-span-2">
+      <div class="mb-6 border-b border-gray-100 pb-3 flex justify-between items-center">
+        <div>
+          <h2 class="text-lg font-bold text-[#191c1d] mb-0.5">Módulos de Gestión</h2>
+          <p class="text-xs text-[#3e4948]">Selecciona un módulo administrativo para operar</p>
         </div>
-        <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Punto de Venta</h3>
-        <p class="text-[0.8125rem] text-gray-500 leading-tight">Registrar nuevas compras</p>
-     </a>
+      </div>
+      
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <!-- Punto de Venta -->
+        <a routerLink="/ventas" *ngIf="!filtroModulo || 'punto de venta'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-[#02696a]/20 shadow-sm"
+           aria-label="Ir a Punto de Venta: Registrar nuevas compras">
+           <div class="w-12 h-12 mx-auto rounded-full bg-emerald-50 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-emerald-600" aria-hidden="true">point_of_sale</span>
+           </div>
+           <h3 class="text-sm font-bold text-gray-800 mb-1">Punto de Venta</h3>
+           <p class="text-[11px] text-gray-500 leading-tight">Registrar compras</p>
+        </a>
 
-     <a routerLink="/productos"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Catálogo: Gestionar productos">
-        <div class="w-12 h-12 mx-auto rounded-full bg-[#eefcfc] flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">inventory_2</span>
+        <!-- Catálogo -->
+        <a routerLink="/productos" *ngIf="!filtroModulo || 'catálogo productos'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-[#02696a]/20 shadow-sm"
+           aria-label="Ir a Catálogo: Gestionar productos">
+           <div class="w-12 h-12 mx-auto rounded-full bg-[#eefcfc] flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-[#02696a]" aria-hidden="true">inventory_2</span>
+           </div>
+           <h3 class="text-sm font-bold text-gray-800 mb-1">Catálogo</h3>
+           <p class="text-[11px] text-gray-500 leading-tight">Gestionar productos</p>
+        </a>
+
+        <!-- Categorías -->
+        <a routerLink="/categorias" *ngIf="!filtroModulo || 'categorías tipos'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-violet-100 shadow-sm"
+           aria-label="Ir a Categorías: Tipos de productos">
+           <div class="w-12 h-12 mx-auto rounded-full bg-violet-50 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-violet-600" aria-hidden="true">category</span>
+           </div>
+           <h3 class="text-sm font-bold text-gray-800 mb-1">Categorías</h3>
+           <p class="text-[11px] text-gray-500 leading-tight">Tipos de productos</p>
+        </a>
+
+        <!-- Métodos Envío -->
+        <a routerLink="/metodos" *ngIf="!filtroModulo || 'métodos envío'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-teal-100 shadow-sm"
+           aria-label="Ir a Métodos de Envío: Configurar opciones">
+           <div class="w-12 h-12 mx-auto rounded-full bg-teal-50 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-teal-600" aria-hidden="true">mark_email_read</span>
+           </div>
+           <h3 class="text-sm font-bold text-gray-800 mb-1">Métodos Envío</h3>
+           <p class="text-[11px] text-gray-500 leading-tight">Configurar opciones</p>
+        </a>
+
+        <!-- Almacenes -->
+        <a routerLink="/almacenes" *ngIf="!filtroModulo || 'almacenes sedes'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-amber-100 shadow-sm"
+           aria-label="Ir a Almacenes: Gestionar sedes">
+          <div class="w-12 h-12 mx-auto rounded-full bg-amber-50 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-amber-600" aria-hidden="true">warehouse</span>
+           </div>
+          <h3 class="text-sm font-bold text-gray-800 mb-1">Almacenes</h3>
+          <p class="text-[11px] text-gray-500 leading-tight">Gestionar sedes</p>
+        </a>
+
+        <!-- Distribución -->
+        <a routerLink="/inventarios" *ngIf="!filtroModulo || 'distribución stock almacén'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-orange-100 shadow-sm"
+           aria-label="Ir a Distribución: Stock por almacén">
+          <div class="w-12 h-12 mx-auto rounded-full bg-orange-50 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-orange-600" aria-hidden="true">analytics</span>
+           </div>
+          <h3 class="text-sm font-bold text-gray-800 mb-1">Distribución</h3>
+          <p class="text-[11px] text-gray-500 leading-tight">Stock por almacén</p>
+        </a>
+
+        <!-- Despachos -->
+        <a routerLink="/envios" *ngIf="!filtroModulo || 'despachos logística envíos'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-sky-100 shadow-sm"
+           aria-label="Ir a Despachos: Logística de salida">
+          <div class="w-12 h-12 mx-auto rounded-full bg-sky-50 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-sky-600" aria-hidden="true">local_shipping</span>
+           </div>
+          <h3 class="text-sm font-bold text-gray-800 mb-1">Despachos</h3>
+          <p class="text-[11px] text-gray-500 leading-tight">Logística de salida</p>
+        </a>
+
+        <!-- Historial -->
+        <a routerLink="/historial" *ngIf="!filtroModulo || 'historial reportes ventas transacciones'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-rose-100 shadow-sm"
+           aria-label="Ir a Historial: Ver reportes de ventas">
+          <div class="w-12 h-12 mx-auto rounded-full bg-rose-50 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-rose-600" aria-hidden="true">history</span>
+           </div>
+          <h3 class="text-sm font-bold text-gray-800 mb-1">Historial</h3>
+          <p class="text-[11px] text-gray-500 leading-tight">Reportes de ventas</p>
+        </a>
+
+        <!-- Proveedores -->
+        <a routerLink="/proveedores" *ngIf="!filtroModulo || 'proveedores contactos marcas'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-indigo-100 shadow-sm"
+           aria-label="Ir a Proveedores: Contactos de marca">
+          <div class="w-12 h-12 mx-auto rounded-full bg-indigo-50 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-indigo-600" aria-hidden="true">domain</span>
+           </div>
+          <h3 class="text-sm font-bold text-gray-800 mb-1">Proveedores</h3>
+          <p class="text-[11px] text-gray-500 leading-tight">Contactos de marca</p>
+        </a>
+
+        <!-- Usuarios -->
+        <a routerLink="/usuarios" *ngIf="!filtroModulo || 'usuarios cuentas permisos'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-blue-100 shadow-sm"
+           aria-label="Ir a Usuarios: Gestión de cuentas y accesos">
+          <div class="w-12 h-12 mx-auto rounded-full bg-blue-50 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-blue-600" aria-hidden="true">group</span>
+           </div>
+          <h3 class="text-sm font-bold text-gray-800 mb-1">Usuarios</h3>
+          <p class="text-[11px] text-gray-500 leading-tight">Cuentas y accesos</p>
+        </a>
+
+        <!-- Seguridad -->
+        <a routerLink="/roles" *ngIf="!filtroModulo || 'seguridad roles'.includes(filtroModulo.toLowerCase())"
+           class="glass-card rounded-2xl p-5 text-center card-lift group no-underline block border border-gray-100 bg-white hover:border-slate-200 shadow-sm"
+           aria-label="Ir a Seguridad: Gestionar roles globales">
+          <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center mb-3 transition-transform group-hover:scale-110">
+             <span class="material-symbols-outlined text-[1.5rem] text-slate-600" aria-hidden="true">shield</span>
+           </div>
+          <h3 class="text-sm font-bold text-gray-800 mb-1">Seguridad</h3>
+          <p class="text-[11px] text-gray-500 leading-tight">Gestionar roles</p>
+        </a>
+      </div>
+      
+      <!-- Estado de no módulos encontrados -->
+      <div *ngIf="filtroModulo && 
+                 !('punto de venta'.includes(filtroModulo.toLowerCase()) || 
+                   'catálogo productos'.includes(filtroModulo.toLowerCase()) || 
+                   'categorías tipos'.includes(filtroModulo.toLowerCase()) || 
+                   'métodos envío'.includes(filtroModulo.toLowerCase()) || 
+                   'almacenes sedes'.includes(filtroModulo.toLowerCase()) || 
+                   'distribución stock almacén'.includes(filtroModulo.toLowerCase()) || 
+                   'despachos logística envíos'.includes(filtroModulo.toLowerCase()) || 
+                   'historial reportes ventas transacciones'.includes(filtroModulo.toLowerCase()) || 
+                   'proveedores contactos marcas'.includes(filtroModulo.toLowerCase()) || 
+                   'usuarios cuentas permisos'.includes(filtroModulo.toLowerCase()) || 
+                   'seguridad roles'.includes(filtroModulo.toLowerCase()))" 
+           class="glass-card rounded-2xl p-10 text-center border border-gray-100 bg-white shadow-sm">
+        <span class="material-symbols-outlined text-[2rem] text-gray-400 mb-2">search_off</span>
+        <p class="text-sm text-gray-500 font-medium">No se encontraron módulos con "{{ filtroModulo }}"</p>
+      </div>
+    </div>
+    
+    <!-- Actividad Reciente (Columna Derecha - 1/3) -->
+    <div>
+      <div class="mb-6 border-b border-gray-100 pb-3 flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-[#191c1d] mb-0.5">Actividad Reciente</h2>
+          <p class="text-xs text-[#3e4948]">Eventos logueados del sistema</p>
         </div>
-        <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Catálogo</h3>
-        <p class="text-[0.8125rem] text-gray-500 leading-tight">Gestionar productos</p>
-     </a>
-
-     <a routerLink="/categorias"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Categorías: Tipos de productos">
-        <div class="w-12 h-12 mx-auto rounded-full bg-violet-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-violet-600" aria-hidden="true">category</span>
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" title="Servicio activo"></span>
+      </div>
+      
+      <!-- Lista de la Línea de Tiempo -->
+      <div class="glass-card rounded-2xl p-5 border border-gray-100 bg-white shadow-sm flex flex-col gap-5">
+        <div *ngFor="let act of actividadesRecientes" class="flex gap-3 relative pb-1">
+          <!-- Círculo de Icono -->
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" [ngClass]="act.color">
+            <span class="material-symbols-outlined text-[1.1rem]">{{ act.icono }}</span>
+          </div>
+          <!-- Contenido del Texto -->
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-semibold text-gray-700 leading-normal">{{ act.texto }}</p>
+            <span class="text-[10px] text-gray-400 font-medium mt-0.5 block">{{ act.tiempo }}</span>
+          </div>
         </div>
-        <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Categorías</h3>
-        <p class="text-[0.8125rem] text-gray-500 leading-tight">Tipos de productos</p>
-     </a>
-
-     <a routerLink="/metodos"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Métodos de Envío: Configurar opciones">
-        <div class="w-12 h-12 mx-auto rounded-full bg-teal-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-teal-600" aria-hidden="true">mark_email_read</span>
-        </div>
-        <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Métodos Envío</h3>
-        <p class="text-[0.8125rem] text-gray-500 leading-tight">Configurar opciones</p>
-     </a>
-
-     <!-- Logística -->
-     <a routerLink="/almacenes"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Almacenes: Gestionar sedes">
-       <div class="w-12 h-12 mx-auto rounded-full bg-amber-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-amber-600" aria-hidden="true">warehouse</span>
-        </div>
-       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Almacenes</h3>
-       <p class="text-[0.8125rem] text-gray-500 leading-tight">Gestionar sedes</p>
-     </a>
-
-     <a routerLink="/inventarios"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Distribución: Stock por almacén">
-       <div class="w-12 h-12 mx-auto rounded-full bg-orange-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-orange-600" aria-hidden="true">analytics</span>
-        </div>
-       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Distribución</h3>
-       <p class="text-[0.8125rem] text-gray-500 leading-tight">Stock por almacén</p>
-     </a>
-
-     <a routerLink="/envios"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Despachos: Logística de salida">
-       <div class="w-12 h-12 mx-auto rounded-full bg-sky-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-sky-600" aria-hidden="true">local_shipping</span>
-        </div>
-       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Despachos</h3>
-       <p class="text-[0.8125rem] text-gray-500 leading-tight">Logística de salida</p>
-     </a>
-
-     <a routerLink="/historial"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Historial: Ver reportes de ventas">
-       <div class="w-12 h-12 mx-auto rounded-full bg-rose-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-rose-600" aria-hidden="true">history</span>
-        </div>
-       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Historial</h3>
-       <p class="text-[0.8125rem] text-gray-500 leading-tight">Ver reportes ventas</p>
-     </a>
-
-     <!-- Administración -->
-     <a routerLink="/proveedores"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Proveedores: Contactos de marca">
-       <div class="w-12 h-12 mx-auto rounded-full bg-indigo-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-indigo-600" aria-hidden="true">domain</span>
-        </div>
-       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Proveedores</h3>
-       <p class="text-[0.8125rem] text-gray-500 leading-tight">Contactos de marca</p>
-     </a>
-
-     <a routerLink="/usuarios"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Usuarios: Gestión de cuentas">
-       <div class="w-12 h-12 mx-auto rounded-full bg-blue-50 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-blue-600" aria-hidden="true">group</span>
-        </div>
-       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Usuarios</h3>
-       <p class="text-[0.8125rem] text-gray-500 leading-tight">Gestión de cuentas</p>
-     </a>
-
-     <a routerLink="/roles"
-        class="glass-card rounded-2xl p-6 text-center card-lift group no-underline block"
-        aria-label="Ir a Seguridad: Gestionar roles">
-       <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-          <span class="material-symbols-outlined text-[1.75rem] text-slate-600" aria-hidden="true">shield</span>
-        </div>
-       <h3 class="text-[0.9375rem] font-semibold text-gray-800 mb-1">Seguridad</h3>
-       <p class="text-[0.8125rem] text-gray-500 leading-tight">Gestionar roles</p>
-     </a>
-
+      </div>
+    </div>
+    
   </div>
 </div>

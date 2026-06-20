@@ -1,38 +1,118 @@
-﻿<div class="container">
-  <h1 style="display: flex; align-items: center; gap: 8px;">
-    <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">sell</span> Gestión de Categorías
-  </h1>
-
-  <!-- Formulario -->
-  <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
-    <div class="campo">
-      <label for="inp-nombre">Nombre:</label>
-      <input id="inp-nombre" type="text" formControlName="nombre" placeholder="Ej: Ropa">
+<div class="container animate-fade-in">
+  <!-- Header de la Vista -->
+  <header class="view-header">
+    <div class="header-title">
+      <span class="material-symbols-outlined header-icon" aria-hidden="true">sell</span>
+      <div>
+        <h1>Gestión de Categorías</h1>
+        <p class="subtitle">Administra las categorías de productos para la organización del catálogo.</p>
+      </div>
     </div>
-    <div class="campo">
-      <label for="inp-desc">Descripción:</label>
-      <input id="inp-desc" type="text" formControlName="descripcion" placeholder="Ej: Polos y pantalones">
-    </div>
-    <button type="submit" [disabled]="form.invalid" class="btn-guardar">Guardar</button>
-  </form>
+  </header>
 
-  <hr>
+  <!-- Layout Principal en Grid -->
+  <div class="dashboard-grid">
+    
+    <!-- Columna Izquierda: Formulario -->
+    <aside class="form-container">
+      <div class="glass-card form-card">
+        <div class="card-header">
+          <span class="material-symbols-outlined icon-accent" aria-hidden="true">add_box</span>
+          <h2>Nueva Categoría</h2>
+        </div>
 
-  <!-- Tabla -->
-  <table >
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Descripción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let c of categorias">
-        <td class="center">{{ c.id }}</td>
-        <td>{{ c.nombre }}</td>
-        <td>{{ c.descripcion }}</td>
-      </tr>
-    </tbody>
-  </table>
+        <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario-moderno">
+          <!-- Campo: Nombre -->
+          <div class="campo">
+            <label for="inp-nombre">Nombre de la Categoría</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">label</span>
+              <input id="inp-nombre" type="text" formControlName="nombre" 
+                     placeholder="Ej. Laptops, Periféricos"
+                     [class.input-error]="esInvalido('nombre')"/>
+            </div>
+            <small *ngIf="esInvalido('nombre')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> El nombre es requerido.
+            </small>
+          </div>
+
+          <!-- Campo: Descripción -->
+          <div class="campo">
+            <label for="inp-desc">Descripción</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">description</span>
+              <input id="inp-desc" type="text" formControlName="descripcion" 
+                     placeholder="Ej. Dispositivos portátiles y notebooks"
+                     [class.input-error]="esInvalido('descripcion')"/>
+            </div>
+            <small *ngIf="esInvalido('descripcion')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> La descripción es requerida.
+            </small>
+          </div>
+
+          <!-- Botones de Acción -->
+          <div class="botones-container">
+            <button type="submit" [disabled]="form.invalid" class="btn-primary animate-scale-up">
+              <span class="material-symbols-outlined">save</span>
+              <span>Guardar Categoría</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Columna Derecha: Listado de Categorías -->
+    <main class="table-container">
+      <div class="glass-card table-card">
+        <div class="card-header table-header-flex">
+          <div class="title-flex">
+            <span class="material-symbols-outlined icon-accent" aria-hidden="true">list_alt</span>
+            <h2>Categorías Registradas</h2>
+          </div>
+          <span class="category-counter">
+            {{ categorias.length }} {{ categorias.length === 1 ? 'categoría' : 'categorías' }}
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="tabla-moderna">
+            <thead>
+              <tr>
+                <th class="center" style="width: 80px;">ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of categorias" class="table-row-hover">
+                <!-- ID con Badge Estilizado -->
+                <td class="center">
+                  <span class="id-badge">#{{ c.id }}</span>
+                </td>
+                
+                <!-- Nombre -->
+                <td>
+                  <span class="category-name-cell">{{ c.nombre }}</span>
+                </td>
+                
+                <!-- Descripción -->
+                <td class="desc-cell">
+                  {{ c.descripcion }}
+                </td>
+              </tr>
+              <!-- Mensaje cuando la tabla está vacía -->
+              <tr *ngIf="categorias.length === 0">
+                <td colspan="3" class="table-empty">
+                  <span class="material-symbols-outlined empty-icon">sell</span>
+                  <p>No hay categorías registradas en este momento.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+  </div>
 </div>
+

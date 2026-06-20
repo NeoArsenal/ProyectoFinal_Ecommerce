@@ -8,7 +8,7 @@ import { RolesService, RolDTO } from '../services/roles';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './roles.html',
-  styleUrls: ['../almacenes/almacenes.css'] // Reusa estilos
+  styleUrls: ['./roles.css']
 })
 export class Roles implements OnInit {
   roles: RolDTO[] = [];

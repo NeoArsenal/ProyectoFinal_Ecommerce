@@ -1,51 +1,131 @@
-﻿<div class="container">
-  <h1 style="display: flex; align-items: center; gap: 8px;">
-    <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">warehouse</span> Gestión de Almacenes
-  </h1>
+<div class="container animate-fade-in">
+  <!-- Header de la Vista -->
+  <header class="view-header">
+    <div class="header-title">
+      <span class="material-symbols-outlined header-icon" aria-hidden="true">warehouse</span>
+      <div>
+        <h1>Gestión de Almacenes</h1>
+        <p class="subtitle">Administra los almacenes físicos y depósitos para el almacenamiento de mercancía.</p>
+      </div>
+    </div>
+  </header>
 
-  <!-- Formulario de Registro -->
-  <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
+  <!-- Layout Principal en Grid -->
+  <div class="dashboard-grid">
     
-    <div class="campo">
-      <label for="inp-nombre-almacen">Nombre del Almacén:</label>
-      <input id="inp-nombre-almacen" type="text" formControlName="nombre" placeholder="Ej: Almacén Norte">
-    </div>
+    <!-- Columna Izquierda: Formulario -->
+    <aside class="form-container">
+      <div class="glass-card form-card">
+        <div class="card-header">
+          <span class="material-symbols-outlined icon-accent" aria-hidden="true">add_box</span>
+          <h2>Nuevo Almacén</h2>
+        </div>
 
-    <div class="campo">
-      <label for="inp-ubicacion">Ubicación Física:</label>
-      <input id="inp-ubicacion" type="text" formControlName="ubicacion" placeholder="Ej: Av. Industrial 123">
-    </div>
+        <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario-moderno">
+          <!-- Campo: Nombre del Almacén -->
+          <div class="campo">
+            <label for="inp-nombre-almacen">Nombre del Almacén</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">warehouse</span>
+              <input id="inp-nombre-almacen" type="text" formControlName="nombre" 
+                     placeholder="Ej. Almacén Central, Depósito Norte"
+                     [class.input-error]="esInvalido('nombre')"/>
+            </div>
+            <small *ngIf="esInvalido('nombre')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> El nombre es requerido.
+            </small>
+          </div>
 
-    <button type="submit" [disabled]="form.invalid" class="btn-guardar">
-      Guardar Almacén
-    </button>
-  </form>
+          <!-- Campo: Ubicación Física -->
+          <div class="campo">
+            <label for="inp-ubicacion">Ubicación Física</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">pin_drop</span>
+              <input id="inp-ubicacion" type="text" formControlName="ubicacion" 
+                     placeholder="Ej. Av. Industrial 123, Lima"
+                     [class.input-error]="esInvalido('ubicacion')"/>
+            </div>
+            <small *ngIf="esInvalido('ubicacion')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> La ubicación es requerida.
+            </small>
+          </div>
 
-  <hr>
+          <!-- Botones de Acción -->
+          <div class="botones-container">
+            <button type="submit" [disabled]="form.invalid" class="btn-primary animate-scale-up">
+              <span class="material-symbols-outlined">save</span>
+              <span>Guardar Almacén</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </aside>
 
-  <!-- Tabla de Resultados -->
-  <table >
-    <thead>
-      <tr>
-        <th style="width: 50px;">ID</th>
-        <th>Nombre</th>
-        <th>Ubicación</th>
-        <th style="width: 100px;">Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let a of almacenes">
-        <td class="center">{{ a.id }}</td>
-        <td>{{ a.nombre }}</td>
-        <td>{{ a.ubicacion }}</td>
-        <td class="center">
-          <button (click)="borrar(a.id)" class="btn-borrar">Eliminar</button>
-        </td>
-      </tr>
-      
-      <tr *ngIf="almacenes.length === 0">
-        <td colspan="4" class="vacio">No hay almacenes registrados.</td>
-      </tr>
-    </tbody>
-  </table>
+    <!-- Columna Derecha: Listado de Almacenes -->
+    <main class="table-container">
+      <div class="glass-card table-card">
+        <div class="card-header table-header-flex">
+          <div class="title-flex">
+            <span class="material-symbols-outlined icon-accent" aria-hidden="true">list_alt</span>
+            <h2>Almacenes Registrados</h2>
+          </div>
+          <span class="warehouse-counter">
+            {{ almacenes.length }} {{ almacenes.length === 1 ? 'almacén' : 'almacenes' }}
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="tabla-moderna">
+            <thead>
+              <tr>
+                <th class="center" style="width: 80px;">ID</th>
+                <th>Nombre</th>
+                <th>Ubicación</th>
+                <th class="center" style="width: 100px;">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of almacenes" class="table-row-hover">
+                <!-- ID con Badge Estilizado -->
+                <td class="center">
+                  <span class="id-badge">#{{ a.id }}</span>
+                </td>
+                
+                <!-- Nombre -->
+                <td>
+                  <span class="warehouse-name-cell">{{ a.nombre }}</span>
+                </td>
+                
+                <!-- Ubicación -->
+                <td class="location-cell">
+                  <div class="location-flex">
+                    <span class="material-symbols-outlined location-icon">place</span>
+                    <span>{{ a.ubicacion }}</span>
+                  </div>
+                </td>
+                
+                <!-- Acciones -->
+                <td class="center">
+                  <div class="action-buttons">
+                    <button (click)="borrar(a.id)" class="btn-action btn-delete" title="Eliminar almacén" aria-label="Eliminar almacén">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Mensaje cuando la tabla está vacía -->
+              <tr *ngIf="almacenes.length === 0">
+                <td colspan="4" class="table-empty">
+                  <span class="material-symbols-outlined empty-icon">warehouse</span>
+                  <p>No hay almacenes registrados en este momento.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+  </div>
 </div>
+

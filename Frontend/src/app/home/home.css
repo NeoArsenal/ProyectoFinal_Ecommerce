@@ -1,1 +1,81 @@
-/* Estilos de home.html ahora se gestionan completamente con Tailwind CSS */
+/* ==========================================================================
+   HOME — Panel de Control General (Cohesivo con DERMQ)
+   ========================================================================== */
+
+/* --- Animaciones Especiales --- */
+@keyframes wave {
+  0% { transform: rotate( 0.0deg) }
+  10% { transform: rotate(14.0deg) }
+  20% { transform: rotate(-8.0deg) }
+  30% { transform: rotate(14.0deg) }
+  40% { transform: rotate(-4.0deg) }
+  50% { transform: rotate(10.0deg) }
+  60% { transform: rotate( 0.0deg) }
+  100% { transform: rotate( 0.0deg) }
+}
+
+.wave-animation {
+  display: inline-block;
+  animation: wave 2.5s infinite;
+  transform-origin: 70% 70%;
+}
+
+/* Efectos Glassmorphism y Sombras */
+.glass-card {
+  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(2, 105, 106, 0.08), 
+              0 8px 16px -6px rgba(2, 105, 106, 0.03) !important;
+  border-color: rgba(2, 105, 106, 0.12) !important;
+}
+
+/* Hover de Cajas del Menú */
+.card-lift {
+  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -5px rgba(2, 105, 106, 0.1), 
+              0 8px 20px -6px rgba(2, 105, 106, 0.05) !important;
+  border-color: var(--primary-light) !important;
+}
+
+/* Timeline vertical line helper */
+.timeline-line::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 32px;
+  bottom: -20px;
+  width: 2px;
+  background-color: var(--border-light);
+}
+
+.timeline-line:last-child::after {
+  display: none;
+}
+
+/* SVG Chart Path Pulse Animation */
+@keyframes strokePulse {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -20; }
+}
+
+svg path[stroke] {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 0;
+  animation: strokeDash 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes strokeDash {
+  from {
+    stroke-dashoffset: 600;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

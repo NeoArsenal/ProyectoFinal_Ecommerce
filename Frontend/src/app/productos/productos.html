@@ -1,105 +1,231 @@
-﻿<div class="container">
-  <h1 style="display: flex; align-items: center; gap: 8px;">
-    <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">inventory_2</span> Gestión de Productos
-  </h1>
+<div class="container animate-fade-in">
+  <!-- Header de la Vista -->
+  <header class="view-header">
+    <div class="header-title">
+      <span class="material-symbols-outlined header-icon" aria-hidden="true">inventory_2</span>
+      <div>
+        <h1>Gestión de Productos</h1>
+        <p class="subtitle">Administra el inventario de productos, controla stocks, categorías y proveedores.</p>
+      </div>
+    </div>
+  </header>
 
-  <form [formGroup]="form" class="formulario">
-    <input type="hidden" formControlName="id" />
+  <!-- Layout Principal en Grid -->
+  <div class="dashboard-grid">
     
-    <div class="fila">
-      <div class="campo">
-         <label for="inp-nombre">Nombre:</label>
-         <input id="inp-nombre" type="text" formControlName="nombre" 
-                [class.input-error]="esInvalido('nombre')"/>
-         
-         <!-- MENSAJES DE ERROR -->
-         <small *ngIf="esInvalido('nombre')" class="msg-error" role="alert" aria-live="polite">
-            Mínimo 3 letras
-         </small>
-      </div>
+    <!-- Columna Izquierda: Formulario (Fijado al hacer scroll en pantallas grandes) -->
+    <aside class="form-container">
+      <div class="glass-card form-card">
+        <div class="card-header">
+          <span class="material-symbols-outlined icon-accent" aria-hidden="true">
+            {{ form.value.id ? 'edit_note' : 'add_box' }}
+          </span>
+          <h2>{{ form.value.id ? 'Modificar Producto' : 'Nuevo Producto' }}</h2>
+        </div>
 
-      <div class="campo">
-         <label for="inp-desc">Descripción:</label>
-         <input id="inp-desc" type="text" formControlName="descripcion" 
-                [class.input-error]="esInvalido('descripcion')"/>
-         <small *ngIf="esInvalido('descripcion')" class="msg-error" role="alert" aria-live="polite">Requerido</small>
-      </div>
-    </div>
-
-    <div class="fila">
-      <div class="campo">
-         <label for="inp-precio">Precio:</label>
-         <input id="inp-precio" type="number" formControlName="precio" 
-                [class.input-error]="esInvalido('precio')"/>
-         <small *ngIf="esInvalido('precio')" class="msg-error" role="alert" aria-live="polite">Debe ser mayor a 0</small>
-      </div>
-
-      <div class="campo">
-         <label for="inp-stock">Stock:</label>
-         <input id="inp-stock" type="number" formControlName="stock" 
-                [class.input-error]="esInvalido('stock')"/>
-         <small *ngIf="esInvalido('stock')" class="msg-error" role="alert" aria-live="polite">No puede ser negativo</small>
-      </div>
-    </div>
-
-    <div class="fila">
-      <div class="campo">
-          <label for="sel-cat">Categoría:</label>
-          <select id="sel-cat" formControlName="categoriaId" [class.input-error]="esInvalido('categoriaId')">
-            <option [ngValue]="null">-- Seleccione --</option>
-            <option *ngFor="let c of categorias" [value]="c.id">{{ c.nombre }}</option>
-          </select>
-          <small *ngIf="esInvalido('categoriaId')" class="msg-error" role="alert" aria-live="polite">Seleccione una</small>
-      </div>
-
-      <div class="campo">
-          <label for="sel-prov">Proveedores (Ctrl + Clic):</label>
-          <select id="sel-prov" formControlName="proveedorIds" multiple style="height: 80px;">
-            <option *ngFor="let p of proveedores" [value]="p.id">{{ p.empresa }}</option>
-          </select>
-      </div>
-    </div>
-
-    <div class="botones">
-      <!-- El botón se deshabilita si el formulario es inválido -->
-      <button type="button" (click)="alta()" [disabled]="form.invalid" class="btn-verde">Agregar</button>
-      <button type="button" (click)="modificacion()" [disabled]="form.invalid || !form.value.id" class="btn-azul">Modificar</button>
-      <button type="button" (click)="resetForm()" class="btn-gris">Limpiar</button>
-    </div>
-  </form>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Stock</th>
-        <th>Categoría</th>
-        <th>Proveedores</th>
-        <th>Precio</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let p of productos">
-          <td>{{ p.nombre }}</td>
-          <td class="center">{{ p.stock }}</td>
-          <td>{{ p.categoriaNombre }}</td>
+        <form [formGroup]="form" class="formulario-moderno">
+          <input type="hidden" formControlName="id" />
           
-          <!-- Columna Proveedores con etiquetas -->
-          <td>
-            <span *ngFor="let nombre of p.proveedorNombres" class="badge-prov">
-              {{ nombre }}
-            </span>
-            <span *ngIf="!p.proveedorNombres?.length" style="color:#999; font-size:11px;">(Ninguno)</span>
-          </td>
-          
-          <td class="num">S/ {{ p.precio | number:'1.2-2' }}</td>
-          <td class="center">
-              <button (click)="seleccionar(p)" class="btn-azul-sm" aria-label="Editar producto">Editar</button>
-              <button (click)="baja(p.id)" class="btn-rojo-sm" aria-label="Eliminar producto">X</button>
-          </td>
-      </tr>
-    </tbody>
-  </table>
+          <!-- Campo: Nombre -->
+          <div class="campo">
+            <label for="inp-nombre">Nombre del Producto</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">badge</span>
+              <input id="inp-nombre" type="text" formControlName="nombre" 
+                     placeholder="Ej. Laptop Asus ROG"
+                     [class.input-error]="esInvalido('nombre')"/>
+            </div>
+            <small *ngIf="esInvalido('nombre')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Mínimo 3 letras.
+            </small>
+          </div>
+
+          <!-- Campo: Descripción -->
+          <div class="campo">
+            <label for="inp-desc">Descripción</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">description</span>
+              <input id="inp-desc" type="text" formControlName="descripcion" 
+                     placeholder="Ej. Core i7, 16GB RAM, 512GB SSD"
+                     [class.input-error]="esInvalido('descripcion')"/>
+            </div>
+            <small *ngIf="esInvalido('descripcion')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> La descripción es requerida.
+            </small>
+          </div>
+
+          <!-- Fila: Precio y Stock -->
+          <div class="fila-grid">
+            <!-- Campo: Precio -->
+            <div class="campo">
+              <label for="inp-precio">Precio (S/)</label>
+              <div class="input-wrapper">
+                <span class="material-symbols-outlined input-icon">payments</span>
+                <input id="inp-precio" type="number" formControlName="precio" 
+                       placeholder="0.00" step="0.01" min="0.01"
+                       [class.input-error]="esInvalido('precio')"/>
+              </div>
+              <small *ngIf="esInvalido('precio')" class="msg-error" role="alert" aria-live="polite">
+                <span class="material-symbols-outlined error-icon">error</span> Debe ser > 0.
+              </small>
+            </div>
+
+            <!-- Campo: Stock -->
+            <div class="campo">
+              <label for="inp-stock">Stock Inicial</label>
+              <div class="input-wrapper">
+                <span class="material-symbols-outlined input-icon">box</span>
+                <input id="inp-stock" type="number" formControlName="stock" 
+                       placeholder="0" min="0"
+                       [class.input-error]="esInvalido('stock')"/>
+              </div>
+              <small *ngIf="esInvalido('stock')" class="msg-error" role="alert" aria-live="polite">
+                <span class="material-symbols-outlined error-icon">error</span> Mínimo 0.
+              </small>
+            </div>
+          </div>
+
+          <!-- Campo: Categoría -->
+          <div class="campo">
+            <label for="sel-cat">Categoría</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">category</span>
+              <select id="sel-cat" formControlName="categoriaId" [class.input-error]="esInvalido('categoriaId')">
+                <option [ngValue]="null">-- Selecciona una categoría --</option>
+                <option *ngFor="let c of categorias" [value]="c.id">{{ c.nombre }}</option>
+              </select>
+            </div>
+            <small *ngIf="esInvalido('categoriaId')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Selecciona una categoría.
+            </small>
+          </div>
+
+          <!-- Campo: Proveedores (Múltiple) -->
+          <div class="campo">
+            <label for="sel-prov">Proveedores <span class="label-hint">(Ctrl/Cmd + Clic para varios)</span></label>
+            <div class="select-multiple-wrapper">
+              <select id="sel-prov" formControlName="proveedorIds" multiple class="custom-multiselect">
+                <option *ngFor="let p of proveedores" [value]="p.id">{{ p.empresa }}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Botones de Acción -->
+          <div class="botones-container">
+            <button *ngIf="!form.value.id" type="button" (click)="alta()" [disabled]="form.invalid" class="btn-primary animate-scale-up">
+              <span class="material-symbols-outlined">add_circle</span>
+              <span>Agregar</span>
+            </button>
+            
+            <button *ngIf="form.value.id" type="button" (click)="modificacion()" [disabled]="form.invalid" class="btn-warning animate-scale-up">
+              <span class="material-symbols-outlined">save</span>
+              <span>Guardar</span>
+            </button>
+
+            <button type="button" (click)="resetForm()" class="btn-secondary">
+              <span class="material-symbols-outlined">restart_alt</span>
+              <span>{{ form.value.id ? 'Cancelar' : 'Limpiar' }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Columna Derecha: Listado de Productos -->
+    <main class="table-container">
+      <div class="glass-card table-card">
+        <div class="card-header table-header-flex">
+          <div class="title-flex">
+            <span class="material-symbols-outlined icon-accent" aria-hidden="true">list_alt</span>
+            <h2>Productos Registrados</h2>
+          </div>
+          <span class="product-counter">
+            {{ productos.length }} {{ productos.length === 1 ? 'producto' : 'productos' }}
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="tabla-moderna">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th class="center">Stock</th>
+                <th>Categoría</th>
+                <th>Proveedores</th>
+                <th class="num">Precio</th>
+                <th class="center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of productos" class="table-row-hover">
+                <!-- Nombre y Descripción combinados -->
+                <td>
+                  <div class="product-info-cell">
+                    <span class="product-title">{{ p.nombre }}</span>
+                    <span class="product-desc" *ngIf="p.descripcion">{{ p.descripcion }}</span>
+                  </div>
+                </td>
+                
+                <!-- Stock con Badge Dinámico -->
+                <td class="center">
+                  <span class="stock-badge" [ngClass]="{
+                    'stock-out': p.stock === 0,
+                    'stock-low': p.stock > 0 && p.stock <= 5,
+                    'stock-ok': p.stock > 5
+                  }">
+                    <span class="material-symbols-outlined stock-icon">
+                      {{ p.stock === 0 ? 'warning' : (p.stock <= 5 ? 'error_outline' : 'check_circle_outline') }}
+                    </span>
+                    {{ p.stock === 0 ? 'Agotado' : p.stock + ' uds' }}
+                  </span>
+                </td>
+                
+                <!-- Categoría -->
+                <td>
+                  <span class="category-badge">{{ p.categoriaNombre }}</span>
+                </td>
+                
+                <!-- Proveedores -->
+                <td>
+                  <div class="badges-wrapper">
+                    <span *ngFor="let nombre of p.proveedorNombres" class="badge-prov">
+                      {{ nombre }}
+                    </span>
+                    <span *ngIf="!p.proveedorNombres?.length" class="no-providers">(Ninguno)</span>
+                  </div>
+                </td>
+                
+                <!-- Precio -->
+                <td class="num price-cell">
+                  <span class="price-symbol">S/</span> {{ p.precio | number:'1.2-2' }}
+                </td>
+                
+                <!-- Acciones con Botones Modernos -->
+                <td class="center">
+                  <div class="action-buttons">
+                    <button (click)="seleccionar(p)" class="btn-action btn-edit" title="Editar producto" aria-label="Editar producto">
+                      <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button (click)="baja(p.id)" class="btn-action btn-delete" title="Eliminar producto" aria-label="Eliminar producto">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Mensaje cuando la tabla está vacía -->
+              <tr *ngIf="productos.length === 0">
+                <td colspan="6" class="table-empty">
+                  <span class="material-symbols-outlined empty-icon">inventory</span>
+                  <p>No hay productos registrados en este momento.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+  </div>
 </div>
+
 

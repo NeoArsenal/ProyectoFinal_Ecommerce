@@ -1,67 +1,340 @@
-/* =============================================
-   ENVÍOS — Diseño Premium
-   ============================================= */
+/* ==========================================================================
+   ENVÍOS — Centro de Despachos Premium (Cohesivo con DERMQ)
+   ========================================================================== */
 
+/* --- Contenedor Principal --- */
 .container {
-  max-width: 1100px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 40px 30px;
-  animation: fadeInUp 0.4s ease-out;
+  padding: 32px 24px;
 }
 
-.container h1 {
-  font-size: 24px;
+/* --- Animaciones del Sistema --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.97); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- Header de la Vista --- */
+.view-header {
+  margin-bottom: 28px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  font-size: 2.25rem;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-header h1 {
+  font-size: 26px;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 4px;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.5px;
 }
 
-.container p {
-  color: var(--text-muted);
-  margin-bottom: 24px;
+.view-header .subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* --- Contenedor Principal Full Ancho --- */
+.dashboard-full-width {
+  width: 100%;
+}
+
+/* --- Tarjetas Estilo Glassmorphism / Premium --- */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition-normal) ease, border-color var(--transition-normal) ease;
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-medium);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0));
+}
+
+.card-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.icon-accent {
+  font-size: 1.5rem;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 4px;
+  border-radius: 6px;
+}
+
+/* --- Tabla de Envíos --- */
+.table-header-flex {
+  justify-content: space-between;
+}
+
+.title-flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shipping-counter {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--primary-light);
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabla-moderna {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
   font-size: 14px;
 }
 
-/* Tabla hereda del global */
-.tracking {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-weight: 700;
-  color: var(--primary);
-  letter-spacing: 0.5px;
+.tabla-moderna th {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
 }
 
-.vacio { text-align: center; padding: 30px; color: var(--text-muted); }
+.tabla-moderna td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--on-surface);
+  vertical-align: middle;
+}
 
-/* Badges de Estado */
-.badge { 
-  padding: 5px 12px;
-  border-radius: var(--radius-full);
+.table-row-hover {
+  transition: background-color var(--transition-fast);
+}
+
+.table-row-hover:hover {
+  background-color: rgba(2, 105, 106, 0.02);
+}
+
+/* Tracking Cell (Monospace) */
+.tracking-cell {
+  font-weight: 700;
+}
+
+.tracking-code {
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 13px;
+  color: var(--primary);
+  background-color: var(--primary-bg);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--primary-light);
+}
+
+/* Method Cell */
+.method-cell-flex {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.method-icon {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+}
+
+/* Cliente Cell */
+.client-cell {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Dirección / Location */
+.location-flex {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+}
+
+.location-icon {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+}
+
+/* Badges de Estado Dinámicos */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 11px;
-  font-weight: 600;
-  color: white;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
   letter-spacing: 0.3px;
   text-transform: uppercase;
 }
-.pendiente { background: linear-gradient(135deg, var(--accent-amber), #d97706); }
-.enviado { background: linear-gradient(135deg, var(--accent-sky), #0284c7); }
-.entregado { background: linear-gradient(135deg, var(--accent-emerald), #059669); }
 
-/* Botones de Acción */
-.btn-enviar {
-  background: linear-gradient(135deg, var(--accent-sky), #0284c7);
-  color: white;
-  font-weight: 600;
-  box-shadow: 0 2px 6px rgba(14, 165, 233, 0.3);
+.status-icon {
+  font-size: 0.95rem;
 }
-.btn-enviar:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(14, 165, 233, 0.4); }
 
-.btn-entregar {
-  background: linear-gradient(135deg, var(--accent-emerald), #059669);
-  color: white;
-  font-weight: 600;
-  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+.status-pending {
+  background-color: #fef3c7;
+  color: #d97706;
+  border: 1px solid rgba(217, 119, 6, 0.15);
 }
-.btn-entregar:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); }
 
-.text-ok { color: var(--accent-emerald); font-weight: 700; font-size: 13px; }
-.acciones { white-space: nowrap; }
+.status-shipped {
+  background-color: var(--primary-bg);
+  color: var(--primary);
+  border: 1px solid var(--primary-light);
+}
+
+.status-delivered {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+/* Acciones */
+.actions-cell {
+  vertical-align: middle;
+}
+
+.action-buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.btn-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-fast) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-control span {
+  font-size: 1.15rem;
+}
+
+.btn-dispatch {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 2px 6px rgba(2, 105, 106, 0.2);
+}
+
+.btn-dispatch:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(2, 105, 106, 0.3);
+  filter: brightness(1.05);
+}
+
+.btn-deliver {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
+}
+
+.btn-deliver:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+  filter: brightness(1.05);
+}
+
+/* Estado Completed */
+.text-completed {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #059669;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.completed-icon {
+  font-size: 1.15rem;
+}
+
+/* Tabla vacía */
+.table-empty {
+  text-align: center;
+  padding: 48px 16px !important;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: var(--border-medium);
+  margin-bottom: 8px;
+}
+
+.table-empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* --- Utilidades --- */
+.center { text-align: center; }
