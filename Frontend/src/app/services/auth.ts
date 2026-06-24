@@ -8,34 +8,20 @@ export class AuthService {
   
   // Variable para saber quién está logueado
   private usuarioActual: any = null;
-  private tokenActual: string | null = null;
 
   constructor(private http: HttpClient) {
-    // Al iniciar, intentamos recuperar solo el token del "disco duro" del navegador
-    const tokenGuardado = localStorage.getItem('jwt_token');
-    if (tokenGuardado) {
-      try {
-        // Validar expiración del token decodificando el payload
-        const payload = JSON.parse(atob(tokenGuardado.split('.')[1]));
-        if (payload.exp * 1000 < Date.now()) {
-            this.logout();
-        } else {
-            this.tokenActual = tokenGuardado;
-            // Reconstruimos un usuario básico a partir del token
-            this.usuarioActual = { email: payload.sub };
-        }
-      } catch (e) {
-        this.logout();
-      }
+    // Al iniciar, intentamos recuperar el usuario del "disco duro" del navegador
+    const guardado = localStorage.getItem('usuario_ecommerce');
+    if (guardado) {
+      this.usuarioActual = JSON.parse(guardado);
     }
   }
 
   // --- LOGIN ---
   login(credenciales: any): Observable<any> {
     return this.http.post(`${this.url}/login`, credenciales).pipe(
-      tap((response: any) => {
-        // El backend ahora devuelve { token: "...", usuario: {...} }
-        this.guardarSesion(response.token, response.usuario);
+      tap((usuario: any) => {
+        this.guardarSesion(usuario);
       })
     );
   }
@@ -48,33 +34,25 @@ export class AuthService {
   // --- CERRAR SESIÓN ---
   logout() {
     this.usuarioActual = null;
-    this.tokenActual = null;
-    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('usuario_ecommerce');
     window.location.href = '/login'; // Recargar página
   }
 
   // --- UTILIDADES ---
   
   // Guardar en memoria y localStorage
-  private guardarSesion(token: string, usuario: any) {
-    this.tokenActual = token;
+  private guardarSesion(usuario: any) {
     this.usuarioActual = usuario;
-    // MITIGACIÓN SEGURIDAD: Solo guardamos el token criptográfico, nunca los datos en texto plano
-    localStorage.setItem('jwt_token', token);
+    localStorage.setItem('usuario_ecommerce', JSON.stringify(usuario));
   }
 
   get usuario() {
     return this.usuarioActual;
   }
 
-  getToken() {
-    return this.tokenActual;
-  }
-
   get estaLogueado(): boolean {
-    return this.tokenActual != null;
+    return this.usuarioActual != null;
   }
-
   obtenerPerfil(id: number): Observable<any> {
     return this.http.get(`${this.url}/${id}/perfil`);
   }
