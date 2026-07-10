@@ -1,61 +1,147 @@
-﻿<div class="container">
-  <h1 style="display: flex; align-items: center; gap: 8px;">
-    <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">fact_check</span> Gestión de Stock por Almacén
-  </h1>
+<div class="container animate-fade-in">
+  <!-- Header de la Vista -->
+  <header class="view-header">
+    <div class="header-title">
+      <span class="material-symbols-outlined header-icon" aria-hidden="true">fact_check</span>
+      <div>
+        <h1>Gestión de Stock por Almacén</h1>
+        <p class="subtitle">Distribuye y asigna la cantidad de stock de cada producto por depósito o almacén físico.</p>
+      </div>
+    </div>
+  </header>
 
-  <!-- Formulario -->
-  <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
+  <!-- Layout Principal en Grid -->
+  <div class="dashboard-grid">
     
-    <div class="campo">
-      <label for="sel-producto">Producto:</label>
-      <select id="sel-producto" formControlName="productoId">
-        <option [ngValue]="null">-- Seleccione --</option>
-        <option *ngFor="let p of listaProductos" [value]="p.id">{{ p.nombre }}</option>
-      </select>
-    </div>
+    <!-- Columna Izquierda: Formulario -->
+    <aside class="form-container">
+      <div class="glass-card form-card">
+        <div class="card-header">
+          <span class="material-symbols-outlined icon-accent" aria-hidden="true">add_box</span>
+          <h2>Asignar Stock</h2>
+        </div>
 
-    <div class="campo">
-      <label for="sel-almacen">Almacén:</label>
-      <select id="sel-almacen" formControlName="almacenId">
-        <option [ngValue]="null">-- Seleccione --</option>
-        <option *ngFor="let a of listaAlmacenes" [value]="a.id">{{ a.nombre }}</option>
-      </select>
-    </div>
+        <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario-moderno">
+          <!-- Campo: Producto -->
+          <div class="campo">
+            <label for="sel-producto">Producto</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">inventory_2</span>
+              <select id="sel-producto" formControlName="productoId" [class.input-error]="esInvalido('productoId')">
+                <option [ngValue]="null">-- Selecciona un producto --</option>
+                <option *ngFor="let p of listaProductos" [value]="p.id">{{ p.nombre }}</option>
+              </select>
+            </div>
+            <small *ngIf="esInvalido('productoId')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Selecciona un producto.
+            </small>
+          </div>
 
-    <div class="campo">
-      <label for="inp-cantidad">Cantidad:</label>
-      <input id="inp-cantidad" type="number" formControlName="cantidad" min="1" style="width: 80px;">
-    </div>
+          <!-- Campo: Almacén -->
+          <div class="campo">
+            <label for="sel-almacen">Almacén de Destino</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">warehouse</span>
+              <select id="sel-almacen" formControlName="almacenId" [class.input-error]="esInvalido('almacenId')">
+                <option [ngValue]="null">-- Selecciona un almacén --</option>
+                <option *ngFor="let a of listaAlmacenes" [value]="a.id">{{ a.nombre }}</option>
+              </select>
+            </div>
+            <small *ngIf="esInvalido('almacenId')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Selecciona un almacén.
+            </small>
+          </div>
 
-    <button type="submit" [disabled]="form.invalid" class="btn-guardar">
-      Asignar Stock
-    </button>
-  </form>
+          <!-- Campo: Cantidad -->
+          <div class="campo">
+            <label for="inp-cantidad">Cantidad a Asignar</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">tag</span>
+              <input id="inp-cantidad" type="number" formControlName="cantidad" 
+                     placeholder="Ej. 50" min="1"
+                     [class.input-error]="esInvalido('cantidad')"/>
+            </div>
+            <small *ngIf="esInvalido('cantidad')" class="msg-error" role="alert" aria-live="polite">
+              <span class="material-symbols-outlined error-icon">error</span> Cantidad mínima es 1.
+            </small>
+          </div>
 
-  <hr>
+          <!-- Botones de Acción -->
+          <div class="botones-container">
+            <button type="submit" [disabled]="form.invalid" class="btn-primary animate-scale-up">
+              <span class="material-symbols-outlined">assignment_turned_in</span>
+              <span>Asignar Stock</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </aside>
 
-  <!-- Tabla -->
-  <table >
-    <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Almacén</th>
-        <th>Cantidad</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of listaInventario">
-        <td>{{ item.productoNombre }}</td>
-        <td>{{ item.almacenNombre }}</td>
-        <td class="center font-bold">{{ item.cantidad }}</td>
-        <td class="center">
-          <button (click)="borrar(item.id)" class="btn-borrar" aria-label="Eliminar inventario">X</button>
-        </td>
-      </tr>
-      <tr *ngIf="listaInventario.length === 0">
-        <td colspan="4" class="vacio">No hay inventario distribuido.</td>
-      </tr>
-    </tbody>
-  </table>
+    <!-- Columna Derecha: Listado de Inventario Distribuido -->
+    <main class="table-container">
+      <div class="glass-card table-card">
+        <div class="card-header table-header-flex">
+          <div class="title-flex">
+            <span class="material-symbols-outlined icon-accent" aria-hidden="true">list_alt</span>
+            <h2>Stock Distribuido</h2>
+          </div>
+          <span class="inventory-counter">
+            {{ listaInventario.length }} {{ listaInventario.length === 1 ? 'registro' : 'registros' }}
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="tabla-moderna">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Almacén</th>
+                <th class="center" style="width: 140px;">Cantidad Asignada</th>
+                <th class="center" style="width: 100px;">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of listaInventario" class="table-row-hover">
+                <!-- Producto -->
+                <td>
+                  <span class="product-name-cell">{{ item.productoNombre }}</span>
+                </td>
+                
+                <!-- Almacén -->
+                <td>
+                  <div class="warehouse-info-cell">
+                    <span class="material-symbols-outlined warehouse-icon">warehouse</span>
+                    <span>{{ item.almacenNombre }}</span>
+                  </div>
+                </td>
+                
+                <!-- Cantidad -->
+                <td class="center">
+                  <span class="quantity-badge">{{ item.cantidad }} uds</span>
+                </td>
+                
+                <!-- Acciones -->
+                <td class="center">
+                  <div class="action-buttons">
+                    <button (click)="borrar(item.id)" class="btn-action btn-delete" title="Eliminar asignación" aria-label="Eliminar asignación">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Mensaje cuando la tabla está vacía -->
+              <tr *ngIf="listaInventario.length === 0">
+                <td colspan="4" class="table-empty">
+                  <span class="material-symbols-outlined empty-icon">fact_check</span>
+                  <p>No hay inventario distribuido en este momento.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+  </div>
 </div>
+

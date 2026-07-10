@@ -1,59 +1,125 @@
-﻿<div class="container">
-  <h1 style="display: flex; align-items: center; gap: 8px;">
-    <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">local_shipping</span> Centro de Despachos
-  </h1>
-  <p>Gestión de paquetes y logística de salida.</p>
+<div class="container animate-fade-in">
+  <!-- Header de la Vista -->
+  <header class="view-header">
+    <div class="header-title">
+      <span class="material-symbols-outlined header-icon" aria-hidden="true">local_shipping</span>
+      <div>
+        <h1>Centro de Despachos</h1>
+        <p class="subtitle">Gestiona paquetes, despachos y realiza el seguimiento de la logística de salida.</p>
+      </div>
+    </div>
+  </header>
 
-  <table >
-    <thead>
-      <tr>
-        <th>Tracking #</th>
-        <th>Método</th>
-        <th>Cliente</th>
-        <th>Destino (Dirección)</th>
-        <th>Estado Actual</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let e of envios">
-        <td class="tracking">{{ e.tracking }}</td>
-        <td>{{ e.metodo || 'Estándar' }}</td>
-        <td>{{ e.cliente }}</td>
-        <td>{{ e.direccion }}</td>
-        
-        <td>
-          <span class="badge" 
-                [class.pendiente]="e.estado === 'PENDIENTE'"
-                [class.enviado]="e.estado === 'ENVIADO'"
-                [class.entregado]="e.estado === 'ENTREGADO'">
-            {{ e.estado }}
-          </span>
-        </td>
-        
-        <td class="acciones">
-          <!-- Botones de Acción Rápida -->
-          <button *ngIf="e.estado === 'PENDIENTE'" 
-                  (click)="cambiarEstado(e, 'ENVIADO')" 
-                  class="btn-enviar">
-            <span class="material-symbols-outlined align-middle mr-1" style="font-size: 16px;" aria-hidden="true">package_2</span> Despachar
-          </button>
+  <!-- Contenedor Principal: Tabla a Full Ancho -->
+  <div class="dashboard-full-width">
+    <div class="glass-card table-card">
+      
+      <!-- Cabecera de la Tarjeta -->
+      <div class="card-header table-header-flex">
+        <div class="title-flex">
+          <span class="material-symbols-outlined icon-accent" aria-hidden="true">assignment</span>
+          <h2>Logística de Envíos</h2>
+        </div>
+        <span class="shipping-counter">
+          {{ envios.length }} {{ envios.length === 1 ? 'envío' : 'envíos' }}
+        </span>
+      </div>
 
-          <button *ngIf="e.estado === 'ENVIADO'" 
-                  (click)="cambiarEstado(e, 'ENTREGADO')" 
-                  class="btn-entregar">
-            <span class="material-symbols-outlined align-middle mr-1" style="font-size: 16px;" aria-hidden="true">check_circle</span> Confirmar Entrega
-          </button>
+      <!-- Tabla Responsiva -->
+      <div class="table-responsive">
+        <table class="tabla-moderna">
+          <thead>
+            <tr>
+              <th>Tracking #</th>
+              <th>Método de Envío</th>
+              <th>Cliente</th>
+              <th>Destino (Dirección)</th>
+              <th>Estado Actual</th>
+              <th class="center" style="width: 220px;">Acciones de Control</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of envios" class="table-row-hover">
+              
+              <!-- Tracking # -->
+              <td class="tracking-cell">
+                <span class="tracking-code">#{{ e.tracking }}</span>
+              </td>
+              
+              <!-- Método -->
+              <td>
+                <div class="method-cell-flex">
+                  <span class="material-symbols-outlined method-icon">inventory_2</span>
+                  <span>{{ e.metodo || 'Envío Estándar' }}</span>
+                </div>
+              </td>
+              
+              <!-- Cliente -->
+              <td class="client-cell">
+                {{ e.cliente }}
+              </td>
+              
+              <!-- Destino / Dirección -->
+              <td>
+                <div class="location-flex">
+                  <span class="material-symbols-outlined location-icon">place</span>
+                  <span>{{ e.direccion }}</span>
+                </div>
+              </td>
+              
+              <!-- Estado con Badge Dinámico -->
+              <td>
+                <span class="status-badge" [ngClass]="{
+                  'status-pending': e.estado === 'PENDIENTE',
+                  'status-shipped': e.estado === 'ENVIADO',
+                  'status-delivered': e.estado === 'ENTREGADO'
+                }">
+                  <span class="material-symbols-outlined status-icon">
+                    {{ e.estado === 'PENDIENTE' ? 'schedule' : (e.estado === 'ENVIADO' ? 'local_shipping' : 'task_alt') }}
+                  </span>
+                  {{ e.estado }}
+                </span>
+              </td>
+              
+              <!-- Acciones -->
+              <td class="center actions-cell">
+                <div class="action-buttons-wrapper">
+                  <!-- Botón Despachar (Pendiente -> Enviado) -->
+                  <button *ngIf="e.estado === 'PENDIENTE'" 
+                          (click)="cambiarEstado(e, 'ENVIADO')" 
+                          class="btn-control btn-dispatch animate-scale-up">
+                    <span class="material-symbols-outlined">package_2</span>
+                    <span>Despachar</span>
+                  </button>
 
-          <span *ngIf="e.estado === 'ENTREGADO'" class="text-ok">
-            Finalizado
-          </span>
-        </td>
-      </tr>
+                  <!-- Botón Confirmar Entrega (Enviado -> Entregado) -->
+                  <button *ngIf="e.estado === 'ENVIADO'" 
+                          (click)="cambiarEstado(e, 'ENTREGADO')" 
+                          class="btn-control btn-deliver animate-scale-up">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span>Entregar</span>
+                  </button>
 
-      <tr *ngIf="envios.length === 0">
-        <td colspan="6" class="vacio">No hay envíos pendientes.</td>
-      </tr>
-    </tbody>
-  </table>
+                  <!-- Estado Finalizado -->
+                  <span *ngIf="e.estado === 'ENTREGADO'" class="text-completed">
+                    <span class="material-symbols-outlined completed-icon">verified</span>
+                    Finalizado
+                  </span>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Mensaje cuando la tabla está vacía -->
+            <tr *ngIf="envios.length === 0">
+              <td colspan="6" class="table-empty">
+                <span class="material-symbols-outlined empty-icon">no_sim</span>
+                <p>No hay envíos registrados en este momento.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
 </div>

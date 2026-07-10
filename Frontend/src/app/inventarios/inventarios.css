@@ -1,66 +1,397 @@
-/* =============================================
-   INVENTARIOS — Diseño Premium
-   ============================================= */
+/* ==========================================================================
+   INVENTARIOS — Diseño Premium & Moderno (Cohesivo con DERMQ)
+   ========================================================================== */
 
+/* --- Contenedor Principal --- */
 .container {
-  max-width: 1100px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 40px 30px;
-  animation: fadeInUp 0.4s ease-out;
+  padding: 32px 24px;
 }
 
-.container h1 {
-  font-size: 24px;
+/* --- Animaciones del Sistema --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.97); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- Header de la Vista --- */
+.view-header {
+  margin-bottom: 28px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  font-size: 2.25rem;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-header h1 {
+  font-size: 26px;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 24px;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.5px;
 }
 
-.formulario { 
+.view-header .subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* --- Grid de Control / Dashboard --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* --- Tarjetas Estilo Glassmorphism / Premium --- */
+.glass-card {
   background: var(--bg-card);
-  padding: 24px;
-  border-radius: var(--radius-lg);
-  display: flex;
-  gap: 16px;
-  align-items: flex-end;
-  margin-bottom: 24px;
   border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
-  flex-wrap: wrap;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition-normal) ease, border-color var(--transition-normal) ease;
 }
 
-.campo { display: flex; flex-direction: column; flex: 1; min-width: 140px; }
+.glass-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-medium);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0));
+}
+
+.card-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.icon-accent {
+  font-size: 1.5rem;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 4px;
+  border-radius: 6px;
+}
+
+/* --- Formulario Moderno --- */
+.formulario-moderno {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
 .campo label {
-  font-weight: 600;
   font-size: 12px;
-  margin-bottom: 6px;
+  font-weight: 600;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
 }
 
-/* Hereda table, input, select del global */
+/* Wrapper de Input con Icono */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
-.center { text-align: center; }
-.font-bold { font-weight: 700; color: var(--primary); }
-.vacio { text-align: center; padding: 20px; color: var(--text-muted); }
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  pointer-events: none;
+  transition: color var(--transition-fast);
+}
 
-.btn-guardar {
-  background: linear-gradient(135deg, var(--accent-sky), #0284c7);
-  color: white;
-  padding: 10px 22px;
+/* Inputs y Selects */
+.formulario-moderno input[type="number"],
+.formulario-moderno select {
+  width: 100%;
+  padding: 10px 14px 10px 40px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--on-surface);
+  background-color: var(--background);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast) ease;
+}
+
+.formulario-moderno input:focus,
+.formulario-moderno select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: var(--surface);
+  box-shadow: 0 0 0 4px rgba(2, 105, 106, 0.12);
+}
+
+.formulario-moderno input:focus + .input-icon,
+.formulario-moderno select:focus + .input-icon {
+  color: var(--primary);
+}
+
+/* Mensajes de Error */
+.msg-error {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--accent-rose);
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 2px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.error-icon {
+  font-size: 0.95rem;
+}
+
+.input-error {
+  border-color: var(--accent-rose) !important;
+  background-color: var(--accent-rose-light) !important;
+}
+
+.input-error + .input-icon {
+  color: var(--accent-rose) !important;
+}
+
+/* Botones del Formulario */
+.botones-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+.botones-container button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
   font-weight: 600;
-  height: 42px;
-  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.25);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-fast) cubic-bezier(0.4, 0, 0.2, 1);
 }
-.btn-guardar:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35); }
 
-.btn-borrar {
-  background: var(--accent-rose);
+.botones-container button span {
+  font-size: 1.15rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
-  padding: 6px 12px;
+  box-shadow: 0 2px 8px rgba(2, 105, 106, 0.25);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(2, 105, 106, 0.35);
+  filter: brightness(1.05);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* --- Tabla de Stock Distribuido --- */
+.table-header-flex {
+  justify-content: space-between;
+}
+
+.title-flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.inventory-counter {
   font-size: 12px;
   font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--primary-light);
 }
-.btn-borrar:hover { background: #e11d48; }
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabla-moderna {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.tabla-moderna th {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tabla-moderna td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--on-surface);
+  vertical-align: middle;
+}
+
+.table-row-hover {
+  transition: background-color var(--transition-fast);
+}
+
+.table-row-hover:hover {
+  background-color: rgba(2, 105, 106, 0.02);
+}
+
+.product-name-cell {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.warehouse-info-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+}
+
+.warehouse-icon {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+}
+
+/* Badge de Cantidad */
+.quantity-badge {
+  display: inline-block;
+  background-color: var(--primary-bg);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--primary-light);
+}
+
+/* Acciones */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-action {
+  border: none;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.btn-action span {
+  font-size: 1.15rem;
+}
+
+.btn-delete:hover {
+  background-color: var(--accent-rose-light);
+  color: var(--accent-rose);
+}
+
+/* Tabla vacía */
+.table-empty {
+  text-align: center;
+  padding: 48px 16px !important;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: var(--border-medium);
+  margin-bottom: 8px;
+}
+
+.table-empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* --- Utilidades --- */
+.center { text-align: center; }
+
+/* --- Responsive --- */
+@media (max-width: 1100px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

@@ -1,32 +1,96 @@
-﻿<div class="container">
-  <h1 style="display: flex; align-items: center; gap: 8px;">
-    <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">admin_panel_settings</span> Gestión de Roles (Seguridad)
-  </h1>
-
-  <div class="formulario">
-    <div class="campo">
-      <label for="inp-nuevo-rol">Nuevo Rol:</label>
-      <input id="inp-nuevo-rol" type="text" [(ngModel)]="nombreNuevo" placeholder="Ej: ADMIN, SUPERVISOR">
+<div class="container animate-fade-in">
+  <!-- Header de la Vista -->
+  <header class="view-header">
+    <div class="header-title">
+      <span class="material-symbols-outlined header-icon" aria-hidden="true">admin_panel_settings</span>
+      <div>
+        <h1>Gestión de Roles</h1>
+        <p class="subtitle">Administra los roles del sistema y define privilegios globales de seguridad.</p>
+      </div>
     </div>
-    <button (click)="guardar()" class="btn-guardar" [disabled]="!nombreNuevo">Crear Rol</button>
-  </div>
+  </header>
 
-  <table >
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Rol</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let r of roles">
-        <td class="center">{{ r.id }}</td>
-        <td>{{ r.nombre }}</td>
-        <td class="center">
-          <button (click)="borrar(r.id)" class="btn-borrar" aria-label="Eliminar rol">X</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Layout Principal (Dashboard Grid) -->
+  <div class="dashboard-grid">
+    
+    <!-- Columna Izquierda: Formulario de Creación -->
+    <aside class="form-container">
+      <div class="glass-card form-card">
+        <div class="card-header">
+          <span class="material-symbols-outlined icon-accent" aria-hidden="true">add_moderator</span>
+          <h2>Nuevo Rol</h2>
+        </div>
+
+        <div class="formulario-moderno">
+          <div class="campo">
+            <label for="inp-nuevo-rol">Nombre del Rol</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">shield</span>
+              <input id="inp-nuevo-rol" type="text" [(ngModel)]="nombreNuevo" placeholder="Ej: ADMIN, SUPERVISOR" class="custom-input">
+            </div>
+            <small class="helper-text">Escribe el nombre del rol en mayúsculas.</small>
+          </div>
+
+          <button (click)="guardar()" class="btn-primary btn-full-width" [disabled]="!nombreNuevo.trim()">
+            <span class="material-symbols-outlined">save</span>
+            <span>Crear Rol</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Columna Derecha: Tabla de Roles -->
+    <main class="table-container">
+      <div class="glass-card table-card">
+        <div class="card-header table-header-flex">
+          <div class="title-flex">
+            <span class="material-symbols-outlined icon-accent" aria-hidden="true">security</span>
+            <h2>Roles de Seguridad</h2>
+          </div>
+          <span class="badge-counter">
+            {{ roles.length }} {{ roles.length === 1 ? 'rol' : 'roles' }}
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="tabla-moderna">
+            <thead>
+              <tr>
+                <th class="center" style="width: 80px;">ID</th>
+                <th>Nombre del Rol</th>
+                <th class="center" style="width: 100px;">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of roles" class="table-row-hover">
+                <!-- ID Badge -->
+                <td class="center">
+                  <span class="id-badge">#{{ r.id }}</span>
+                </td>
+                
+                <!-- Nombre del Rol -->
+                <td class="rol-name-cell">
+                  <span class="badge-rol-pill">{{ r.nombre }}</span>
+                </td>
+                
+                <!-- Acción -->
+                <td class="center">
+                  <button (click)="borrar(r.id)" class="btn-action-delete" aria-label="Eliminar rol">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="!roles.length">
+                <td colspan="3" class="no-records-cell">
+                  <span class="material-symbols-outlined">info</span>
+                  <p>No hay roles de seguridad registrados.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+  </div>
 </div>

@@ -1,72 +1,127 @@
-﻿<div class="historial-page">
-
-  <div class="page-header">
-    <h1 style="display: flex; align-items: center; gap: 8px;">
-      <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">receipt_long</span> Historial de Pedidos
-    </h1>
-    <p class="subtitulo" *ngIf="emailUsuario">
-      Mostrando todos los pedidos del sistema
-    </p>
-  </div>
+<div class="container animate-fade-in">
+  <!-- Header de la Vista -->
+  <header class="view-header">
+    <div class="header-title">
+      <span class="material-symbols-outlined header-icon" aria-hidden="true">receipt_long</span>
+      <div>
+        <h1>Historial de Pedidos</h1>
+        <p class="subtitle" *ngIf="emailUsuario">
+          Registro completo de todos los pedidos y transacciones realizadas en la plataforma.
+        </p>
+      </div>
+    </div>
+  </header>
 
   <!-- Cargando -->
-  <div *ngIf="cargando" class="loading-state">
+  <div *ngIf="cargando" class="loading-state glass-card">
     <div class="spinner"></div>
-    <p>Cargando historial...</p>
+    <p>Cargando historial de pedidos...</p>
   </div>
 
   <!-- Error -->
-  <div *ngIf="mensajeError && !cargando" class="error-state">
-    <p role="alert" aria-live="polite" class="flex items-center gap-1"><span class="material-symbols-outlined text-[1.125rem]" aria-hidden="true">error</span> {{ mensajeError }}</p>
+  <div *ngIf="mensajeError && !cargando" class="error-state glass-card">
+    <span class="material-symbols-outlined error-icon" aria-hidden="true">error</span>
+    <p role="alert" aria-live="polite">{{ mensajeError }}</p>
   </div>
 
-  <!-- Tabla -->
-  <div *ngIf="!cargando && !mensajeError" class="tabla-wrapper">
+  <!-- Tabla de Pedidos -->
+  <div *ngIf="!cargando && !mensajeError" class="dashboard-full-width">
+    <div class="glass-card table-card">
+      
+      <!-- Cabecera de la Tarjeta -->
+      <div class="card-header table-header-flex">
+        <div class="title-flex">
+          <span class="material-symbols-outlined icon-accent" aria-hidden="true">receipt</span>
+          <h2>Historial de Transacciones</h2>
+        </div>
+        <span class="shipping-counter">
+          {{ pedidos.length }} {{ pedidos.length === 1 ? 'pedido' : 'pedidos' }}
+        </span>
+      </div>
 
-    <!-- Contador -->
-    <div class="contador">
-      <span class="badge-total">{{ pedidos.length }} pedido{{ pedidos.length !== 1 ? 's' : '' }}</span>
+      <!-- Tabla Responsiva -->
+      <div class="table-responsive">
+        <table class="tabla-moderna">
+          <thead>
+            <tr>
+              <th class="center" style="width: 80px;"># ID</th>
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th class="num" style="width: 140px;">Total</th>
+              <th class="center" style="width: 140px;">Método de Pago</th>
+              <th class="center" style="width: 160px;">Estado de Envío</th>
+              <th>Tracking #</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of pedidos" class="table-row-hover">
+              
+              <!-- ID Pedido -->
+              <td class="center">
+                <span class="id-badge">#{{ p.idPedido }}</span>
+              </td>
+              
+              <!-- Fecha -->
+              <td>
+                <div class="date-cell-flex">
+                  <span class="material-symbols-outlined date-icon">calendar_today</span>
+                  <span class="date-text">{{ p.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+                </div>
+              </td>
+              
+              <!-- Cliente -->
+              <td class="client-cell">
+                {{ p.emailUsuario }}
+              </td>
+              
+              <!-- Total -->
+              <td class="num price-cell">
+                <span class="price-symbol">S/</span> {{ p.total | number:'1.2-2' }}
+              </td>
+              
+              <!-- Método de Pago -->
+              <td class="center">
+                <span class="payment-badge">
+                  <span class="material-symbols-outlined payment-icon">
+                    {{ p.metodoPago === 'EFECTIVO' ? 'payments' : 'credit_card' }}
+                  </span>
+                  {{ p.metodoPago || '—' }}
+                </span>
+              </td>
+              
+              <!-- Estado de Envío -->
+              <td class="center">
+                <span class="status-badge" [ngClass]="{
+                  'status-pending': p.estadoEnvio === 'PENDIENTE',
+                  'status-shipped': p.estadoEnvio === 'ENVIADO',
+                  'status-delivered': p.estadoEnvio === 'ENTREGADO'
+                }">
+                  <span class="material-symbols-outlined status-icon">
+                    {{ p.estadoEnvio === 'PENDIENTE' ? 'schedule' : (p.estadoEnvio === 'ENVIADO' ? 'local_shipping' : 'task_alt') }}
+                  </span>
+                  {{ p.estadoEnvio || 'No asignado' }}
+                </span>
+              </td>
+              
+              <!-- Tracking -->
+              <td class="tracking-cell">
+                <span *ngIf="p.tracking" class="tracking-code">#{{ p.tracking }}</span>
+                <span *ngIf="!p.tracking" class="no-tracking">—</span>
+              </td>
+            </tr>
+
+            <!-- Mensaje cuando la tabla está vacía -->
+            <tr *ngIf="pedidos.length === 0">
+              <td colspan="7" class="table-empty">
+                <span class="material-symbols-outlined empty-icon">receipt_long</span>
+                <p>No hay pedidos registrados todavía.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
-
-    <table class="tabla-historial">
-      <thead>
-        <tr>
-          <th class="col-id">#</th>
-          <th>Fecha</th>
-          <th>Cliente</th>
-          <th class="col-num">Total</th>
-          <th>Pago</th>
-          <th>Estado Envío</th>
-          <th>Tracking</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let p of pedidos">
-          <td class="col-id id-pedido">#{{ p.idPedido }}</td>
-          <td class="fecha-cell">{{ p.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
-          <td class="email-cell">{{ p.emailUsuario }}</td>
-          <td class="col-num total-cell">S/ {{ p.total | number:'1.2-2' }}</td>
-          <td>
-            <span class="badge badge-pago">{{ p.metodoPago || '—' }}</span>
-          </td>
-          <td>
-            <span class="badge" [ngClass]="badgeClase(p.estadoEnvio)">
-              {{ p.estadoEnvio || 'No asignado' }}
-            </span>
-          </td>
-          <td class="tracking-cell">{{ p.tracking || '—' }}</td>
-        </tr>
-
-        <tr *ngIf="pedidos.length === 0">
-          <td colspan="7" class="vacio">
-            <div class="vacio-contenido">
-              <span class="material-symbols-outlined text-gray-300" style="font-size: 48px;" aria-hidden="true">receipt_long</span>
-              <p>No hay pedidos registrados todavía.</p>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-
 </div>
+

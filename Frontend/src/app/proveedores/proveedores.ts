@@ -35,6 +35,11 @@ export class Proveedores implements OnInit {
 
   get esEdicion(): boolean { return this.form.get('id')?.value > 0; }
 
+  esInvalido(campo: string): boolean {
+    const control = this.form.get(campo);
+    return control ? control.invalid && control.touched : false;
+  }
+
   listar() {
     this.service.listar().subscribe(data => this.proveedores = data);
   }

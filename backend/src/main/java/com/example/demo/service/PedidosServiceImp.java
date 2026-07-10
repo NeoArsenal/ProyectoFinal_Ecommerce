@@ -79,12 +79,15 @@ public class PedidosServiceImp implements PedidosService {
     @Transactional 
     public int registrarVenta(VentaDTO dto) {
         try {
-            // 1. CORRECCIÓN CRÍTICA: Buscar el Objeto Usuario Real
-            Optional<Usuarios> usuarioOpt = usuariosRepo.findById(dto.getUsuarioId());
+            org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+            String emailUsuarioAutenticado = auth.getName(); 
+            
+            // 1. CORRECCIÓN CRÍTICA (A01 - IDOR): Buscar el Objeto Usuario Real por Email Seguro
+            Optional<Usuarios> usuarioOpt = usuariosRepo.findByEmail(emailUsuarioAutenticado);
             
             // Si el usuario no existe, no podemos crear el pedido (Constraint de BD)
             if (usuarioOpt.isEmpty()) {
-                System.out.println("Error: Usuario no encontrado ID " + dto.getUsuarioId());
+                System.out.println("Error: Usuario no autenticado o token inválido");
                 return 0; 
             }
 

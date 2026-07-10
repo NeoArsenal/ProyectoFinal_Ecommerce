@@ -1,73 +1,132 @@
-﻿<div class="container">
-  <h1 style="display: flex; align-items: center; gap: 8px;">
-    <span class="material-symbols-outlined text-[1.75rem] text-[#02696a]" aria-hidden="true">group</span> Gestión de Usuarios y Permisos
-  </h1>
-
-  <!-- FORMULARIO FLOTANTE DE ASIGNACIÓN -->
-  <!-- Solo se muestra si hay un usuario seleccionado (*ngIf) -->
-  <div class="formulario" *ngIf="usuarioSeleccionado" style="background: #e3f2fd; border: 1px solid #90caf9;">
-    
-    <h3 style="margin-top: 0; color: #1565c0;">
-      Editando permisos de: <strong>{{ usuarioSeleccionado.email }}</strong>
-    </h3>
-    
-    <div class="campo">
-      <label for="sel-roles">Seleccionar Roles (Mantén presionado Ctrl para varios):</label>
-      
-      <!-- Select Múltiple -->
-      <select id="sel-roles" multiple [(ngModel)]="rolesSeleccionados" style="height: 120px; padding: 5px;">
-        <option *ngFor="let r of rolesDisponibles" [value]="r.id">
-          {{ r.nombre }}
-        </option>
-      </select>
-      
-      <small style="color: #666; margin-top: 5px;">
-        Haz clic en los roles para asignarlos o quitarlos.
-      </small>
+<div class="container animate-fade-in">
+  <!-- Header de la Vista -->
+  <header class="view-header">
+    <div class="header-title">
+      <span class="material-symbols-outlined header-icon" aria-hidden="true">group</span>
+      <div>
+        <h1>Gestión de Usuarios y Permisos</h1>
+        <p class="subtitle">Administra los usuarios del sistema y asigna privilegios mediante roles de acceso.</p>
+      </div>
     </div>
+  </header>
 
-    <div class="botones">
-      <button (click)="guardarRoles()" class="btn-verde flex items-center gap-1 justify-center"><span class="material-symbols-outlined text-[1.125rem]" aria-hidden="true">save</span> Guardar Cambios</button>
-      <button (click)="usuarioSeleccionado = null" class="btn-gris">Cancelar</button>
-    </div>
+  <!-- Layout Principal (Se adapta dinámicamente si hay un usuario seleccionado) -->
+  <div class="dashboard-grid" [class.split-layout]="usuarioSeleccionado">
+    
+    <!-- Columna Izquierda: Asignación de Roles (Solo visible si hay un usuario seleccionado) -->
+    <aside *ngIf="usuarioSeleccionado" class="form-container animate-scale-up">
+      <div class="glass-card form-card role-editor-card">
+        <div class="card-header">
+          <span class="material-symbols-outlined icon-accent" aria-hidden="true">shield</span>
+          <h2>Editar Permisos</h2>
+        </div>
+
+        <div class="formulario-moderno">
+          <!-- Info de Usuario -->
+          <div class="user-edit-info">
+            <span class="material-symbols-outlined user-avatar-icon">account_circle</span>
+            <div class="user-details">
+              <span class="label-heading">Asignar roles a:</span>
+              <span class="user-email-text" title="{{ usuarioSeleccionado.email }}">{{ usuarioSeleccionado.email }}</span>
+            </div>
+          </div>
+
+          <!-- Selector de Roles -->
+          <div class="campo">
+            <label for="sel-roles">Roles Disponibles <span class="label-hint">(Cmd/Ctrl + Clic para seleccionar varios)</span></label>
+            <div class="select-multiple-wrapper">
+              <select id="sel-roles" multiple [(ngModel)]="rolesSeleccionados" class="custom-multiselect">
+                <option *ngFor="let r of rolesDisponibles" [value]="r.id">
+                  {{ r.nombre }}
+                </option>
+              </select>
+            </div>
+            <small class="helper-text-info">
+              <span class="material-symbols-outlined info-icon">info</span>
+              Haz clic en los roles para agregarlos o quitarlos del usuario.
+            </small>
+          </div>
+
+          <!-- Botones de Acción -->
+          <div class="botones-container">
+            <button (click)="guardarRoles()" class="btn-primary">
+              <span class="material-symbols-outlined">save</span>
+              <span>Guardar</span>
+            </button>
+            <button (click)="usuarioSeleccionado = null" class="btn-secondary">
+              <span class="material-symbols-outlined">close</span>
+              <span>Cancelar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Columna Derecha/Principal: Listado de Usuarios -->
+    <main class="table-container">
+      <div class="glass-card table-card">
+        <div class="card-header table-header-flex">
+          <div class="title-flex">
+            <span class="material-symbols-outlined icon-accent" aria-hidden="true">manage_accounts</span>
+            <h2>Usuarios del Sistema</h2>
+          </div>
+          <span class="user-counter">
+            {{ usuarios.length }} {{ usuarios.length === 1 ? 'usuario' : 'usuarios' }}
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="tabla-moderna">
+            <thead>
+              <tr>
+                <th class="center" style="width: 80px;">ID</th>
+                <th>Email del Usuario</th>
+                <th>Roles Asignados</th>
+                <th class="center" style="width: 180px;">Privilegios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let u of usuarios" class="table-row-hover" [class.row-editing]="usuarioSeleccionado?.id === u.id">
+                <!-- ID con Badge Estilizado -->
+                <td class="center">
+                  <span class="id-badge">#{{ u.id }}</span>
+                </td>
+                
+                <!-- Email -->
+                <td class="email-cell-bold">
+                  {{ u.email }}
+                </td>
+                
+                <!-- Roles -->
+                <td>
+                  <div class="roles-badges-container">
+                    <span *ngFor="let rol of u.rolesNombres" class="badge-rol">
+                      {{ rol }}
+                    </span>
+                    <span *ngIf="!u.rolesNombres?.length" class="no-roles-assigned">
+                      (Sin roles asignados)
+                    </span>
+                  </div>
+                </td>
+                
+                <!-- Acciones -->
+                <td class="center">
+                  <div class="action-buttons-wrapper">
+                    <button (click)="seleccionar(u)" class="btn-control btn-assign" 
+                            [class.btn-assign-active]="usuarioSeleccionado?.id === u.id"
+                            aria-label="Asignar roles al usuario">
+                      <span class="material-symbols-outlined">admin_panel_settings</span>
+                      <span>{{ usuarioSeleccionado?.id === u.id ? 'Editando...' : 'Asignar Roles' }}</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
   </div>
-
-  <hr *ngIf="usuarioSeleccionado">
-
-  <!-- TABLA DE USUARIOS -->
-  <table >
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Email</th>
-        <th>Roles Actuales</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let u of usuarios">
-        <td class="center">{{ u.id }}</td>
-        <td>{{ u.email }}</td>
-        
-        <!-- COLUMNA DE ROLES (Aquí está la magia) -->
-        <td>
-            <!-- Si tiene roles, los mostramos como etiquetas azules -->
-            <span *ngFor="let rol of u.rolesNombres" class="badge-rol">
-                {{ rol }}
-            </span>
-
-            <!-- Si no tiene roles o la lista es nula, mostramos aviso gris -->
-            <span *ngIf="!u.rolesNombres?.length" style="color:#999; font-size: 11px; font-style: italic;">
-                (Sin roles asignados)
-            </span>
-        </td>
-        
-        <td class="center">
-          <button (click)="seleccionar(u)" class="btn-azul-sm flex items-center gap-1 mx-auto" aria-label="Asignar roles al usuario">
-            <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">shield</span> Asignar Roles
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
 </div>
+

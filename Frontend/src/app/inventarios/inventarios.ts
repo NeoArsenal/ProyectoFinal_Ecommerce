@@ -34,6 +34,11 @@ export class Inventarios implements OnInit {
     });
   }
 
+  esInvalido(campo: string): boolean {
+    const control = this.form.get(campo);
+    return control ? control.invalid && control.touched : false;
+  }
+
   ngOnInit(): void {
     this.cargarTodo();
   }
