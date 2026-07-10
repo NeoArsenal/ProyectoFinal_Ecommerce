@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.PerfilDTO;
@@ -29,14 +30,34 @@ public class UsuariosServiceImp implements UsuariosService {
     @Autowired
     private RolesRepository rolesRepo;
 
+    // --- OWASP A07 / A02: BCrypt inyectado desde SecurityConfig ---
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UsuariosDTO login(String email, String password) {
         Optional<Usuarios> usuarioOpt = repository.findByEmail(email);
-        
+
         if (usuarioOpt.isPresent()) {
             Usuarios u = usuarioOpt.get();
-            // Validación simple (en producción usar BCrypt)
-            if (u.getPassword().equals(password)) {
+            boolean loginValido = false;
+
+            // OWASP A07 — Verificación con BCrypt
+            // Detecta si la contraseña ya está hasheada ($2a$ o $2b$ = prefijo BCrypt)
+            if (u.getPassword().startsWith("$2a$") || u.getPassword().startsWith("$2b$")) {
+                // Contraseña hasheada: verificar con BCrypt
+                loginValido = passwordEncoder.matches(password, u.getPassword());
+            } else {
+                // Contraseña legacy (texto plano): validar y migrar automáticamente
+                loginValido = u.getPassword().equals(password);
+                if (loginValido) {
+                    // Re-hashear y persistir para futuras sesiones
+                    u.setPassword(passwordEncoder.encode(password));
+                    repository.save(u);
+                }
+            }
+
+            if (loginValido) {
                 return new UsuariosDTO(u.getId(), u.getEmail());
             }
         }
@@ -59,7 +80,8 @@ public class UsuariosServiceImp implements UsuariosService {
         // --- GUARDAR USUARIO BASE ---
         Usuarios nuevo = new Usuarios();
         nuevo.setEmail(dto.getEmail());
-        nuevo.setPassword(dto.getPassword());
+        // OWASP A07 / A02 — Hashear contraseña con BCrypt antes de persistir
+        nuevo.setPassword(passwordEncoder.encode(dto.getPassword()));
         Usuarios guardado = repository.save(nuevo);
 
         // --- GUARDAR DETALLES COMPLETOS (Actividad N°5: caso 9) ---

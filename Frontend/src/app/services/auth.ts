@@ -40,10 +40,12 @@ export class AuthService {
 
   // --- UTILIDADES ---
   
-  // Guardar en memoria y localStorage
+  // OWASP A02 — Guardar solo los campos mínimos necesarios (id, email).
+  // No almacenar datos adicionales del DTO para minimizar la superficie de exposición.
   private guardarSesion(usuario: any) {
-    this.usuarioActual = usuario;
-    localStorage.setItem('usuario_ecommerce', JSON.stringify(usuario));
+    const sesionMinima = { id: usuario.id, email: usuario.email };
+    this.usuarioActual = sesionMinima;
+    localStorage.setItem('usuario_ecommerce', JSON.stringify(sesionMinima));
   }
 
   get usuario() {
