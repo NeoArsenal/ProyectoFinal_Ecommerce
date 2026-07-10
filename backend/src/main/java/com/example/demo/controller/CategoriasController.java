@@ -39,7 +39,11 @@ public class CategoriasController {
     }
 
     @PostMapping
-    public ResponseEntity<Categorias> crear(@RequestBody Categorias nuevo) {
+    public ResponseEntity<CategoriasDTO> crear(@RequestBody CategoriasDTO dto) {
+        Categorias nuevo = new Categorias();
+        nuevo.setId(dto.getId());
+        nuevo.setNombre(dto.getNombre());
+        nuevo.setDescripcion(dto.getDescripcion());
         int ok = service.save(nuevo);
         
         if (ok != 1) {
@@ -50,7 +54,7 @@ public class CategoriasController {
                 .path("/{id}")
                 .buildAndExpand(nuevo.getId())
                 .toUri();
-        return ResponseEntity.created(location).body(nuevo);
+        return ResponseEntity.created(location).body(dto);
     }
     
     // Puedes agregar PUT y DELETE siguiendo la misma lógica si los necesitas

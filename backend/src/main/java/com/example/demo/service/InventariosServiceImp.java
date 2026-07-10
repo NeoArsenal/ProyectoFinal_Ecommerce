@@ -96,7 +96,7 @@ public class InventariosServiceImp implements InventariosService {
 
             return 1;
         } catch (Exception e) {
-            e.printStackTrace();
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Error SQL", e);
             return 0;
         }
     }

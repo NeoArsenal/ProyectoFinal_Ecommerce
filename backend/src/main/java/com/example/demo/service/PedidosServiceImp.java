@@ -87,7 +87,7 @@ public class PedidosServiceImp implements PedidosService {
             
             // Si el usuario no existe, no podemos crear el pedido (Constraint de BD)
             if (usuarioOpt.isEmpty()) {
-                System.out.println("Error: Usuario no autenticado o token inválido");
+                org.slf4j.LoggerFactory.getLogger(this.getClass()).warn("Error: Usuario no autenticado o token inválido");
                 return 0; 
             }
 
@@ -145,7 +145,7 @@ public class PedidosServiceImp implements PedidosService {
             return 1; 
             
         } catch (Exception e) {
-            e.printStackTrace();
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Error SQL", e);
             return 0;
         }
     }

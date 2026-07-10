@@ -30,14 +30,16 @@ import com.example.demo.dto.AuthResponseDTO;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UsuariosController {
 
-    @Autowired
-    private UsuariosService service;
+    private final UsuariosService service;
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtProvider jwtProvider;
+    public UsuariosController(UsuariosService service, AuthenticationManager authenticationManager, JwtProvider jwtProvider) {
+        this.service = service;
+        this.authenticationManager = authenticationManager;
+        this.jwtProvider = jwtProvider;
+    }
 
     // --- 1. Login Validado ---
     @PostMapping("/login")

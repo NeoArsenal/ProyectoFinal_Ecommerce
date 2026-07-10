@@ -64,7 +64,7 @@ public class ProductosServiceImp implements ProductosService {
             return productoRepo.save(p) != null ? 1 : 0;
             
         } catch (Exception e) {
-            e.printStackTrace();
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Error SQL", e);
             return 0;
         }
     }

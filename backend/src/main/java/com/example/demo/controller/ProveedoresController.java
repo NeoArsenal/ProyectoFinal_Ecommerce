@@ -42,7 +42,12 @@ public class ProveedoresController {
     }
 
     @PostMapping
-    public ResponseEntity<Proveedores> crear(@RequestBody Proveedores nuevo) {
+    public ResponseEntity<ProveedoresDTO> crear(@RequestBody ProveedoresDTO dto) {
+        Proveedores nuevo = new Proveedores();
+        nuevo.setId(dto.getId());
+        nuevo.setEmpresa(dto.getEmpresa());
+        nuevo.setContacto(dto.getContacto());
+        nuevo.setTelefono(dto.getTelefono());
         int ok = service.save(nuevo);
         
         if (ok != 1) {
@@ -53,12 +58,12 @@ public class ProveedoresController {
                 .path("/{id}")
                 .buildAndExpand(nuevo.getId())
                 .toUri();
-        return ResponseEntity.created(location).body(nuevo);
+        return ResponseEntity.created(location).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Proveedores> actualizar(@PathVariable("id") Integer id,
-                                                  @RequestBody Proveedores cambios) {
+    public ResponseEntity<ProveedoresDTO> actualizar(@PathVariable("id") Integer id,
+                                                  @RequestBody ProveedoresDTO cambios) {
         
         Optional<Proveedores> opt = service.listarId(id);
         
@@ -73,7 +78,7 @@ public class ProveedoresController {
 
         int ok = service.save(actual);
         
-        return (ok == 1) ? ResponseEntity.ok(actual) : ResponseEntity.badRequest().build();
+        return (ok == 1) ? ResponseEntity.ok(cambios) : ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/{id}")

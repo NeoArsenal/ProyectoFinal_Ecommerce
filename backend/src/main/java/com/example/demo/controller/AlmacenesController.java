@@ -31,7 +31,11 @@ public class AlmacenesController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crear(@RequestBody Almacenes almacen) {
+    public ResponseEntity<?> crear(@RequestBody AlmacenesDTO dto) {
+        Almacenes almacen = new Almacenes();
+        almacen.setId(dto.getId());
+        almacen.setNombre(dto.getNombre());
+        almacen.setUbicacion(dto.getUbicacion());
         int res = service.save(almacen);
         return res == 1 ? ResponseEntity.ok("Almacén guardado") : ResponseEntity.badRequest().build();
     }

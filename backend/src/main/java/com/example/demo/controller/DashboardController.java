@@ -31,10 +31,19 @@ import java.util.HashMap;
 @CrossOrigin(origins = "http://localhost:4200")
 public class DashboardController {
 
-    @Autowired private PedidosRepository pedidosRepo;
-    @Autowired private ProductosRepository productosRepo;
-    @Autowired private EnviosRepository enviosRepo;
-    @Autowired private UsuariosRepository usuariosRepo;
+    private final PedidosRepository pedidosRepo;
+    private final ProductosRepository productosRepo;
+    private final EnviosRepository enviosRepo;
+    private final UsuariosRepository usuariosRepo;
+
+    @Autowired
+    public DashboardController(PedidosRepository pedidosRepo, ProductosRepository productosRepo,
+                               EnviosRepository enviosRepo, UsuariosRepository usuariosRepo) {
+        this.pedidosRepo = pedidosRepo;
+        this.productosRepo = productosRepo;
+        this.enviosRepo = enviosRepo;
+        this.usuariosRepo = usuariosRepo;
+    }
 
     @GetMapping("/resumen")
     public ResponseEntity<DashboardDTO> obtenerResumen() {
@@ -61,7 +70,7 @@ public class DashboardController {
         
         // Generar lista de los últimos 7 días terminando en "hoy"
         List<Double> tendencia = new ArrayList<>();
-        LocalDate hoy = LocalDate.now();
+        LocalDate hoy = LocalDate.now(java.time.ZoneId.systemDefault());
         for (int i = 6; i >= 0; i--) {
             LocalDate dia = hoy.minusDays(i);
             tendencia.add(ventasPorDia.getOrDefault(dia, 0.0));
@@ -93,7 +102,7 @@ public class DashboardController {
         List<Envios> envios = enviosRepo.findAll();
         for (int i = 0; i < Math.min(envios.size(), 3); i++) {
             Envios e = envios.get(i);
-            LocalDateTime fechaEnvio = e.getPedido() != null ? e.getPedido().getFecha() : LocalDateTime.now();
+            LocalDateTime fechaEnvio = e.getPedido() != null ? e.getPedido().getFecha() : LocalDateTime.now(java.time.ZoneId.systemDefault());
             lista.add(new ActividadDTO(
                 "Envío #" + e.getId() + " en estado '" + e.getEstado() + "' (Tracking: " + e.getNumeroTracking() + ")",
                 fechaEnvio,
@@ -107,7 +116,7 @@ public class DashboardController {
         for (int i = 0; i < Math.min(usuarios.size(), 2); i++) {
             Usuarios u = usuarios.get(i);
             // Simular fecha de registro según ID decreciente para poner los más nuevos al inicio
-            LocalDateTime fechaReg = LocalDateTime.now().minusHours(24 - u.getId() * 2);
+            LocalDateTime fechaReg = LocalDateTime.now(java.time.ZoneId.systemDefault()).minusHours(24L - (long) u.getId() * 2L);
             lista.add(new ActividadDTO(
                 "Usuario " + u.getEmail() + " registrado en el sistema",
                 fechaReg,
@@ -121,7 +130,7 @@ public class DashboardController {
         for (int i = 0; i < Math.min(productos.size(), 2); i++) {
             Productos prod = productos.get(i);
             // Simular fecha de creación en base a ID
-            LocalDateTime fechaProd = LocalDateTime.now().minusHours(72 - prod.getId() * 3);
+            LocalDateTime fechaProd = LocalDateTime.now(java.time.ZoneId.systemDefault()).minusHours(72L - (long) prod.getId() * 3L);
             lista.add(new ActividadDTO(
                 "Producto '" + prod.getNombre() + "' agregado al catálogo de ventas",
                 fechaProd,
