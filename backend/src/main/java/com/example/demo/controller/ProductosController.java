@@ -21,9 +21,6 @@ import com.example.demo.dto.ProductosDTO;
 import com.example.demo.service.ProductosService;
 
 import jakarta.validation.Valid;
-
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/productos")
 public class ProductosController {

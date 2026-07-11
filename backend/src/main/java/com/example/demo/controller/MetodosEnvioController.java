@@ -18,7 +18,6 @@ import com.example.demo.service.MetodosEnvioService;
 
 @RestController
 @RequestMapping("/metodos-envio")
-@CrossOrigin(origins = "http://localhost:4200")
 public class MetodosEnvioController {
 
     @Autowired

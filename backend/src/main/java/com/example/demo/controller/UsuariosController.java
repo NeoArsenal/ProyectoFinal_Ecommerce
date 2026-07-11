@@ -27,7 +27,6 @@ import com.example.demo.dto.AuthResponseDTO;
 
 @RestController
 @RequestMapping("/usuarios")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UsuariosController {
 
     private final UsuariosService service;

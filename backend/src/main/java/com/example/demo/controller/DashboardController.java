@@ -28,7 +28,6 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/dashboard")
-@CrossOrigin(origins = "http://localhost:4200")
 public class DashboardController {
 
     private final PedidosRepository pedidosRepo;

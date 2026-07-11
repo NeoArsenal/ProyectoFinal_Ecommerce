@@ -17,7 +17,6 @@ import com.example.demo.service.EnviosService;
 
 @RestController
 @RequestMapping("/envios")
-@CrossOrigin(origins = "http://localhost:4200")
 public class EnviosController {
 
     @Autowired

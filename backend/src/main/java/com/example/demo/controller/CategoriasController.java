@@ -17,8 +17,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.demo.dto.CategoriasDTO;
 import com.example.demo.model.Categorias;
 import com.example.demo.service.CategoriasService;
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/categorias")
 public class CategoriasController {

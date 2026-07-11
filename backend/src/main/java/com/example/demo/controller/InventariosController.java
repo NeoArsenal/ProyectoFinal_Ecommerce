@@ -18,7 +18,6 @@ import com.example.demo.service.InventariosService;
 
 @RestController
 @RequestMapping("/inventarios")
-@CrossOrigin(origins = "http://localhost:4200") // Opcional si ya tienes el Config global
 public class InventariosController {
 
     @Autowired

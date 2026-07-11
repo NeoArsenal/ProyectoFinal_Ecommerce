@@ -15,8 +15,6 @@ import com.example.demo.dto.HistorialDTO;
 import com.example.demo.dto.VentaDTO;
 import com.example.demo.model.Pedidos;
 import com.example.demo.service.PedidosService;
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/pedidos")
 public class PedidosController {

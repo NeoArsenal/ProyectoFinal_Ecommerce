@@ -20,8 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.demo.dto.ProveedoresDTO;
 import com.example.demo.model.Proveedores;
 import com.example.demo.service.ProveedoresService;
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/proveedores")
 public class ProveedoresController {
