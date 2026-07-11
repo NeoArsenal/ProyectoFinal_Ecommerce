@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -21,7 +22,7 @@ export interface InventarioPayload {
 
 @Injectable({ providedIn: 'root' })
 export class InventariosService {
-  private url = 'http://localhost:8085/inventarios';
+  private url = environment.apiUrl + '/inventarios';
 
   constructor(private http: HttpClient) {}
 

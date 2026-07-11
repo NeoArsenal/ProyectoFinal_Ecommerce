@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,7 +11,7 @@ export interface CategoriaDTO {
 
 @Injectable({ providedIn: 'root' })
 export class CategoriasService {
-  private url = 'http://localhost:8085/categorias';
+  private url = environment.apiUrl + '/categorias';
 
   constructor(private http: HttpClient) {}
 
@@ -26,3 +27,4 @@ export class CategoriasService {
   // Si tu backend tiene delete, agrégalo. Si no, solo listar y crear.
   /* eliminar(id: number) { ... } */
 }
+

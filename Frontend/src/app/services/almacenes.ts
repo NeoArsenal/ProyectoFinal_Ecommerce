@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,7 +11,7 @@ export interface AlmacenDTO {
 
 @Injectable({ providedIn: 'root' })
 export class AlmacenesService {
-  private url = 'http://localhost:8085/almacenes';
+  private url = environment.apiUrl + '/almacenes';
 
   constructor(private http: HttpClient) {}
 
@@ -26,3 +27,4 @@ export class AlmacenesService {
     return this.http.delete<void>(`${this.url}/${id}`);
   }
 }
+

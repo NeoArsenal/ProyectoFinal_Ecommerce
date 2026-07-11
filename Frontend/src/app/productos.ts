@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -31,8 +32,8 @@ export interface ProductoPayload {
 
 @Injectable({ providedIn: 'root' })
 export class ProductosService {
-  private url = 'http://localhost:8085/productos';
-  private urlCat = 'http://localhost:8085/categorias';
+  private url = environment.apiUrl + '/productos';
+  private urlCat = environment.apiUrl + '/categorias';
 
   constructor(private http: HttpClient) {}
 

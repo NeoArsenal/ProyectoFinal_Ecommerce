@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -9,7 +10,7 @@ export interface MetodoDTO {
 
 @Injectable({ providedIn: 'root' })
 export class MetodosService {
-  private url = 'http://localhost:8085/metodos-envio';
+  private url = environment.apiUrl + '/metodos-envio';
 
   constructor(private http: HttpClient) {}
 
@@ -25,3 +26,4 @@ export class MetodosService {
     return this.http.delete<void>(`${this.url}/${id}`);
   }
 }
+

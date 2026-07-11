@@ -1,10 +1,11 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private url = 'http://localhost:8085/usuarios';
+  private url = environment.apiUrl + '/usuarios';
   
   // Variable para saber quién está logueado
   private usuarioActual: any = null;
@@ -83,3 +84,4 @@ export class AuthService {
     return this.http.put(`${this.url}/${id}/perfil`, datos, { responseType: 'text' });
   }
 }
+

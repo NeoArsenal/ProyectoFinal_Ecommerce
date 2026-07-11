@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -15,7 +16,7 @@ export type ProveedorPayload = Omit<ProveedorDTO, 'id'>;
 
 @Injectable({ providedIn: 'root' })
 export class ProveedoresService {
-  private readonly url = 'http://localhost:8085/proveedores';
+  private readonly url = environment.apiUrl + '/proveedores';
 
   constructor(private http: HttpClient) {}
 
@@ -39,3 +40,4 @@ export class ProveedoresService {
     return this.http.delete<void>(`${this.url}/${id}`);
   }
 }
+

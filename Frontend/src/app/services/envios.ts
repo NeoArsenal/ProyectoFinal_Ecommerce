@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -14,7 +15,7 @@ export interface EnvioDTO {
 
 @Injectable({ providedIn: 'root' })
 export class EnviosService {
-  private url = 'http://localhost:8085/envios';
+  private url = environment.apiUrl + '/envios';
 
   constructor(private http: HttpClient) {}
 
@@ -27,3 +28,4 @@ export class EnviosService {
     return this.http.patch(`${this.url}/${id}/estado?estado=${nuevoEstado}`, {});
   }
 }
+

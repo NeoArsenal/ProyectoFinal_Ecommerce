@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -25,8 +26,8 @@ export interface MetodoEnvio {
 
 @Injectable({ providedIn: 'root' })
 export class VentasService {
-  private readonly url       = 'http://localhost:8085/pedidos';
-  private readonly enviosUrl = 'http://localhost:8085/metodos-envio';
+  private readonly url       = environment.apiUrl + '/pedidos';
+  private readonly enviosUrl = environment.apiUrl + '/metodos-envio';
 
   constructor(private http: HttpClient) {}
 

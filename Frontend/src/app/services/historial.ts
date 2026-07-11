@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -16,7 +17,7 @@ export interface HistorialDTO {
 @Injectable({ providedIn: 'root' })
 export class HistorialService {
   // Asegúrate de que el puerto sea el correcto (8085)
-  private readonly url = 'http://localhost:8085/pedidos/historial';
+  private readonly url = environment.apiUrl + '/pedidos/historial';
 
   constructor(private http: HttpClient) {}
 
@@ -24,3 +25,4 @@ export class HistorialService {
     return this.http.get<HistorialDTO[]>(this.url);
   }
 }
+
